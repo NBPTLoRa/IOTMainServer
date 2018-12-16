@@ -29,6 +29,7 @@ public class LoginEntrance extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		String userID;
 		String pwd;
@@ -47,7 +48,7 @@ public class LoginEntrance extends HttpServlet {
 			}else
 			{
 				//校对失败返回{"login":"failed","error":"用户名或密码不正确"}
-				retJ=new JsonParser().parse("{\"login\":\"failed\",\"error\":\"用户名或密码不正确\"}").getAsJsonObject();
+				retJ=new JsonParser().parse("{\"login\":\"failed\",\"error\":\""+"用户名或密码不正确"+"\"}").getAsJsonObject();
 			}
 		}
 		catch (Exception e) {

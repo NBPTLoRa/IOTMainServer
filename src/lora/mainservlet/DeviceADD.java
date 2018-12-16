@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class DeviceADD
  */
-@WebServlet("/DeviceADD")
 public class DeviceADD extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
