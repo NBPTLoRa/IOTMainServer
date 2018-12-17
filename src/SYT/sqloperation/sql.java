@@ -2,7 +2,7 @@ package SYT.sqloperation;
 
 import java.util.List;
 
-import SYT.domain.userinf;
+import SYT.domain.User;
 import java.io.InputStream;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -20,7 +20,7 @@ public class sql {
 	public String login(String id,String pwd)
 	{
 	    String start="SYT.mapping.userMapper.login";
-		userinf use=new userinf();
+	    User use=new User();
 		try
 		{
 			use.setUserID(id);

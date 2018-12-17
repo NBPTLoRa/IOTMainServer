@@ -4,9 +4,6 @@
 
 	<properties resource="db.properties"/>
 	
-    <typeAliases>
-    <typeAlias type="SYT.domain.userinf" alias="_userinf"/>
-	</typeAliases>
 
     <environments default="development">
         <environment id="development">

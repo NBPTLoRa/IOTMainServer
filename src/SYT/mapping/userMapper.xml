@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SYT.mapping.userMapper">   
     <select id="login" parameterType="String" 
-        resultType="_userinf">
+        resultType="SYT.domin.User">
         select * from userinf where userID=#{userID} and userPWD=#{userPWD}
     </select>
     
