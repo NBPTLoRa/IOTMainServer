@@ -9,16 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
-	<servlet>
-    	<servlet-name>LoginEntrance</servlet-name>
-    	<servlet-class>web.mainservlet.LoginEntrance</servlet-class>
- 	</servlet>
-  	<servlet-mapping>
-		<servlet-name>LoginEntrance</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-  
+  <servlet>
+    <servlet-name>LoginEntrance</servlet-name>
+    <servlet-class>web.mainservlet.LoginEntrance</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginEntrance</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>Query</servlet-name>
     <servlet-class>lora.mainservlet.Query</servlet-class>
@@ -27,7 +25,6 @@
     <servlet-name>Query</servlet-name>
     <url-pattern>/query</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>DeviceRX</servlet-name>
     <servlet-class>lora.mainservlet.DeviceRX</servlet-class>
@@ -36,6 +33,4 @@
     <servlet-name>DeviceRX</servlet-name>
     <url-pattern>/deviceRX</url-pattern>
   </servlet-mapping>
-  
-  
 </web-app>

@@ -1,25 +1,23 @@
 package lora.mainservlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.loginVerify.LoginVerfication;
-
 /**
- * Servlet implementation class DeviceADD
+ * Servlet implementation class DeviceDataList
  */
-public class DeviceADD extends HttpServlet {
+@WebServlet("/DeviceDataList")
+public class DeviceDataList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeviceADD() {
+    public DeviceDataList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,14 +25,9 @@ public class DeviceADD extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    //用于增加列表下的节点
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out=response.getWriter();
-		LoginVerfication loginVerfication=new LoginVerfication();
-		String loginString=loginVerfication.veriLogin(request.getParameter("userID"), request.getParameter("pwd"));
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
