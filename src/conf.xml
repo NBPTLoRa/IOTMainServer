@@ -5,7 +5,7 @@
 	<properties resource="db.properties"/>
 	
     <typeAliases>
-    <typeAlias type="SYT.domain.User" alias="_User"/>
+    <typeAlias type="SYT.domain.userinf" alias="_userinf"/>
 	</typeAliases>
 
     <environments default="development">
