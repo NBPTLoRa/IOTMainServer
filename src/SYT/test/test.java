@@ -6,7 +6,7 @@ public class test {
 
 	public static void main(String[] args) {
 		sql Sql=new sql();
-		System.out.println(Sql.login("admin", "admin"));
+		System.out.println(Sql.hh("admin"));
 	}
 
 }

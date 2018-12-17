@@ -17,7 +17,24 @@ public class sql {
 		session = sessionFactory.openSession(); 
 	}
 	
-	public String login(String id,String pwd)
+	public String hh(String id)
+	{
+	    String start="SYT.mapping.userMapper.getUser";
+	    User use=new User();
+	    use.setUserID(id);
+	    int i=session.selectOne(start, use);
+        session.commit();
+		if(i==1)
+		{
+			return "1";
+		}
+		else
+		{
+			return "0";
+		}
+	}
+	
+	/*public String login(String id,String pwd)
 	{
 	    String start="SYT.mapping.userMapper.login";
 	    User use=new User();
@@ -44,5 +61,5 @@ public class sql {
 	    {
 	    	session.close();
 	    }
-	}
+	}*/
 }
