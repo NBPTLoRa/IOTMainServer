@@ -35,7 +35,7 @@ public class SqlOp {
 			 if(shuchu.toString()!="[]")
 			 {
 				 session.close();
-				 return "1";
+				 return "1:"+shuchu.toString().substring(1,shuchu.toString().length()-1);
 			 }
 			 else
 			 {			 

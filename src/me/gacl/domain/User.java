@@ -3,7 +3,14 @@ package me.gacl.domain;
 public class User {
 	private String userID;
 	private String userPWD;
+	private String userClas;
 	
+	public String getUserClas() {
+		return userClas;
+	}
+	public void setUserClas(String userClas) {
+		this.userClas = userClas;
+	}
 	public String getUserID() {
 		return userID;
 	}
@@ -18,6 +25,6 @@ public class User {
 	}
 	
     public String toString() {
-        return "User [id=" + userID + ", pwd=" + userPWD +"]";
+        return userClas;
     }
 }
