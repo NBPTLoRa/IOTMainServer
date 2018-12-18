@@ -1,9 +1,14 @@
 package web.sqloperation;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.util.List;
 
-import Mybatis.domin.Userinf;
+import me.gacl.domain.User;
+import me.gacl.test.test;
+
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -20,30 +25,29 @@ public class SqlOp {
 	
 	public String login(String ID,String PWD)
 	{
-		String start="SYT.mapping.userMapper.login";
-	    Userinf use =new Userinf();
-	    try
-	    {
-	    	use.setUserID(ID);
-	    	use.setUserPWD(PWD);
-	        List<Userinf> lstUsers = session.selectList(start,use);
-	        if(lstUsers!=null)
-	        {
-	        	return "1";
-	        }
-	        else
-	        {
-	        	return "0";
-	        }
-	    }
-	    catch(Exception ex)
-	    {
-        	return "e"+ex.toString();
-	    }
-	    finally
-	    {
-	    	session.close();
-	    }
+		 String start="me.gacl.mapping.userMapper.login";
+		 User use =new User();
+		 try
+		 {
+			 use.setUserID(ID);
+			 use.setUserPWD(PWD);
+			 List<User> shuchu=session.selectList(start, use);
+			 if(shuchu.toString()!="[]")
+			 {
+				 session.close();
+				 return "1";
+			 }
+			 else
+			 {			 
+				 session.close();
+				 return "0";
+			 }
+		 } 
+		 catch(Exception ex)
+		 {
+			 session.close();
+			 return "e"+ex.toString();
+		 }
 	}
 	
 }
