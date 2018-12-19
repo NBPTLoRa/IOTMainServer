@@ -13,6 +13,6 @@ public class LoginObj {
 	public void setException(String exception) {
 		this.exception = exception;
 	}
-	Boolean loginSta=false;
-	String exception="none";
+	private Boolean loginSta=false;
+	private String exception="none";
 }

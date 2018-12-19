@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
 
 /**
@@ -33,7 +34,7 @@ public class DeviceADD extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		LoginVerfication loginVerfication=new LoginVerfication();
-		String loginString=loginVerfication.veriLogin(request.getParameter("userID"), request.getParameter("pwd"));
+		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 		
 	}
 
