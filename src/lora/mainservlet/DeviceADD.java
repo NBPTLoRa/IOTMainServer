@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+
 import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
 
@@ -35,6 +37,7 @@ public class DeviceADD extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		LoginVerfication loginVerfication=new LoginVerfication();
 		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
+		JsonObject retJ=new JsonObject();
 		//判断用户信息
 		if(loginObj.getLoginSta())
 		{
