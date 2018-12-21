@@ -41,6 +41,7 @@ public class DeviceADD extends HttpServlet {
 		//判断用户信息
 		if(loginObj.getLoginSta())
 		{
+			//通过后调用所有的分服务器的添加url
 			
 		}
 		else
