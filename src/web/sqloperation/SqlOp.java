@@ -47,7 +47,7 @@ public class SqlOp {
 		 catch(Exception ex)
 		 {
 			 session.close();
-			 return "e"+ex.toString();
+			 return "e:"+ex.toString();
 		 }
 		}
 		 
@@ -66,7 +66,7 @@ public class SqlOp {
 			 catch(Exception ex)
 			 {
 				 ret=new String[1];
-				 ret[0]="e"+ex.toString();
+				 ret[0]="e:"+ex.toString();
 				 session.close();
 				 return ret;
 			 }
