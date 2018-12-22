@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.util.List;
 
 import me.gacl.domain.User;
+import me.gacl.domain.server;
 import me.gacl.test.test;
 
 import org.apache.ibatis.io.Resources;
@@ -48,6 +49,27 @@ public class SqlOp {
 			 session.close();
 			 return "e"+ex.toString();
 		 }
-	}
-	
+		}
+		 
+		 public String[] getDisServIP()
+		 {
+				 
+			 String start="me.gacl.mapping.userMapper.DistServIP";	
+			 String []ret;
+			 try 
+			 { 
+				 List<server> lstUsers = session.selectList(start); 
+				 ret=lstUsers.toString().substring(1,lstUsers.toString().length()-1).split(",");
+				 session.close();
+				 return ret;
+			 }	
+			 catch(Exception ex)
+			 {
+				 ret=new String[1];
+				 ret[0]="e"+ex.toString();
+				 session.close();
+				 return ret;
+			 }
+			 
+		 }
 }
