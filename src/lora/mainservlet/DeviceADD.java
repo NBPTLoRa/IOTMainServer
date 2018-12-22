@@ -48,7 +48,7 @@ public class DeviceADD extends HttpServlet {
 		if(loginObj.getLoginSta())
 		{
 			//通过后调用所有的分服务器的添加url
-			String[] ips = null;//sqlOp.getDistServIP();
+			String[] ips =sqlOp.getDisServIP();
 			if(ips[0].equals("e"))
 			{//获取异常
 				retJ=jsonParser.parse("").getAsJsonObject();
