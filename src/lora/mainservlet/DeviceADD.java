@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
+import web.sqloperation.SqlOp;
 
 /**
  * Servlet implementation class DeviceADD
@@ -22,9 +24,11 @@ public class DeviceADD extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	SqlOp sqlOp;
     public DeviceADD() {
         super();
         // TODO Auto-generated constructor stub
+        sqlOp=new SqlOp();
     }
 
 	/**
@@ -38,14 +42,16 @@ public class DeviceADD extends HttpServlet {
 		LoginVerfication loginVerfication=new LoginVerfication();
 		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 		JsonObject retJ=new JsonObject();
+		JsonParser jsonParser=new JsonParser();
+		
 		//判断用户信息
 		if(loginObj.getLoginSta())
 		{
 			//通过后调用所有的分服务器的添加url
-			String[] ips = null;
+			String[] ips = null;//sqlOp.getDistServIP();
 			if(ips[0].equals("e"))
 			{//获取异常
-				
+				retJ=jsonParser.parse("").getAsJsonObject();
 			}
 			else
 			{//获取成功
@@ -54,9 +60,11 @@ public class DeviceADD extends HttpServlet {
 			
 		}
 		else
-		{
-			
+		{//账户不通过
+			//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
+			retJ=jsonParser.parse("{\"success\":\"failed\",\"error\":\"Your account does not have permission!\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
 		}
+		out.println(retJ);
 	}
 
 	/**
