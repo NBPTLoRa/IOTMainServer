@@ -17,5 +17,15 @@
     <servlet-name>LoginEntrance</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>DeviceADD</servlet-name>
+    <servlet-class>lora.mainservlet.DeviceADD</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeviceADD</servlet-name>
+    <url-pattern>/deviceADD</url-pattern>
+  </servlet-mapping>
+  
 
 </web-app>
