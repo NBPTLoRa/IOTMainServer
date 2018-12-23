@@ -15,18 +15,20 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class SqlOp {
-	SqlSession session;
+	SqlSessionFactory sessionFactory;
 	public SqlOp()
 	{
 		String resource = "conf.xml";	      
 		InputStream is = SqlOp.class.getClassLoader().getResourceAsStream(resource);	        
-		SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(is);
-		session = sessionFactory.openSession(); 
+		sessionFactory = new SqlSessionFactoryBuilder().build(is);
 	}
 	
+	@SuppressWarnings("finally")
 	public String login(String ID,String PWD)
 	{
+		SqlSession session = sessionFactory.openSession(); 
 		 String start="me.gacl.mapping.userMapper.login";
+		 String ret="";
 		 User use =new User();
 		 try
 		 {
@@ -35,41 +37,47 @@ public class SqlOp {
 			 List<User> shuchu=session.selectList(start, use);
 			 if(shuchu.toString()!="[]")
 			 {
-				 session.close();
-				 return "1:"+shuchu.toString().substring(1,shuchu.toString().length()-1);
+				 ret="1:"+shuchu.toString().substring(1,shuchu.toString().length()-1);
 			 }
 			 else
 			 {			 
-				 session.close();
-				 return "0";
+				 ret= "0";
 			 }
 		 } 
 		 catch(Exception ex)
 		 {
+			 ret= "e:"+ex.toString();
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
 			 session.close();
-			 return "e:"+ex.toString();
+			 return ret;
 		 }
 		}
 		 
-		 public String[] getDisServIP()
-		 {
-				 
+		 @SuppressWarnings("finally")
+		public String[] getDisServIP()
+		 {	
+			 SqlSession session = sessionFactory.openSession(); 
 			 String start="me.gacl.mapping.userMapper.DistServIP";	
-			 String []ret;
+			 String []ret=null;
 			 try 
 			 { 
 				 List<server> lstUsers = session.selectList(start); 
 				 ret=lstUsers.toString().substring(1,lstUsers.toString().length()-1).split(",");
-				 session.close();
-				 return ret;
+
 			 }	
 			 catch(Exception ex)
 			 {
 				 ret=new String[1];
 				 ret[0]="e:"+ex.toString();
+				 ex.printStackTrace();
+			 }	
+			 finally
+			 {
 				 session.close();
 				 return ret;
 			 }
-			 
 		 }
 }
