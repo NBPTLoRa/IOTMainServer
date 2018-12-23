@@ -52,6 +52,10 @@ public class DeviceADD extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		LoginVerfication loginVerfication=new LoginVerfication();
 		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
+		String devEui=request.getParameter("devEui");	//设备ID
+		String snCode=request.getParameter("snCode");	//设备sn码
+		String app=request.getParameter("app");			//设备类型
+		
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
 		
@@ -66,22 +70,35 @@ public class DeviceADD extends HttpServlet {
 			}
 			else
 			{//获取成功
+				
+				//校验sn码
+				
+				//设定写入到url的map
 				Map<String, String> data=new HashMap<String,String>();
 				data.put("doOper", "deviceADD");
-				try {
-					String aString=test("http://localhost:8080/LoRaServletTest/do", data);
-					if(aString.substring(0, 1).equals("e"))
-					{//如果分服务器报错
-						//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
-						retJ=jsonParser.parse("{\"success\":\"failed\",\"error\":\""+aString+"\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
-					}else
-					{//如果不报错
-						//{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
-						retJ=jsonParser.parse("{\"success\":\"success\",\"error\":\"0\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
+				data.put("devEui",devEui);
+				data.put("snCode", snCode);
+				data.put("app", app);
+				
+				//向所有分服发送指令
+				for(int i=0;i<ips.length;i++)
+				{
+					//这一段业务还要重写
+					try {
+						String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
+						if(distReturn.substring(0, 1).equals("e"))
+						{//如果分服务器报错
+							//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
+							retJ=jsonParser.parse("{\"success\":\"failed\",\"error\":\""+distReturn+"\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
+						}else
+						{//如果不报错
+							//{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
+							retJ=jsonParser.parse("{\"success\":\"success\",\"error\":\"0\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 			
@@ -94,7 +111,7 @@ public class DeviceADD extends HttpServlet {
 		out.println(retJ);
 	}
 
-	public static String test(String url1, Map data)throws Exception 
+	public static String urltoDist(String url1, Map data)throws Exception 
 	{
 		//把参数拼接到URL后面
 		for (Object obj : data.entrySet()) {
