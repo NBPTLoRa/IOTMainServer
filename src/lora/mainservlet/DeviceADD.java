@@ -24,6 +24,7 @@ import com.google.gson.JsonParser;
 
 import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
+import web.md5.MD5Utils;
 import web.sqloperation.SqlOp;
 
 /**
@@ -50,8 +51,10 @@ public class DeviceADD extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
+
 		LoginVerfication loginVerfication=new LoginVerfication();
 		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
+		
 		String devEui=request.getParameter("devEui");	//设备ID
 		String snCode=request.getParameter("snCode");	//设备sn码
 		String app=request.getParameter("app");			//设备类型
@@ -78,50 +81,57 @@ public class DeviceADD extends HttpServlet {
 				retDoFServer="0";
 			}
 			else
-			{//获取成功
-				
+			{//获取分服务器列表成功
 				//校验sn码
-				
-				//设定写入到url的map
-				Map<String, String> data=new HashMap<String,String>();
-				data.put("doOper", "deviceADD");
-				data.put("devEui",devEui);
-				data.put("snCode", snCode);
-				data.put("app", app);
-				
-				int sucServer=0;//成功的分服务器数量
-				//向所有分服发送指令
-				for(int i=0;i<ips.length;i++)
-				{
-					//md5验证还没做
+				if(MD5Utils.getSaltMD5(devEui).equals(snCode))
+				{//sn码通过
+					//设定写入到url的map
+					Map<String, String> data=new HashMap<String,String>();
+					data.put("doOper", "deviceADD");
+					data.put("devEui",devEui);
+					data.put("snCode", snCode);
+					data.put("app", app);
 					
-					
-					try {
-						String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
-						if(distReturn.substring(0, 1).equals("e"))
-						{//如果分服务器报错
-							//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
-							retSuccess="failed";
-							retError=distReturn;
-							retDoCount=sucServer+"";
-							retDoFServer+=","+ips[i];
-						}else
-						{//如果不报错
-							sucServer++;
-							//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
-							retSuccess="success";
-							retError="0";
-							retDoCount=sucServer+"";
-						}
-					} 
-					catch (Exception e)
+					int sucServer=0;//成功的分服务器数量
+					//向所有分服发送指令
+					for(int i=0;i<ips.length;i++)
 					{
-						e.printStackTrace();
-						//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
-						retSuccess="failed";
-						retError=e.getMessage();
-						retDoFServer+=","+ips[i];
+						
+						try {
+							String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
+							if(distReturn.substring(0, 1).equals("e"))
+							{//如果分服务器报错
+								//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
+								retSuccess="failed";
+								retError=distReturn;
+								retDoCount=sucServer+"";
+								retDoFServer+=","+ips[i];
+							}else
+							{//如果不报错
+								sucServer++;
+								//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
+								retSuccess="success";
+								retError="0";
+								retDoCount=sucServer+"";
+							}
+						} 
+						catch (Exception e)
+						{
+							e.printStackTrace();
+							//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
+							retSuccess="failed";
+							retError=e.getMessage();
+							retDoFServer+=","+ips[i];
+						}
 					}
+				}
+				else
+				{//sn码不匹配
+					//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
+					retSuccess="failed";
+					retError="Your SnCode does not have permission!";
+					retDoCount="0";
+					retDoFServer="0";
 				}
 			}
 			
@@ -130,7 +140,7 @@ public class DeviceADD extends HttpServlet {
 		{//账户不通过
 			//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 			retSuccess="failed";
-			retError="Your account does not have permission!";
+			retError="Your account does not have permission!"+loginObj.getException();
 			retDoCount="-1";
 			retDoFServer="-1";
 		}
