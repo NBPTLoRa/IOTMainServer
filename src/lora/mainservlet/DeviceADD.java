@@ -59,6 +59,11 @@ public class DeviceADD extends HttpServlet {
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
 		
+		String retSuccess="failed";		//ADD是否完全成功
+		String retError="CreateNull";	//返回的错误信息
+		String retDoCount="-1";			//作用成功的服务器数量
+		String retDoFServer="-1";		//作用失败的服务器IP
+		
 		//判断用户信息
 		if(loginObj.getLoginSta())
 		{
@@ -66,7 +71,11 @@ public class DeviceADD extends HttpServlet {
 			String[] ips =sqlOp.getDisServIP();
 			if(ips[0].equals("e"))
 			{//获取异常
-				retJ=jsonParser.parse("").getAsJsonObject();
+				//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
+				retSuccess="failed";
+				retError="e:getServerIPError"+ips[1];
+				retDoCount="0";
+				retDoFServer="0";
 			}
 			else
 			{//获取成功
@@ -80,24 +89,38 @@ public class DeviceADD extends HttpServlet {
 				data.put("snCode", snCode);
 				data.put("app", app);
 				
+				int sucServer=0;//成功的分服务器数量
 				//向所有分服发送指令
 				for(int i=0;i<ips.length;i++)
 				{
-					//这一段业务还要重写
+					//md5验证还没做
+					
+					
 					try {
 						String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
 						if(distReturn.substring(0, 1).equals("e"))
 						{//如果分服务器报错
-							//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
-							retJ=jsonParser.parse("{\"success\":\"failed\",\"error\":\""+distReturn+"\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
+							//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
+							retSuccess="failed";
+							retError=distReturn;
+							retDoCount=sucServer+"";
+							retDoFServer+=","+ips[i];
 						}else
 						{//如果不报错
-							//{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
-							retJ=jsonParser.parse("{\"success\":\"success\",\"error\":\"0\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
+							sucServer++;
+							//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
+							retSuccess="success";
+							retError="0";
+							retDoCount=sucServer+"";
 						}
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
+					} 
+					catch (Exception e)
+					{
 						e.printStackTrace();
+						//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
+						retSuccess="failed";
+						retError=e.getMessage();
+						retDoFServer+=","+ips[i];
 					}
 				}
 			}
@@ -106,8 +129,13 @@ public class DeviceADD extends HttpServlet {
 		else
 		{//账户不通过
 			//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
-			retJ=jsonParser.parse("{\"success\":\"failed\",\"error\":\"Your account does not have permission!\",\"doCount\":\"-1\",\"doFServer\":\"-1\"}").getAsJsonObject();
+			retSuccess="failed";
+			retError="Your account does not have permission!";
+			retDoCount="-1";
+			retDoFServer="-1";
 		}
+		
+		retJ=jsonParser.parse("{\"success\":\""+retSuccess+"\",\"error\":\""+retError+"\",\"doCount\":\""+retDoCount+"\",\"doFServer\":\""+retDoFServer+"\"}").getAsJsonObject();
 		out.println(retJ);
 	}
 
@@ -163,14 +191,7 @@ public class DeviceADD extends HttpServlet {
 
 	
 	
-	
 
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
