@@ -89,7 +89,6 @@ public class DeviceADD extends HttpServlet {
 					Map<String, String> data=new HashMap<String,String>();
 					data.put("doOper", "deviceADD");
 					data.put("devEui",devEui);
-					data.put("snCode", snCode);
 					data.put("app", app);
 					
 					int sucServer=0;//成功的分服务器数量
