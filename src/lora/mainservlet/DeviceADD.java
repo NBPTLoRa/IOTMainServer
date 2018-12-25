@@ -56,7 +56,7 @@ public class DeviceADD extends HttpServlet {
 		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 		
 		String devEui=request.getParameter("devEui");	//设备ID
-		String snCode=request.getParameter("snCode");	//设备sn码
+		String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
 		String app=request.getParameter("app");			//设备类型
 		
 		JsonObject retJ=new JsonObject();
@@ -67,8 +67,21 @@ public class DeviceADD extends HttpServlet {
 		String retDoCount="-1";			//作用成功的服务器数量
 		String retDoFServer="-1";		//作用失败的服务器IP
 		
+		Boolean inputFormat=false;
+		//判断snCode是不是16位的hex码
+		if(snCode.matches("^[a-f0-9]{16}&"))
+		{//如果是
+			inputFormat=true;
+		}
+		else
+		{//报错
+			retSuccess="failed";		//ADD是否完全成功
+			retError="e:Your SnCode is not up to standard!";	//返回的错误信息
+			retDoCount="0";			//作用成功的服务器数量
+			retDoFServer="0";		//作用失败的服务器IP
+		}
 		//判断用户信息
-		if(loginObj.getLoginSta())
+		if(loginObj.getLoginSta()&&inputFormat)
 		{
 			//通过后调用所有的分服务器的添加url
 			String[] ips =sqlOp.getDisServIP();
@@ -144,7 +157,11 @@ public class DeviceADD extends HttpServlet {
 			retDoFServer="-1";
 		}
 		
-		retJ=jsonParser.parse("{\"success\":\""+retSuccess+"\",\"error\":\""+retError+"\",\"doCount\":\""+retDoCount+"\",\"doFServer\":\""+retDoFServer+"\"}").getAsJsonObject();
+		retJ=jsonParser.parse("{\"success\":\""+retSuccess
+				+"\",\"error\":\""+retError
+				+"\",\"doCount\":\""+retDoCount
+				+"\",\"doFServer\":\""+retDoFServer
+				+"\"}").getAsJsonObject();
 		out.println(retJ);
 	}
 
