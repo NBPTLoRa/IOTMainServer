@@ -7,9 +7,9 @@
             <!-- 配置数据库连接信息 -->
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://167.179.83.38:3306/LoRaINFDB" />
+                <property name="url" value="jdbc:mysql://120.27.126.17:3306/LoRaINFDB" />
                 <property name="username" value="test" />
-                <property name="password" value="ciwXvh7edD2oEoxh" />
+                <property name="password" value="826M4XqSdZvqtioH" />
             </dataSource>
         </environment>
     </environments>
