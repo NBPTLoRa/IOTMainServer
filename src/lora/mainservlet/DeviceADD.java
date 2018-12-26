@@ -1,23 +1,19 @@
 package lora.mainservlet;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -55,9 +51,11 @@ public class DeviceADD extends HttpServlet {
 		LoginVerfication loginVerfication=new LoginVerfication();
 		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 		
-		String devEui=request.getParameter("devEui");	//设备ID
+		String devEui=request.getParameter("devEui");		//设备ID
 		String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
-		String app=request.getParameter("app");			//设备类型
+		String app=request.getParameter("app");				//设备类型
+		String descrip=request.getParameter("descrip");			//设备备注
+		
 		
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
@@ -214,9 +212,6 @@ public class DeviceADD extends HttpServlet {
 		return response.toString();
 
 	}
-
-	
-	
 
 	
 	/**
