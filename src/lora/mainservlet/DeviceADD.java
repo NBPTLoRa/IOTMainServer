@@ -163,7 +163,7 @@ public class DeviceADD extends HttpServlet {
 		out.println(retJ);
 	}
 
-	public static String urltoDist(String url1, Map data)throws Exception 
+	public String urltoDist(String url1, Map data)throws Exception 
 	{
 		//把参数拼接到URL后面
 		for (Object obj : data.entrySet()) {
