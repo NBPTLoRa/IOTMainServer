@@ -102,7 +102,8 @@ public class DeviceADD extends HttpServlet {
 					data.put("doOper", "deviceADD");
 					data.put("devEui",devEui);
 					//通过总服务器的app获取profName
-					//data.put("ProfName", ProfName);
+					String ProfName=sqlOp.getProfNameforappName(app);
+					data.put("ProfName", ProfName);
 					data.put("descrip", descrip);
 					data.put("devName", devName);
 					
