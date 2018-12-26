@@ -55,6 +55,7 @@ public class DeviceADD extends HttpServlet {
 		String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
 		String app=request.getParameter("app");				//设备类型
 		String descrip=request.getParameter("descrip");			//设备备注
+		String devName=request.getParameter("devName");			//设备名称
 		
 		
 		JsonObject retJ=new JsonObject();
@@ -100,7 +101,10 @@ public class DeviceADD extends HttpServlet {
 					Map<String, String> data=new HashMap<String,String>();
 					data.put("doOper", "deviceADD");
 					data.put("devEui",devEui);
-					data.put("app", app);
+					//通过总服务器的app获取profName
+					//data.put("ProfName", ProfName);
+					data.put("descrip", descrip);
+					data.put("devName", devName);
 					
 					int sucServer=0;//成功的分服务器数量
 					//向所有分服发送指令
