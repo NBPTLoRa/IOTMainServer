@@ -9,5 +9,9 @@
     <select id="DistServIP" resultType="me.gacl.domain.server">
         select serverIP from HWSERVER 
     </select>
-        
+    
+    <select id="ProfComparison" parameterType="String" resultType="me.gacl.domain.profComparison">
+        select profname from profComparison  where appName=#{appName}
+    </select>
+            
 </mapper>

@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.util.List;
 
 import me.gacl.domain.User;
+import me.gacl.domain.profComparison;
 import me.gacl.domain.server;
 import me.gacl.test.test;
 
@@ -74,6 +75,32 @@ public class SqlOp {
 				 ret[0]="e:"+ex.toString();
 				 ex.printStackTrace();
 			 }	
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
+		 
+		 @SuppressWarnings("finally")
+		 public String getProfNameforappName(String name)
+		 {	  
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.ProfComparison";	
+			 String ret="";
+			 try
+			 {
+				 profComparison pr=session.selectOne(start, name);
+				 if(pr!=null)
+				 {
+					 ret=pr.toString();
+				 }
+			 }
+			 catch(Exception ex)
+			 {
+				 ret="e:"+ex.toString();
+				 ex.printStackTrace();
+			 } 
 			 finally
 			 {
 				 session.close();
