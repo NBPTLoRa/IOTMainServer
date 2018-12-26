@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -68,7 +69,7 @@ public class DeviceADD extends HttpServlet {
 		
 		Boolean inputFormat=false;
 		//判断snCode是不是16位的hex码
-		if(snCode.matches("^[a-f0-9]{16}&"))
+		if(devEui.matches("^[a-f0-9]{16}"))
 		{//如果是
 			inputFormat=true;
 		}
@@ -95,7 +96,7 @@ public class DeviceADD extends HttpServlet {
 			else
 			{//获取分服务器列表成功
 				//校验sn码
-				if(MD5Utils.getSaltMD5(devEui).equals(snCode))
+				if(MD5Utils.getSaltMD5(devEui).toLowerCase().equals(snCode))
 				{//sn码通过
 					//设定写入到url的map
 					Map<String, String> data=new HashMap<String,String>();
@@ -114,6 +115,7 @@ public class DeviceADD extends HttpServlet {
 						
 						try {
 							String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
+							//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
 							if(distReturn.substring(0, 1).equals("e"))
 							{//如果分服务器报错
 								//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
@@ -168,28 +170,15 @@ public class DeviceADD extends HttpServlet {
 		out.println(retJ);
 	}
 
-	public String urltoDist(String url1, Map data)throws Exception 
+	public String urltoDist(String url1, Map<String,String> data)throws Exception 
 	{
 		//把参数拼接到URL后面
-		for (Object obj : data.entrySet()) {
-			
-			url1+="?";
-
-			Map.Entry<String, String> entry = (Map.Entry<String, String>) obj;
-			String key = entry.getKey().toString();
-			String value = null;
-			if (entry.getValue() == null) 
-			{
-				value = "";
-			} 
-			else
-			{
-				value = entry.getValue().toString();
+		url1+="?";
+			for(Entry<String, String> vo : data.entrySet()){
+			  	url1+=vo.getKey()+"="+vo.getValue()+"&";
 			}
-			url1+=key;
-			url1+='=';
-			url1+=URLEncoder.encode(value, "UTF-8");
-		}
+			  
+		
 		//创建URL对象
 		URL url = new URL(url1);
 		

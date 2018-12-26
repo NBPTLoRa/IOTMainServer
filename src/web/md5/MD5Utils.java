@@ -90,4 +90,13 @@ public class MD5Utils {
 		}
 		return String.valueOf(cs);
 	}
+	
+	public static void main(String[] args)
+	{
+		String aString="0000000000000001";
+		System.out.println(aString+" "+getSaltMD5(aString));
+
+		String bString="0000000000000002";
+		System.out.println(bString+" "+getSaltMD5(bString));
+	}
 }
