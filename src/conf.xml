@@ -9,7 +9,7 @@
                 <property name="driver" value="com.mysql.jdbc.Driver" />
                 <property name="url" value="jdbc:mysql://120.27.126.17:3306/LoRaINFDB" />
                 <property name="username" value="test" />
-                <property name="password" value="826M4XqSdZvqtioH" />
+                <property name="password" value="SjKJSbwjc4737@&amp;$7." />
             </dataSource>
         </environment>
     </environments>
