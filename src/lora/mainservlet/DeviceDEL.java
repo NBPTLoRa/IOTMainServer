@@ -50,6 +50,8 @@ public class DeviceDEL extends HttpServlet {
 				PrintWriter out=response.getWriter();
 
 				LoginVerfication loginVerfication=new LoginVerfication();
+				
+				//用户名密码鉴权
 				LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 				
 				String devEui=request.getParameter("devEui");		//设备ID
@@ -79,6 +81,8 @@ public class DeviceDEL extends HttpServlet {
 				//判断用户信息
 				if(loginObj.getLoginSta()&&inputFormat)
 				{//+++++++判断用户是否有该节点的权限
+					
+					
 					//通过后调用所有的分服务器的添加url
 					String[] ips =sqlOp.getDisServIP();
 					if(ips[0].equals("e"))
