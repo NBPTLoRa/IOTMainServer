@@ -54,7 +54,7 @@ public class DeviceDEL extends HttpServlet {
 				//用户名密码鉴权
 				LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 				
-				String devEui=request.getParameter("devEui");		//设备ID
+				String devEui=request.getParameter("devEui");				//设备ID
 				String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
 				
 				JsonObject retJ=new JsonObject();
@@ -74,7 +74,7 @@ public class DeviceDEL extends HttpServlet {
 				else
 				{//报错
 					retSuccess="failed";		//ADD是否完全成功
-					retError="e:Your SnCode is not up to standard!";	//返回的错误信息
+					retError="e:Your SnCode is not up to standard!";	//返回的错误信息：sn码格式不正确
 					retDoCount="0";			//作用成功的服务器数量
 					retDoFServer="0";		//作用失败的服务器IP
 				}
@@ -82,7 +82,7 @@ public class DeviceDEL extends HttpServlet {
 				if(loginObj.getLoginSta()&&inputFormat)
 				{//+++++++判断用户是否有该节点的权限
 					
-					
+
 					//通过后调用所有的分服务器的添加url
 					String[] ips =sqlOp.getDisServIP();
 					if(ips[0].equals("e"))
