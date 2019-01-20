@@ -142,7 +142,7 @@ public class DeviceADD extends HttpServlet {
 						}
 					}
 					//在向所有分服务器发送完之后在总服务器的inWorkNodes加数据
-					
+					//+++++++++++++++++++++++++++++++++++++
 				}
 				else
 				{//sn码不匹配

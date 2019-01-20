@@ -54,8 +54,7 @@ public class DeviceDEL extends HttpServlet {
 				//用户名密码鉴权
 				LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
 				
-				String devEui=request.getParameter("devEui");				//设备ID
-				String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
+				String devEui=request.getParameter("devEui");//设备ID
 				
 				JsonObject retJ=new JsonObject();
 				JsonParser jsonParser=new JsonParser();
@@ -80,10 +79,10 @@ public class DeviceDEL extends HttpServlet {
 				}
 				//判断用户信息
 				if(loginObj.getLoginSta()&&inputFormat)
-				{//+++++++判断用户是否有该节点的权限
-					
-
-					//通过后调用所有的分服务器的添加url
+				{
+					//判断用户是否有该节点的权限
+					//sql.hasManageNode(userID,devEui);
+					//调用所有的分服务器的删除url
 					String[] ips =sqlOp.getDisServIP();
 					if(ips[0].equals("e"))
 					{//获取异常
@@ -95,12 +94,9 @@ public class DeviceDEL extends HttpServlet {
 					}
 					else
 					{//获取分服务器列表成功
-						//校验sn码
-						if(MD5Utils.getSaltMD5(devEui).toLowerCase().equals(snCode))
-						{//sn码通过
 							//设定写入到url的map
 							Map<String, String> data=new HashMap<String,String>();
-							data.put("doOper", "deviceADD");
+							data.put("doOper", "deviceDEL");
 							data.put("devEui",devEui);
 							
 							int sucServer=0;//成功的分服务器数量
@@ -137,16 +133,6 @@ public class DeviceDEL extends HttpServlet {
 								}
 							}
 						}
-						else
-						{//sn码不匹配
-							//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
-							retSuccess="failed";
-							retError="Your SnCode does not have permission!";
-							retDoCount="0";
-							retDoFServer="0";
-						}
-					}
-					
 				}
 				else
 				{//账户不通过
