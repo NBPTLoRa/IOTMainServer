@@ -72,71 +72,80 @@ public class DeviceDEL extends HttpServlet {
 				else
 				{//报错
 					retSuccess="failed";	//ADD是否完全成功
-					retError="e:Your NodeID is not up to standard!";	//返回的错误信息：ID格式不正确
+					retError="Your NodeID is not up to standard!";	//返回的错误信息：ID格式不正确
 				}
 				//判断用户信息
 				if(loginObj.getLoginSta()&&inputFormat)
 				{
 					//判断用户是否有该节点的权限
-					//String rets=sql.hasManageNode(userID,devEui);
-					/*if(rets.subString(0,1).eqauls("e"))
-					  {//出现异常
-					  //{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
+					String rets=sqlOp.hasManageNode(userID,devEui);
+					if(rets.substring(0,1).equals("e"))
+					{//出现异常
+					 //{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
 						retSuccess="failed";
-						retError="e:Error of hasMana "+rets;
-					  }else if(rets.eqauls("1"))
-					  {
-					  	
-					  }*/
-					//调用所有的分服务器的删除url
-					String[] ips =sqlOp.getDisServIP();
-					if(ips[0].equals("e"))
-					{//获取异常
-						//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
-						retSuccess="failed";
-						retError="e:getServerIPError"+ips[1];
-					}
-					else
-					{//获取分服务器列表成功
-							//设定写入到url的map
-							Map<String, String> data=new HashMap<String,String>();
-							data.put("doOper", "deviceDEL");
-							data.put("devEui",devEui);
-							
-							int sucServer=0;//成功的分服务器数量
-							//向所有分服发送指令
-							for(int i=0;i<ips.length;i++)
-							{
-								
-								try {
-									String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
-									//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
-									if(distReturn.substring(0, 1).equals("e"))
-									{//如果分服务器报错
-										//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
-										retSuccess="failed";
-										retError=distReturn;
-										retDoCount=sucServer+"";
-										retDoFServer+=","+ips[i];
-									}else
-									{//如果不报错
-										sucServer++;
-										//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
-										retSuccess="success";
-										retError="0";
-										retDoCount=sucServer+"";
-									}
-								} 
-								catch (Exception e)
-								{
-									e.printStackTrace();
-									//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
-									retSuccess="failed";
-									retError=e.getMessage();
-									retDoFServer+=","+ips[i];
-								}
-							}
+						retError="e:Error of hasManaSQL "+rets;
+					}else if(rets.equals("1"))
+					{//有权限
+						//删除inWorkNodes库内的记录
+						//sqlOp.deleteNode(String nodeID);
+						
+						//调用所有的分服务器的删除url
+						String[] ips =sqlOp.getDisServIP();
+						if(ips[0].equals("e"))
+						{//获取异常
+							//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
+							retSuccess="failed";
+							retError="e:getServerIPError"+ips[1];
 						}
+						else
+						{//获取分服务器列表成功
+								//设定写入到url的map
+								Map<String, String> data=new HashMap<String,String>();
+								data.put("doOper", "deviceDEL");
+								data.put("devEui",devEui);
+								
+								int sucServer=0;//成功的分服务器数量
+								//向所有分服发送指令
+								for(int i=0;i<ips.length;i++)
+								{
+									
+									try {
+										//String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
+										String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
+										if(distReturn.substring(0, 1).equals("e"))
+										{//如果分服务器报错
+											//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
+											retSuccess="failed";
+											retError=distReturn;
+											retDoCount=sucServer+"";
+											retDoFServer+=","+ips[i];
+										}else
+										{//如果不报错
+											sucServer++;
+											//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
+											retSuccess="success";
+											retError="0";
+											retDoCount=sucServer+"";
+										}
+									} 
+									catch (Exception e)
+									{
+										e.printStackTrace();
+										//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
+										retSuccess="failed";
+										retError=e.getMessage();
+										retDoFServer+=","+ips[i];
+									}
+								}
+								
+							}
+					}else if(rets.equals("0"))
+					{//无权限
+						//{"success":"failed","error":"You do not own the node!","doCount":"-1","doFServer":"-1"}
+						retSuccess="failed";
+						retError="You do not own the node!";
+					}
+					
 				}
 				else
 				{//账户不通过
