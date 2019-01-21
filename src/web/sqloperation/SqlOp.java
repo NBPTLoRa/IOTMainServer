@@ -3,9 +3,12 @@ package web.sqloperation;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import me.gacl.domain.User;
+import me.gacl.domain.inWorkNodes;
 import me.gacl.domain.profComparison;
 import me.gacl.domain.server;
 import me.gacl.test.test;
@@ -94,6 +97,38 @@ public class SqlOp {
 				 if(pr!=null)
 				 {
 					 ret=pr.toString();
+				 }
+			 }
+			 catch(Exception ex)
+			 {
+				 ret="e:"+ex.toString();
+				 ex.printStackTrace();
+			 } 
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
+		 
+		 public String makeWorkForNode(String nodeID,String nodeManage)
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.addinworknodes";	
+			 String ret="";
+			 try
+			 {
+				 inWorkNodes inwork=new inWorkNodes();
+				 inwork.setNodeID(nodeID);
+				 inwork.setNodeManage(nodeManage);
+				 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
+				 inwork.setNodeCreTime(df.format(new Date()));
+				 inwork.setNodeState("1");
+				 int retResult = session.update(start,inwork);
+				 session.commit();
+				 if(retResult==1)
+				 {
+					 ret="1";
 				 }
 			 }
 			 catch(Exception ex)
