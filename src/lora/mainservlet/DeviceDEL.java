@@ -50,7 +50,8 @@ public class DeviceDEL extends HttpServlet {
 				LoginVerfication loginVerfication=new LoginVerfication();
 				
 				//用户名密码鉴权
-				LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
+				String userID=request.getParameter("userID");
+				LoginObj loginObj=loginVerfication.veriLogin(userID,request.getParameter("pwd"));
 				
 				String devEui=request.getParameter("devEui");//设备ID
 				
@@ -70,16 +71,23 @@ public class DeviceDEL extends HttpServlet {
 				}
 				else
 				{//报错
-					retSuccess="failed";		//ADD是否完全成功
-					retError="e:Your SnCode is not up to standard!";	//返回的错误信息：sn码格式不正确
-					retDoCount="0";			//作用成功的服务器数量
-					retDoFServer="0";		//作用失败的服务器IP
+					retSuccess="failed";	//ADD是否完全成功
+					retError="e:Your NodeID is not up to standard!";	//返回的错误信息：ID格式不正确
 				}
 				//判断用户信息
 				if(loginObj.getLoginSta()&&inputFormat)
 				{
 					//判断用户是否有该节点的权限
-					//sql.hasManageNode(userID,devEui);
+					//String rets=sql.hasManageNode(userID,devEui);
+					/*if(rets.subString(0,1).eqauls("e"))
+					  {//出现异常
+					  //{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
+						retSuccess="failed";
+						retError="e:Error of hasMana "+rets;
+					  }else if(rets.eqauls("1"))
+					  {
+					  	
+					  }*/
 					//调用所有的分服务器的删除url
 					String[] ips =sqlOp.getDisServIP();
 					if(ips[0].equals("e"))
@@ -87,8 +95,6 @@ public class DeviceDEL extends HttpServlet {
 						//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
 						retSuccess="failed";
 						retError="e:getServerIPError"+ips[1];
-						retDoCount="0";
-						retDoFServer="0";
 					}
 					else
 					{//获取分服务器列表成功
@@ -137,8 +143,6 @@ public class DeviceDEL extends HttpServlet {
 					//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 					retSuccess="failed";
 					retError="Your account does not have permission!"+loginObj.getException();
-					retDoCount="-1";
-					retDoFServer="-1";
 				}
 				
 				retJ=jsonParser.parse("{\"success\":\""+retSuccess

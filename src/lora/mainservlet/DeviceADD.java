@@ -50,7 +50,8 @@ public class DeviceADD extends HttpServlet {
 		PrintWriter out=response.getWriter();
 
 		LoginVerfication loginVerfication=new LoginVerfication();
-		LoginObj loginObj=loginVerfication.veriLogin(request.getParameter("userID"),request.getParameter("pwd"));
+		String userID=request.getParameter("userID");
+		LoginObj loginObj=loginVerfication.veriLogin(userID,request.getParameter("pwd"));
 		
 		String devEui=request.getParameter("devEui");		//设备ID
 		String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
@@ -68,7 +69,7 @@ public class DeviceADD extends HttpServlet {
 		String retDoFServer="-1";		//作用失败的服务器IP
 		
 		Boolean inputFormat=false;
-		//判断snCode是不是16位的hex码
+		//判断ID是不是16位的hex码
 		if(devEui.matches("^[a-f0-9]{16}"))
 		{//如果是
 			inputFormat=true;
@@ -76,7 +77,7 @@ public class DeviceADD extends HttpServlet {
 		else
 		{//报错
 			retSuccess="failed";		//ADD是否完全成功
-			retError="e:Your SnCode is not up to standard!";	//返回的错误信息
+			retError="e:Your NodeID is not up to standard!";	//返回的错误信息
 			retDoCount="0";			//作用成功的服务器数量
 			retDoFServer="0";		//作用失败的服务器IP
 		}
@@ -142,15 +143,21 @@ public class DeviceADD extends HttpServlet {
 						}
 					}
 					//在向所有分服务器发送完之后在总服务器的inWorkNodes加数据
-					//+++++++++++++++++++++++++++++++++++++
+					String RetS=sqlOp.makeWorkForNode(devEui,userID);
+					if(!RetS.equals("1"))
+					{//添加报错
+						//{"success":"failed","error":"e:Make Work In Base ERROR","doCount":"-1","doFServer":"-1"}
+						retSuccess="failed";
+						retError="e:Make Work In Base ERROR:"+RetS;
+					}
 				}
 				else
 				{//sn码不匹配
 					//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 					retSuccess="failed";
 					retError="Your SnCode does not have permission!";
-					retDoCount="0";
-					retDoFServer="0";
+					retDoCount="-1";
+					retDoFServer="-1";
 				}
 			}
 			
