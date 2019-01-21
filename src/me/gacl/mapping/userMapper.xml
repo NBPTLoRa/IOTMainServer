@@ -16,6 +16,10 @@
     
      <insert id="addinworknodes" parameterType="me.gacl.domain.inWorkNodes">
         insert into inWorkNodes(nodeID,nodeManage,nodeCreTime,nodeState) values(#{nodeID},#{nodeManage},#{nodeCreTime},#{nodeState})
-    </insert>
+    </insert>         
+               
+    <select id="hasinworknodes" resultType="me.gacl.domain.inWorkNodes">
+        select * from inWorkNodes where nodeID=#{nodeID} and nodeManage=#{nodeManage}
+    </select>
             
 </mapper>

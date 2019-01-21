@@ -142,4 +142,36 @@ public class SqlOp {
 				 return ret;
 			 }
 		 }
+		 
+		 public String hasManageNode(String userID,String nodeID)
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.hasinworknodes";	
+			 String ret="";
+			 try
+			 {
+				 inWorkNodes inwork=new inWorkNodes();
+				 inwork.setNodeID(nodeID);
+				 inwork.setNodeManage(userID);
+				 List<inWorkNodes> shuchu=session.selectList(start, inwork);
+				 if(shuchu.toString()!="[]")
+				 {
+					 ret="1";
+				 }
+				 else
+				 {			 
+					 ret= "0";
+				 }
+			 } 
+			 catch(Exception ex)
+			 {
+				 ret= "e:"+ex.toString();
+				 ex.printStackTrace();
+			 }
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
 }
