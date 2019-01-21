@@ -6,7 +6,7 @@ public class test {
 
     public static void main(String[] args){
     	SqlOp sql=new SqlOp();
-    	System.out.println(sql.getProfNameforappName("1"));
+    	System.out.println(sql.makeWorkForNode("hhh", "233"));
     }
 
 }
