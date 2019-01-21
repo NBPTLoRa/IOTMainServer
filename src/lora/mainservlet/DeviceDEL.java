@@ -72,7 +72,7 @@ public class DeviceDEL extends HttpServlet {
 				else
 				{//报错
 					retSuccess="failed";	//ADD是否完全成功
-					retError="Your NodeID is not up to standard!";	//返回的错误信息：ID格式不正确
+					retError+="Your NodeID is not up to standard!";	//返回的错误信息：ID格式不正确
 				}
 				//判断用户信息
 				if(loginObj.getLoginSta()&&inputFormat)
@@ -83,11 +83,20 @@ public class DeviceDEL extends HttpServlet {
 					{//出现异常
 					 //{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
 						retSuccess="failed";
-						retError="e:Error of hasManaSQL "+rets;
+						retError+="e:Error of hasManaSQL "+rets;
 					}else if(rets.equals("1"))
 					{//有权限
 						//删除inWorkNodes库内的记录
-						//sqlOp.deleteNode(String nodeID);
+						//String retS=sqlOp.deleteNode(String nodeID);
+						/*
+						if(!retS.equals("1"))
+						{//添加报错
+						//{"success":"failed","error":"Delete Node In Base ERROR","doCount":"-1","doFServer":"-1"}
+							retSuccess="failed";
+							retError+="Delete Node In Base ERROR"+retS;
+						}
+						 
+						 * */
 						
 						//调用所有的分服务器的删除url
 						String[] ips =sqlOp.getDisServIP();
@@ -95,7 +104,7 @@ public class DeviceDEL extends HttpServlet {
 						{//获取异常
 							//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
 							retSuccess="failed";
-							retError="e:getServerIPError"+ips[1];
+							retError+="e:getServerIPError"+ips[1];
 						}
 						else
 						{//获取分服务器列表成功
@@ -116,7 +125,7 @@ public class DeviceDEL extends HttpServlet {
 										{//如果分服务器报错
 											//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
 											retSuccess="failed";
-											retError=distReturn;
+											retError+=distReturn;
 											retDoCount=sucServer+"";
 											retDoFServer+=","+ips[i];
 										}else
@@ -124,7 +133,7 @@ public class DeviceDEL extends HttpServlet {
 											sucServer++;
 											//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
 											retSuccess="success";
-											retError="0";
+											retError+="0";
 											retDoCount=sucServer+"";
 										}
 									} 
@@ -133,7 +142,7 @@ public class DeviceDEL extends HttpServlet {
 										e.printStackTrace();
 										//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
 										retSuccess="failed";
-										retError=e.getMessage();
+										retError+=e.getMessage();
 										retDoFServer+=","+ips[i];
 									}
 								}
@@ -143,7 +152,7 @@ public class DeviceDEL extends HttpServlet {
 					{//无权限
 						//{"success":"failed","error":"You do not own the node!","doCount":"-1","doFServer":"-1"}
 						retSuccess="failed";
-						retError="You do not own the node!";
+						retError+="You do not own the node!";
 					}
 					
 				}
@@ -151,7 +160,7 @@ public class DeviceDEL extends HttpServlet {
 				{//账户不通过
 					//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 					retSuccess="failed";
-					retError="Your account does not have permission!"+loginObj.getException();
+					retError+="Your account does not have permission!"+loginObj.getException();
 				}
 				
 				retJ=jsonParser.parse("{\"success\":\""+retSuccess

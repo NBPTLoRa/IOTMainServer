@@ -77,7 +77,7 @@ public class DeviceADD extends HttpServlet {
 		else
 		{//报错
 			retSuccess="failed";		//ADD是否完全成功
-			retError="e:Your NodeID is not up to standard!";	//返回的错误信息
+			retError+="e:Your NodeID is not up to standard!";	//返回的错误信息
 			retDoCount="0";			//作用成功的服务器数量
 			retDoFServer="0";		//作用失败的服务器IP
 		}
@@ -90,7 +90,7 @@ public class DeviceADD extends HttpServlet {
 			{//获取异常
 				//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
 				retSuccess="failed";
-				retError="e:getServerIPError"+ips[1];
+				retError+="e:getServerIPError"+ips[1];
 				retDoCount="0";
 				retDoFServer="0";
 			}
@@ -121,7 +121,7 @@ public class DeviceADD extends HttpServlet {
 							{//如果分服务器报错
 								//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
 								retSuccess="failed";
-								retError=distReturn;
+								retError+=distReturn;
 								retDoCount=sucServer+"";
 								retDoFServer+=","+ips[i];
 							}else
@@ -129,7 +129,7 @@ public class DeviceADD extends HttpServlet {
 								sucServer++;
 								//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
 								retSuccess="success";
-								retError="0";
+								retError+="0";
 								retDoCount=sucServer+"";
 							}
 						} 
@@ -138,7 +138,7 @@ public class DeviceADD extends HttpServlet {
 							e.printStackTrace();
 							//如果报错:{"success":"failed","error":"0","doCount":"-1","doFServer":"-1"}
 							retSuccess="failed";
-							retError=e.getMessage();
+							retError+=e.getMessage();
 							retDoFServer+=","+ips[i];
 						}
 					}
@@ -148,14 +148,14 @@ public class DeviceADD extends HttpServlet {
 					{//添加报错
 						//{"success":"failed","error":"e:Make Work In Base ERROR","doCount":"-1","doFServer":"-1"}
 						retSuccess="failed";
-						retError="e:Make Work In Base ERROR:"+RetS;
+						retError+="Make Work In Base ERROR:"+RetS;
 					}
 				}
 				else
 				{//sn码不匹配
 					//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 					retSuccess="failed";
-					retError="Your SnCode does not have permission!";
+					retError+="Your SnCode does not have permission!";
 					retDoCount="-1";
 					retDoFServer="-1";
 				}
@@ -166,7 +166,7 @@ public class DeviceADD extends HttpServlet {
 		{//账户不通过
 			//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 			retSuccess="failed";
-			retError="Your account does not have permission!"+loginObj.getException();
+			retError+="Your account does not have permission!"+loginObj.getException();
 			retDoCount="-1";
 			retDoFServer="-1";
 		}
