@@ -174,4 +174,27 @@ public class SqlOp {
 				 return ret;
 			 }
 		 }
+		 
+		 public String deleteNode(String nodeID)
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.deleteinworknodes";	
+			 String ret="";
+			 try
+			 {
+				 int retResult = session.delete(start,nodeID);
+				 session.commit();
+				 ret=""+retResult;				 
+			 }
+			 catch(Exception ex)
+			 {
+				 ret= "e:"+ex.toString();
+				 ex.printStackTrace();
+			 }
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
 }

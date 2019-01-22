@@ -6,7 +6,7 @@ public class test {
 
     public static void main(String[] args){
     	SqlOp sql=new SqlOp();
-    	System.out.println(sql.hasManageNode("admin", "0000000000000002"));
+    	System.out.println(sql.deleteNode("1"));
     }
 
 }
