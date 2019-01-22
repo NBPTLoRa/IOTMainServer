@@ -37,7 +37,7 @@ public class DeviceADD extends HttpServlet {
     public DeviceADD() {
         super();
         // TODO Auto-generated constructor stub
-        sqlOp=new SqlOp();
+        sqlOp=new SqlOp(); 
     }
 
 	/**
