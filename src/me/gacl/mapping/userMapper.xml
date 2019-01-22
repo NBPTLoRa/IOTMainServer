@@ -22,4 +22,9 @@
         select * from inWorkNodes where nodeID=#{nodeID} and nodeManage=#{nodeManage}
     </select>
             
+            
+    <delete id="deleteinworknodes" parameterType="String">
+         delete from inWorkNodes where nodeID=#{nodeID}
+    </delete>
+
 </mapper>
