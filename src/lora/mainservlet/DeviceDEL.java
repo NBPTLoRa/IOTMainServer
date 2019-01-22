@@ -86,7 +86,7 @@ public class DeviceDEL extends HttpServlet {
 						retError+="e:Error of hasManaSQL "+rets;
 					}else if(rets.equals("1"))
 					{//有权限
-						//删除inWorkNodes库内的记录
+						//删除inWorkNodes库内的记录 
 						//String retS=sqlOp.deleteNode(String nodeID);
 						/*
 						if(!retS.equals("1"))
