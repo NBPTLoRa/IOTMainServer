@@ -118,7 +118,7 @@ public class DeviceADD extends HttpServlet {
 							String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);//运行就用这个
 							//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
 							if(distReturn.substring(0, 1).equals("e"))
-							{//如果分服务器报错
+							{//如果分服务器报错 
 								//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
 								retSuccess="failed";
 								retError+=distReturn;
