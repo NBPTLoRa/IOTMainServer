@@ -87,16 +87,14 @@ public class DeviceDEL extends HttpServlet {
 					}else if(rets.equals("1"))
 					{//有权限
 						//删除inWorkNodes库内的记录 
-						//String retS=sqlOp.deleteNode(String nodeID);
-						/*
+						String retS=sqlOp.deleteNode(devEui);
+						
 						if(!retS.equals("1"))
 						{//添加报错
 						//{"success":"failed","error":"Delete Node In Base ERROR","doCount":"-1","doFServer":"-1"}
 							retSuccess="failed";
 							retError+="Delete Node In Base ERROR"+retS;
 						}
-						 
-						 * */
 						
 						//调用所有的分服务器的删除url
 						String[] ips =sqlOp.getDisServIP();
@@ -119,8 +117,8 @@ public class DeviceDEL extends HttpServlet {
 								{
 									
 									try {
-										//String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);
-										String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
+										String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);//生产模式
+										//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
 										if(distReturn.substring(0, 1).equals("e"))
 										{//如果分服务器报错
 											//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
