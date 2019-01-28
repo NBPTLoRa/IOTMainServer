@@ -26,5 +26,9 @@
     <delete id="deleteinworknodes" parameterType="String">
          delete from inWorkNodes where nodeID=#{nodeID}
     </delete>
+         
+     <insert id="addinWorkGateways" parameterType="me.gacl.domain.inWorkGateways">
+        insert into inWorkGateways(gatewayID,gatewayManage,gatewayCreTime,gatewayState) values(#{gatewayID},#{gatewayManage},#{gatewayCreTime},#{gatewayState})
+    </insert> 
 
 </mapper>
