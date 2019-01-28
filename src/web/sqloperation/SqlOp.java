@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.gacl.domain.User;
+import me.gacl.domain.inWorkGateways;
 import me.gacl.domain.inWorkNodes;
 import me.gacl.domain.profComparison;
 import me.gacl.domain.server;
@@ -111,7 +112,8 @@ public class SqlOp {
 			 }
 		 }
 		 
-		 public String makeWorkForNode(String nodeID,String nodeManage)
+		 @SuppressWarnings("finally")
+		public String makeWorkForNode(String nodeID,String nodeManage)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
 		     String start="me.gacl.mapping.userMapper.addinworknodes";	
@@ -143,7 +145,8 @@ public class SqlOp {
 			 }
 		 }
 		 
-		 public String hasManageNode(String userID,String nodeID)
+		 @SuppressWarnings("finally")
+		public String hasManageNode(String userID,String nodeID)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
 		     String start="me.gacl.mapping.userMapper.hasinworknodes";	
@@ -175,7 +178,8 @@ public class SqlOp {
 			 }
 		 }
 		 
-		 public String deleteNode(String nodeID)
+		 @SuppressWarnings("finally")
+		public String deleteNode(String nodeID)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
 		     String start="me.gacl.mapping.userMapper.deleteinworknodes";	
@@ -191,6 +195,39 @@ public class SqlOp {
 				 ret= "e:"+ex.toString();
 				 ex.printStackTrace();
 			 }
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
+		 
+		 @SuppressWarnings("finally")
+		public String makeWorkGateway(String gateID,String GateManage)
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.addinWorkGateways";	
+			 String ret="";
+			 try
+			 {
+				 inWorkGateways inwork=new inWorkGateways();
+				 inwork.setGatewayID(gateID);
+				 inwork.setGatewayManage(GateManage);
+				 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
+				 inwork.setGatewayCreTime(df.format(new Date()));
+				 inwork.setGatewayState("1");
+				 int retResult = session.update(start,inwork);
+				 session.commit();
+				 if(retResult==1)
+				 {
+					 ret="1";
+				 }
+			 }
+			 catch(Exception ex)
+			 {
+				 ret="e:"+ex.toString();
+				 ex.printStackTrace();
+			 } 
 			 finally
 			 {
 				 session.close();
