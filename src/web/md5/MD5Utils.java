@@ -1,5 +1,6 @@
 package web.md5;
  
+import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
  
@@ -93,10 +94,10 @@ public class MD5Utils {
 	
 	public static void main(String[] args)
 	{
-		String aString="0000000000000001";
-		System.out.println(aString+" "+getSaltMD5(aString));
-
-		String bString="0000000000000002";
-		System.out.println(bString+" "+getSaltMD5(bString));
+		for(int i=1;i<10;i++)
+		{
+			String aString="000000000000000"+i;
+			System.out.println(aString+" "+getSaltMD5(aString));
+		}
 	}
 }

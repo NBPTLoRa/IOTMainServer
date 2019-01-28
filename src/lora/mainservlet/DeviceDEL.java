@@ -117,7 +117,7 @@ public class DeviceDEL extends HttpServlet {
 								{
 									
 									try {
-										String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);//生产模式
+										String distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//生产模式
 										//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
 										if(distReturn.substring(0, 1).equals("e"))
 										{//如果分服务器报错

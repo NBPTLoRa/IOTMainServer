@@ -115,7 +115,7 @@ public class DeviceADD extends HttpServlet {
 					{
 						
 						try {
-							String distReturn=urltoDist("http://"+ips[i]+":8080/LoRaServletTest/do", data);//运行就用这个
+							String distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
 							//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
 							if(distReturn.substring(0, 1).equals("e"))
 							{//如果分服务器报错 
@@ -143,7 +143,11 @@ public class DeviceADD extends HttpServlet {
 						}
 					}
 					//在向所有分服务器发送完之后在总服务器的inWorkNodes加数据
-					String RetS=sqlOp.makeWorkForNode(devEui,userID);
+					String RetS="makeWorkForNode CreateError";
+					if(!retDoCount.equals("-1"))
+					{
+						RetS=sqlOp.makeWorkForNode(devEui,userID);
+					}
 					if(!RetS.equals("1"))
 					{//添加报错
 						//{"success":"failed","error":"e:Make Work In Base ERROR","doCount":"-1","doFServer":"-1"}
