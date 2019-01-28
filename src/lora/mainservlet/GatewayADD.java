@@ -102,7 +102,6 @@ public class GatewayADD extends HttpServlet {
 							Map<String, String> data=new HashMap<String,String>();
 							data.put("doOper", "gatewayADD");
 							data.put("gatewayID",gatewayID);
-							//通过总服务器的app获取profName
 							data.put("descrip", descrip);
 							data.put("devName", devName);
 							
