@@ -97,7 +97,7 @@ public class DeviceADD extends HttpServlet {
 			else
 			{//获取分服务器列表成功
 				//校验sn码
-				if(MD5Utils.getSaltMD5(devEui).toLowerCase().equals(snCode))
+				if(MD5Utils.getSaltMD5ofDevice(devEui).toLowerCase().equals(snCode))
 				{//sn码通过
 					//设定写入到url的map
 					Map<String, String> data=new HashMap<String,String>();

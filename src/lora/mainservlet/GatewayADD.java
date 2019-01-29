@@ -96,7 +96,7 @@ public class GatewayADD extends HttpServlet {
 					else
 					{//获取分服务器列表成功
 						//校验sn码
-						if(MD5Utils.getSaltMD5(gatewayID).toLowerCase().equals(snCode))
+						if(MD5Utils.getSaltMD5ofGate(gatewayID).toLowerCase().equals(snCode))
 						{//sn码通过
 							//设定写入到url的map
 							Map<String, String> data=new HashMap<String,String>();
@@ -108,7 +108,6 @@ public class GatewayADD extends HttpServlet {
 							//向所有分服发送指令
 							for(int i=0;i<ips.length;i++)
 							{
-								
 								try {
 									String distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
 									//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
@@ -135,11 +134,11 @@ public class GatewayADD extends HttpServlet {
 									retDoFServer+=","+ips[i];
 								}
 							}
-							//在向所有分服务器发送完之后在总服务器的inWorkNodes加数据
+							//在向所有分服务器发送完之后在总服务器的inWorkGateway加数据
 							String RetS="makeWorkForGateway CreateError";
 							if(retSucServer!=-1)
 							{
-								//RetS=sqlOp.makeWorkForNode(devEui,userID);
+								RetS=sqlOp.makeWorkGateway(gatewayID,userID);
 							}
 							if(!RetS.equals("1"))
 							{//添加报错
@@ -150,7 +149,7 @@ public class GatewayADD extends HttpServlet {
 						}
 						else
 						{//sn码不匹配
-							//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
+							//{"success":"failed","error":"Your SnCode does not have permission!","doCount":"-1","doFServer":"-1"}
 							retSuccess="failed";
 							retError+="Your SnCode does not have permission!";
 							retSucServer=-1;
@@ -171,7 +170,7 @@ public class GatewayADD extends HttpServlet {
 				retJ=jsonParser.parse("{\"success\":\""+retSuccess
 						+"\",\"error\":\""+retError
 						+"\",\"doCount\":\""+retSucServer
-						+"\",\"doFServer\":\""+retSuccess
+						+"\",\"doFServer\":\""+retDoFServer
 						+"\"}").getAsJsonObject();
 				out.println(retJ);
 	}

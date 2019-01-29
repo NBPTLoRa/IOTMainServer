@@ -77,7 +77,7 @@ public class MD5Utils {
 	 * @Date : 2017年12月27日 上午11:21:00
 	 *       </p>
 	 */
-	public static String getSaltMD5(String password) {
+	public static String getSaltMD5ofDevice(String password) {
 
 		// 生成最终的加密盐
 		String Salt = "NiNgBo888ChUaNzHi";
@@ -92,12 +92,27 @@ public class MD5Utils {
 		return String.valueOf(cs);
 	}
 	
+	public static String getSaltMD5ofGate(String password) {
+
+		// 生成最终的加密盐
+		String Salt = "NiNgBo777ChUaNzHi";
+		password = md5Hex(password + Salt);
+		char[] cs = new char[48];
+		for (int i = 0; i < 48; i += 3) {
+			cs[i] = password.charAt(i / 3 * 2);
+			char c = Salt.charAt(i / 3);
+			cs[i + 1] = c;
+			cs[i + 2] = password.charAt(i / 3 * 2 + 1);
+		}
+		return String.valueOf(cs);
+	}
 	public static void main(String[] args)
 	{
 		for(int i=1;i<10;i++)
 		{
 			String aString="000000000000000"+i;
-			System.out.println(aString+" "+getSaltMD5(aString));
+			System.out.println(aString+" "+getSaltMD5ofDevice(aString));
+			System.out.println(aString+" "+getSaltMD5ofGate(aString));
 		}
 	}
 }
