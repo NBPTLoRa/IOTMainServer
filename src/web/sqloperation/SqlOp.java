@@ -234,4 +234,28 @@ public class SqlOp {
 				 return ret;
 			 }
 		 }
+		 
+		 @SuppressWarnings("finally")
+		public String deleteGateway(String gateID)
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.deleteinWorkGateways";	
+			 String ret="";
+			 try
+			 {
+				 int retResult = session.delete(start,gateID);
+				 session.commit();
+				 ret=""+retResult;				 
+			 }
+			 catch(Exception ex)
+			 {
+				 ret= "e:"+ex.toString();
+				 ex.printStackTrace();
+			 }
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
 }
