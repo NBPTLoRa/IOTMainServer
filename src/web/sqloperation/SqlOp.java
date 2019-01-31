@@ -132,6 +132,10 @@ public class SqlOp {
 				 {
 					 ret="1";
 				 }
+				 else if(retResult==0)
+				 {
+					 ret="e:The device already exsts";
+				 }
 			 }
 			 catch(Exception ex)
 			 {
@@ -222,12 +226,40 @@ public class SqlOp {
 				 {
 					 ret="1";
 				 }
+				 else if(retResult==0)
+				 {
+					 ret="e:The device already exsts";
+				 }
 			 }
 			 catch(Exception ex)
 			 {
 				 ret="e:"+ex.toString();
 				 ex.printStackTrace();
 			 } 
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
+		 
+		 @SuppressWarnings("finally")
+		public String deleteGateway(String gateID)
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.deleteinWorkGateways";	
+			 String ret="";
+			 try
+			 {
+				 int retResult = session.delete(start,gateID);
+				 session.commit();
+				 ret=""+retResult;				 
+			 }
+			 catch(Exception ex)
+			 {
+				 ret= "e:"+ex.toString();
+				 ex.printStackTrace();
+			 }
 			 finally
 			 {
 				 session.close();
