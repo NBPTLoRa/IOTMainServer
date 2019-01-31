@@ -168,7 +168,7 @@ public class GatewayADD extends HttpServlet {
 				}
 				
 				retJ=jsonParser.parse("{\"success\":\""+retSuccess
-						+"\",\"error\":\""+retError
+						+"\",\"error\":\""+retError.replace("\"","#")
 						+"\",\"doCount\":\""+retSucServer
 						+"\",\"doFServer\":\""+retDoFServer
 						+"\"}").getAsJsonObject();

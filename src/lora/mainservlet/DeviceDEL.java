@@ -162,7 +162,7 @@ public class DeviceDEL extends HttpServlet {
 				}
 				
 				retJ=jsonParser.parse("{\"success\":\""+retSuccess
-						+"\",\"error\":\""+retError
+						+"\",\"error\":\""+retError.replace("\"","#")
 						+"\",\"doCount\":\""+retDoCount
 						+"\",\"doFServer\":\""+retDoFServer
 						+"\"}").getAsJsonObject();
