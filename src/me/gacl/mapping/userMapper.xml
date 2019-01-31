@@ -34,5 +34,13 @@
     <delete id="deleteinWorkGateways" parameterType="String">
          delete from inWorkGateways where gatewayID=#{gatewayID}
     </delete>
+    
+    <select id="selectnodeID" parameterType="String" resultType="me.gacl.domain.inWorkNodes">
+         select * from inWorkNodes where nodeID=#{nodeID}
+    </select>
+
+    <select id="selectgatewayID" parameterType="String" resultType="me.gacl.domain.inWorkGateways">
+         select * from inWorkGateways where gatewayID=#{gatewayID}
+    </select>
 
 </mapper>

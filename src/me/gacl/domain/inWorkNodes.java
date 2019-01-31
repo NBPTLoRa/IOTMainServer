@@ -32,4 +32,7 @@ public class inWorkNodes {
 		this.nodeState = nodeState;
 	}
 	
+    public String toString() {
+        return nodeID;
+    }
 }

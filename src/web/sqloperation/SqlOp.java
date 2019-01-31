@@ -115,26 +115,31 @@ public class SqlOp {
 		 @SuppressWarnings("finally")
 		public String makeWorkForNode(String nodeID,String nodeManage)
 		 {
-			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.addinworknodes";	
+			 SqlSession session = sessionFactory.openSession(); 
+		     String start="me.gacl.mapping.userMapper.selectnodeID";	
 			 String ret="";
 			 try
 			 {
-				 inWorkNodes inwork=new inWorkNodes();
-				 inwork.setNodeID(nodeID);
-				 inwork.setNodeManage(nodeManage);
-				 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
-				 inwork.setNodeCreTime(df.format(new Date()));
-				 inwork.setNodeState("1");
-				 int retResult = session.update(start,inwork);
-				 session.commit();
-				 if(retResult==1)
+				 List<server> lstUsers = session.selectList(start,nodeID); 
+				 if(lstUsers.toString()!="[]")
 				 {
-					 ret="1";
+					 ret="e:The device already exsts"; 
 				 }
-				 else if(retResult==0)
+				 else 
 				 {
-					 ret="e:The device already exsts";
+					 start="me.gacl.mapping.userMapper.addinworknodes";	
+					 inWorkNodes inwork=new inWorkNodes();
+					 inwork.setNodeID(nodeID);
+					 inwork.setNodeManage(nodeManage);
+					 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
+					 inwork.setNodeCreTime(df.format(new Date()));
+					 inwork.setNodeState("1");
+					 int retResult = session.update(start,inwork);
+				 	 session.commit();
+				 	 if(retResult==1)
+				 	 {
+				 		 ret="1";
+				 	 }
 				 }
 			 }
 			 catch(Exception ex)
@@ -210,30 +215,39 @@ public class SqlOp {
 		public String makeWorkGateway(String gateID,String GateManage)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.addinWorkGateways";	
-			 String ret="";
+		     String start="me.gacl.mapping.userMapper.selectgatewayID";	
+			 String ret="";			 
 			 try
 			 {
-				 inWorkGateways inwork=new inWorkGateways();
-				 inwork.setGatewayID(gateID);
-				 inwork.setGatewayManage(GateManage);
-				 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
-				 inwork.setGatewayCreTime(df.format(new Date()));
-				 inwork.setGatewayState("1");
-				 int retResult = session.update(start,inwork);
-				 session.commit();
-				 if(retResult==1)
+				 List<server> lstUsers = session.selectList(start,gateID); 
+				 if(lstUsers.toString()!="[]")
 				 {
-					 ret="1";
+					 ret="e:The device already exsts"; 
 				 }
-				 else if(retResult==0)
+				 else
 				 {
-					 ret="e:The device already exsts";
+					 start="me.gacl.mapping.userMapper.addinWorkGateways";	
+					 inWorkGateways inwork=new inWorkGateways();
+					 inwork.setGatewayID(gateID);
+					 inwork.setGatewayManage(GateManage);
+					 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
+					 inwork.setGatewayCreTime(df.format(new Date()));
+					 inwork.setGatewayState("1");
+					 int retResult = session.update(start,inwork);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret="1";
+					 }
 				 }
 			 }
 			 catch(Exception ex)
 			 {
 				 ret="e:"+ex.toString();
+				 if(ret.indexOf("Duplicate entry '"+gateID+"' for key 'PRIMARY'")!=-1)
+				 {
+					 ret="e:The device already exsts"; 
+				 }
 				 ex.printStackTrace();
 			 } 
 			 finally
@@ -266,4 +280,5 @@ public class SqlOp {
 				 return ret;
 			 }
 		 }
+		 
 }
