@@ -132,6 +132,10 @@ public class SqlOp {
 				 {
 					 ret="1";
 				 }
+				 else if(retResult==0)
+				 {
+					 ret="e:The device already exsts";
+				 }
 			 }
 			 catch(Exception ex)
 			 {
@@ -221,6 +225,10 @@ public class SqlOp {
 				 if(retResult==1)
 				 {
 					 ret="1";
+				 }
+				 else if(retResult==0)
+				 {
+					 ret="e:The device already exsts";
 				 }
 			 }
 			 catch(Exception ex)
