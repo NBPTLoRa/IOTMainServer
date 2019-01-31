@@ -30,4 +30,8 @@ public class inWorkGateways {
 	public void setGatewayState(String gatewayState) {
 		this.gatewayState = gatewayState;
 	}
+	
+    public String toString() {
+        return gatewayID;
+    }
 }
