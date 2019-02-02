@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import lora.auth.Auth;
 import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
 import web.md5.MD5Utils;
@@ -47,12 +48,9 @@ public class DeviceDEL extends HttpServlet {
 				response.setContentType("application/json;charset=UTF-8");
 				PrintWriter out=response.getWriter();
 
-				LoginVerfication loginVerfication=new LoginVerfication();
-				
-				//用户名密码鉴权
-				String userID=request.getParameter("userID");
-				LoginObj loginObj=loginVerfication.veriLogin(userID,request.getParameter("pwd"));
-				
+				LoginObj loginObj=Auth.auth(request);
+
+				String userID=request.getParameter("userID");//用户ID
 				String devEui=request.getParameter("devEui");//设备ID
 				
 				JsonObject retJ=new JsonObject();

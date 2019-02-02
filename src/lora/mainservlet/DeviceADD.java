@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import lora.auth.Auth;
 import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
 import web.md5.MD5Utils;
@@ -49,15 +50,14 @@ public class DeviceADD extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 
-		LoginVerfication loginVerfication=new LoginVerfication();
-		String userID=request.getParameter("userID");
-		LoginObj loginObj=loginVerfication.veriLogin(userID,request.getParameter("pwd"));
-		
+		LoginObj loginObj=Auth.auth(request);
+
+		String userID=request.getParameter("userID");		//用户ID
 		String devEui=request.getParameter("devEui");		//设备ID
 		String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
 		String app=request.getParameter("app");				//设备类型
-		String descrip=request.getParameter("descrip");			//设备备注
-		String devName=request.getParameter("devName");			//设备名称
+		String descrip=request.getParameter("descrip");		//设备备注
+		String devName=request.getParameter("devName");		//设备名称
 		
 		
 		JsonObject retJ=new JsonObject();

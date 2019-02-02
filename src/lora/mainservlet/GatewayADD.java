@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import lora.auth.Auth;
 import web.loginVerify.LoginObj;
 import web.loginVerify.LoginVerfication;
 import web.md5.MD5Utils;
@@ -48,11 +49,10 @@ public class GatewayADD extends HttpServlet {
 		// TODO Auto-generated method stub
 				response.setContentType("application/json;charset=UTF-8");
 				PrintWriter out=response.getWriter();
-					
-				LoginVerfication loginVerfication=new LoginVerfication();
-				String userID=request.getParameter("userID");
-				LoginObj loginObj=loginVerfication.veriLogin(userID,request.getParameter("pwd"));
-				
+
+				LoginObj loginObj=Auth.auth(request);
+
+				String userID=request.getParameter("userID");			//用户ID
 				String gatewayID=request.getParameter("gatewayID");		//网关ID
 				String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
 				String descrip=request.getParameter("descrip");			//设备备注
