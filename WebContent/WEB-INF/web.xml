@@ -33,13 +33,20 @@
     <servlet-name>DeviceDEL</servlet-name>
     <url-pattern>/deviceDEL</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>GatewayADD</servlet-name>
     <servlet-class>lora.mainservlet.GatewayADD</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GatewayADD</servlet-name>
     <url-pattern>/gatewayADD</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>GatewayDEL</servlet-name>
+    <servlet-class>lora.mainservlet.GatewayDEL</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GatewayDEL</servlet-name>
+    <url-pattern>/gatewayDEL</url-pattern>
   </servlet-mapping>
 </web-app>

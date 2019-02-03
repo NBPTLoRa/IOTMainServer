@@ -56,20 +56,20 @@ public class DeviceDEL extends HttpServlet {
 				JsonObject retJ=new JsonObject();
 				JsonParser jsonParser=new JsonParser();
 				
-				String retSuccess="failed";		//ADD是否完全成功
+				String retSuccess="failed";		//DEL是否完全成功
 				String retError="CreateNull";	//返回的错误信息
-				String retDoCount="-1";			//作用成功的服务器数量
+				int retDoCount=-1;				//作用成功的服务器数量
 				String retDoFServer="-1";		//作用失败的服务器IP
 				
 				Boolean inputFormat=false;
-				//判断snCode是不是16位的hex码
+				//判断gatewayID是不是16位的hex码
 				if(devEui.matches("^[a-f0-9]{16}"))
 				{//如果是
 					inputFormat=true;
 				}
 				else
 				{//报错
-					retSuccess="failed";	//ADD是否完全成功
+					retSuccess="failed";	//DEL是否完全成功
 					retError+="Your NodeID is not up to standard!";	//返回的错误信息：ID格式不正确
 				}
 				//判断用户信息
@@ -115,14 +115,20 @@ public class DeviceDEL extends HttpServlet {
 								{
 									
 									try {
-										String distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//生产模式
-										//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);
+										String distReturn="e:deisReturnCreateNone";
+										if(DeviceADD.devMode)
+										{
+											distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
+										}else
+										{
+											distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
+										}
 										if(distReturn.substring(0, 1).equals("e"))
 										{//如果分服务器报错
 											//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
 											retSuccess="failed";
 											retError+=distReturn;
-											retDoCount=sucServer+"";
+											retDoCount=sucServer;
 											retDoFServer+=","+ips[i];
 										}else
 										{//如果不报错
@@ -130,7 +136,7 @@ public class DeviceDEL extends HttpServlet {
 											//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
 											retSuccess="success";
 											retError+="0";
-											retDoCount=sucServer+"";
+											retDoCount=sucServer;
 										}
 									} 
 									catch (Exception e)

@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,7 +20,6 @@ import com.google.gson.JsonParser;
 
 import lora.auth.Auth;
 import web.loginVerify.LoginObj;
-import web.loginVerify.LoginVerfication;
 import web.md5.MD5Utils;
 import web.sqloperation.SqlOp;
 
@@ -30,7 +28,8 @@ import web.sqloperation.SqlOp;
  */
 public class DeviceADD extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	//开发模式，如果调试就写true
+    public static Boolean devMode=false;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -50,6 +49,7 @@ public class DeviceADD extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 
+		//鉴权
 		LoginObj loginObj=Auth.auth(request);
 
 		String userID=request.getParameter("userID");		//用户ID
@@ -59,13 +59,13 @@ public class DeviceADD extends HttpServlet {
 		String descrip=request.getParameter("descrip");		//设备备注
 		String devName=request.getParameter("devName");		//设备名称
 		
-		
+		//返回的json
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
 		
 		String retSuccess="failed";		//ADD是否完全成功
 		String retError="CreateNull";	//返回的错误信息
-		String retDoCount="-1";			//作用成功的服务器数量
+		int retDoCount=-1;			//作用成功的服务器数量
 		String retDoFServer="-1";		//作用失败的服务器IP
 		
 		Boolean inputFormat=false;
@@ -78,7 +78,7 @@ public class DeviceADD extends HttpServlet {
 		{//报错
 			retSuccess="failed";		//ADD是否完全成功
 			retError+="e:Your NodeID is not up to standard!";	//返回的错误信息
-			retDoCount="0";			//作用成功的服务器数量
+			retDoCount=-1;			//作用成功的服务器数量
 			retDoFServer="0";		//作用失败的服务器IP
 		}
 		//判断用户信息
@@ -91,7 +91,7 @@ public class DeviceADD extends HttpServlet {
 				//{"success":"failed","error":"***","doCount":"-1","doFServer":"-1"}
 				retSuccess="failed";
 				retError+="e:getServerIPError"+ips[1];
-				retDoCount="0";
+				retDoCount=0;
 				retDoFServer="0";
 			}
 			else
@@ -115,14 +115,20 @@ public class DeviceADD extends HttpServlet {
 					{
 						
 						try {
-							String distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
-							//String distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
+							String distReturn="e:deisReturnCreateNone";
+							if(DeviceADD.devMode)
+							{
+								distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
+							}else
+							{
+								distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
+							}
 							if(distReturn.substring(0, 1).equals("e"))
 							{//如果分服务器报错 
 								//{"success":"failed","error":"***","doCount":"i的值","doFServer":"当前的分服IP"}
 								retSuccess="failed";
 								retError+=distReturn;
-								retDoCount=sucServer+"";
+								retDoCount=sucServer;
 								retDoFServer+=","+ips[i];
 							}else
 							{//如果不报错
@@ -130,7 +136,7 @@ public class DeviceADD extends HttpServlet {
 								//{"success":"success","error":"0","doCount":"123","doFServer":"0"}
 								retSuccess="success";
 								retError+="0";
-								retDoCount=sucServer+"";
+								retDoCount=sucServer;
 							}
 						} 
 						catch (Exception e)
@@ -144,7 +150,7 @@ public class DeviceADD extends HttpServlet {
 					}
 					//在向所有分服务器发送完之后在总服务器的inWorkNodes加数据
 					String RetS="makeWorkForNode CreateError";
-					if(!retDoCount.equals("-1"))
+					if(retDoCount!=-1)
 					{
 						RetS=sqlOp.makeWorkForNode(devEui,userID);
 					}
@@ -160,7 +166,7 @@ public class DeviceADD extends HttpServlet {
 					//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 					retSuccess="failed";
 					retError+="Your SnCode does not have permission!";
-					retDoCount="-1";
+					retDoCount=-1;
 					retDoFServer="-1";
 				}
 			}
@@ -171,7 +177,7 @@ public class DeviceADD extends HttpServlet {
 			//{"success":"failed","error":"Your account does not have permission!","doCount":"-1","doFServer":"-1"}
 			retSuccess="failed";
 			retError+="Your account does not have permission!"+loginObj.getException();
-			retDoCount="-1";
+			retDoCount=-1;
 			retDoFServer="-1";
 		}
 		
