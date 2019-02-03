@@ -2,45 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.gacl.mapping.userMapper">
 
-    <select id="login" resultType="me.gacl.domain.User">
+    <select id="select_userID_and_userPWD" resultType="me.gacl.domain.User">
         select * from userinf where userID=#{userID} and userPWD=#{userPWD}
     </select>
     
-    <select id="DistServIP" resultType="me.gacl.domain.server">
+    <select id="select_ALL_serverIP" resultType="me.gacl.domain.server">
         select serverIP from HWSERVER 
     </select>
     
-    <select id="ProfComparison" parameterType="String" resultType="me.gacl.domain.profComparison">
+    <select id="select_profname" parameterType="String" resultType="me.gacl.domain.profComparison">
         select profname from profComparison  where appName=#{appName}
     </select>
     
-     <insert id="addinworknodes" parameterType="me.gacl.domain.inWorkNodes">
+     <insert id="add_inworknodes" parameterType="me.gacl.domain.inWorkNodes">
         insert into inWorkNodes(nodeID,nodeManage,nodeCreTime,nodeState) values(#{nodeID},#{nodeManage},#{nodeCreTime},#{nodeState})
     </insert>         
                
-    <select id="hasinworknodes" resultType="me.gacl.domain.inWorkNodes">
+    <select id="select_nodeID_and_nodeManage" resultType="me.gacl.domain.inWorkNodes">
         select * from inWorkNodes where nodeID=#{nodeID} and nodeManage=#{nodeManage}
     </select>
             
             
-    <delete id="deleteinworknodes" parameterType="String">
+    <delete id="delete_inworknodes" parameterType="String">
          delete from inWorkNodes where nodeID=#{nodeID}
     </delete>
          
-     <insert id="addinWorkGateways" parameterType="me.gacl.domain.inWorkGateways">
+     <insert id="add_inWorkGateways" parameterType="me.gacl.domain.inWorkGateways">
         insert into inWorkGateways(gatewayID,gatewayManage,gatewayCreTime,gatewayState) values(#{gatewayID},#{gatewayManage},#{gatewayCreTime},#{gatewayState})
     </insert> 
     
-    <delete id="deleteinWorkGateways" parameterType="String">
+    <delete id="delete_inWorkGateways" parameterType="String">
          delete from inWorkGateways where gatewayID=#{gatewayID}
     </delete>
     
-    <select id="selectnodeID" parameterType="String" resultType="me.gacl.domain.inWorkNodes">
+    <select id="select_nodeID" parameterType="String" resultType="me.gacl.domain.inWorkNodes">
          select * from inWorkNodes where nodeID=#{nodeID}
     </select>
 
-    <select id="selectgatewayID" parameterType="String" resultType="me.gacl.domain.inWorkGateways">
+    <select id="select_gatewayID" parameterType="String" resultType="me.gacl.domain.inWorkGateways">
          select * from inWorkGateways where gatewayID=#{gatewayID}
+    </select>
+
+    <select id="select_gatewayID_and_gatewayManage" parameterType="String" resultType="me.gacl.domain.inWorkGateways">
+         select * from inWorkGateways where gatewayID=#{gatewayID} and gatewayManage=#{gatewayManage}
     </select>
 
 </mapper>

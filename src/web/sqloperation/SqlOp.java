@@ -32,7 +32,7 @@ public class SqlOp {
 	public String login(String ID,String PWD)
 	{
 		SqlSession session = sessionFactory.openSession(); 
-		 String start="me.gacl.mapping.userMapper.login";
+		 String start="me.gacl.mapping.userMapper.select_userID_and_userPWD";
 		 String ret="";
 		 User use =new User();
 		 try
@@ -65,7 +65,7 @@ public class SqlOp {
 		public String[] getDisServIP()
 		 {	
 			 SqlSession session = sessionFactory.openSession(); 
-			 String start="me.gacl.mapping.userMapper.DistServIP";	
+			 String start="me.gacl.mapping.userMapper.select_ALL_serverIP";	
 			 String []ret=null;
 			 try 
 			 { 
@@ -90,7 +90,7 @@ public class SqlOp {
 		 public String getProfNameforappName(String name)
 		 {	  
 			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.ProfComparison";	
+		     String start="me.gacl.mapping.userMapper.select_profname";	
 			 String ret="";
 			 try
 			 {
@@ -116,7 +116,7 @@ public class SqlOp {
 		public String makeWorkForNode(String nodeID,String nodeManage)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 
-		     String start="me.gacl.mapping.userMapper.selectnodeID";	
+		     String start="me.gacl.mapping.userMapper.select_nodeID";	
 			 String ret="";
 			 try
 			 {
@@ -127,7 +127,7 @@ public class SqlOp {
 				 }
 				 else 
 				 {
-					 start="me.gacl.mapping.userMapper.addinworknodes";	
+					 start="me.gacl.mapping.userMapper.add_inworknodes";	
 					 inWorkNodes inwork=new inWorkNodes();
 					 inwork.setNodeID(nodeID);
 					 inwork.setNodeManage(nodeManage);
@@ -158,7 +158,7 @@ public class SqlOp {
 		public String hasManageNode(String userID,String nodeID)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.hasinworknodes";	
+		     String start="me.gacl.mapping.userMapper.select_nodeID_and_nodeManage";	
 			 String ret="";
 			 try
 			 {
@@ -191,7 +191,7 @@ public class SqlOp {
 		public String deleteNode(String nodeID)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.deleteinworknodes";	
+		     String start="me.gacl.mapping.userMapper.delete_inworknodes";	
 			 String ret="";
 			 try
 			 {
@@ -215,7 +215,7 @@ public class SqlOp {
 		public String makeWorkGateway(String gateID,String GateManage)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.selectgatewayID";	
+		     String start="me.gacl.mapping.userMapper.select_gatewayID";	
 			 String ret="";			 
 			 try
 			 {
@@ -226,7 +226,7 @@ public class SqlOp {
 				 }
 				 else
 				 {
-					 start="me.gacl.mapping.userMapper.addinWorkGateways";	
+					 start="me.gacl.mapping.userMapper.add_inWorkGateways";	
 					 inWorkGateways inwork=new inWorkGateways();
 					 inwork.setGatewayID(gateID);
 					 inwork.setGatewayManage(GateManage);
@@ -244,10 +244,6 @@ public class SqlOp {
 			 catch(Exception ex)
 			 {
 				 ret="e:"+ex.toString();
-				 if(ret.indexOf("Duplicate entry '"+gateID+"' for key 'PRIMARY'")!=-1)
-				 {
-					 ret="e:The device already exsts"; 
-				 }
 				 ex.printStackTrace();
 			 } 
 			 finally
@@ -261,13 +257,46 @@ public class SqlOp {
 		public String deleteGateway(String gateID)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 
-		     String start="me.gacl.mapping.userMapper.deleteinWorkGateways";	
+		     String start="me.gacl.mapping.userMapper.delete_inWorkGateways";	
 			 String ret="";
 			 try
 			 {
 				 int retResult = session.delete(start,gateID);
 				 session.commit();
 				 ret=""+retResult;				 
+			 }
+			 catch(Exception ex)
+			 {
+				 ret= "e:"+ex.toString();
+				 ex.printStackTrace();
+			 }
+			 finally
+			 {
+				 session.close();
+				 return ret;
+			 }
+		 }
+		 
+			
+		 public String hasManageGateway(String userID,String gatewayID)	
+		 {
+			 SqlSession session = sessionFactory.openSession(); 	 
+		     String start="me.gacl.mapping.userMapper.select_gatewayID_and_gatewayManage";	
+			 String ret="";
+			 inWorkGateways inw=new inWorkGateways();
+			 try
+			 {
+				 inw.setGatewayManage(userID);
+				 inw.setGatewayID(gatewayID);
+				 List<User> shuchu=session.selectList(start, inw);
+				 if(shuchu.toString()!="[]")
+				 {
+					 ret="1";
+				 }
+				 else
+				 {			 
+					 ret= "0";
+				 }
 			 }
 			 catch(Exception ex)
 			 {
