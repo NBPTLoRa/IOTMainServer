@@ -2,6 +2,9 @@ package lora.mainservlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,24 +42,26 @@ public class DeviceRX extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
-
 		//鉴权
 		LoginObj loginObj=Auth.auth(request);
 
-		
+		String userID=request.getParameter("userID");		//用户ID
 		String devEui=request.getParameter("devEui");		//设备ID
 		String pull_mode=request.getParameter("pull_mode");	//请求模式
+		String t=request.getParameter("t");			//时间
+		String st=request.getParameter("st");		//开始时间
+		String et=request.getParameter("et");		//结束时间
 		
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
 		
 		String errorReturn="CreateNullError";
-		
+		ArrayList<String> urlList=new ArrayList<>();
 		
 		//账户鉴权：是否是平台用户
 		if(!loginObj.getLoginSta())
 		{
-			errorReturn="ERROR Incorrect username or password";
+			errorReturn+="ERROR Incorrect username or password.";
 		}
 		
 		Boolean inputFormat=false;
@@ -67,14 +72,79 @@ public class DeviceRX extends HttpServlet {
 		}
 		else
 		{//报错
-			errorReturn="Your NodeID is not up to standard";
+			errorReturn+="Your NodeID is not up to standard.";
 		}
 		
-		
-		
+		//是否拥有节点
+		String rets=sqlOp.hasManageNode(userID,devEui);
+		if(rets.substring(0,1).equals("e"))
+		{//出现异常
+			errorReturn+="e:Error of hasManaSQL "+rets+".";
+		}else if(rets.equals("1"))
+		{//有权限
+			//把数据请求发送到分服务器
+			//获取分服务器列表
+			String[] ips =sqlOp.getDisServIP();
+			if(ips[0].equals("e"))
+			{//获取异常
+				errorReturn+="e:getServerIPError"+ips[1];
+			}
+			else
+			{
+				Map<String, String> data=new HashMap<String,String>();
+				data.put("insID", "");
+				data.put("userID",userID);
+				data.put("operKey","");
+				data.put("devEui",devEui);
+				if(pull_mode.equals("1"))
+				{//获取模式1
+					data.put("hwOPT","deviceRX1");
+					data.put("t", t);
+				}else if(pull_mode.equals("2"))
+				{//获取模式2
+					data.put("hwOPT","deviceRX2");
+					data.put("st", st);
+					data.put("et", et);
+				}
+				
+				//设定指令部分
+				String errormsg="";
+				for(int i=0;i<ips.length;i++)
+				{
+					try
+					{
+						String distReturn="e:deisReturnCreateNone";
+						if(DeviceADD.devMode)
+						{
+							distReturn=UrlApi.urltoDist("http://localhost:8080/LoRaServletTest/setIns", data);//调试就用这个
+						}else
+						{
+							distReturn=UrlApi.urltoDist("http://"+ips[i]+":8090/LoRaServletTest/setIns", data);//运行就用这个
+						}
+						//设定指令完之后生成指令
+						if(!distReturn.substring(0,1).equals("e"))
+						{
+							urlList.add(distReturn);
+						}else
+						{
+							errormsg+=distReturn+" ";
+						}
+					}
+					catch (Exception e) 
+					{
+						e.printStackTrace();
+						errorReturn+="DistError"+e.getMessage();
+					}
+				}
+			}
+		}else if(rets.equals("0"))
+		{//无权限
+			errorReturn+="You do not own the node!";
+		}
 		
 		//返回Json↓
-		if(errorReturn.equals("CreateNullError"))
+		errorReturn=errorReturn.replace("CreateNullError", "");
+		if(errorReturn.equals(""))
 		{//如果没有错误
 			
 		}
