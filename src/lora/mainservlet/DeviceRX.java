@@ -57,6 +57,8 @@ public class DeviceRX extends HttpServlet {
 		
 		String errorReturn="CreateNullError";
 		ArrayList<String> urlList=new ArrayList<>();
+
+		String errormsg="";
 		
 		//账户鉴权：是否是平台用户
 		if(!loginObj.getLoginSta())
@@ -80,7 +82,8 @@ public class DeviceRX extends HttpServlet {
 		if(rets.substring(0,1).equals("e"))
 		{//出现异常
 			errorReturn+="e:Error of hasManaSQL "+rets+".";
-		}else if(rets.equals("1"))
+		}
+		else if(rets.equals("1"))
 		{//有权限
 			//把数据请求发送到分服务器
 			//获取分服务器列表
@@ -92,9 +95,7 @@ public class DeviceRX extends HttpServlet {
 			else
 			{
 				Map<String, String> data=new HashMap<String,String>();
-				data.put("insID", "");
 				data.put("userID",userID);
-				data.put("operKey","");
 				data.put("devEui",devEui);
 				if(pull_mode.equals("1"))
 				{//获取模式1
@@ -108,7 +109,6 @@ public class DeviceRX extends HttpServlet {
 				}
 				
 				//设定指令部分
-				String errormsg="";
 				for(int i=0;i<ips.length;i++)
 				{
 					try
@@ -124,7 +124,14 @@ public class DeviceRX extends HttpServlet {
 						//设定指令完之后生成指令
 						if(!distReturn.substring(0,1).equals("e"))
 						{
-							urlList.add(distReturn);
+							if(DeviceADD.devMode)
+							{
+								urlList.add("http://localhost:8080/LoRaServletTest/do?"+distReturn);//调试就用这个
+							}else
+							{
+								//运行就用这个
+								urlList.add("http://"+ips[i]+":8090/LoRaServletTest/do?"+distReturn);
+							}
 						}else
 						{
 							errormsg+=distReturn+" ";
@@ -146,11 +153,26 @@ public class DeviceRX extends HttpServlet {
 		errorReturn=errorReturn.replace("CreateNullError", "");
 		if(errorReturn.equals(""))
 		{//如果没有错误
-			
+			String temp="{"
+					+ "\"urlCount\":\""+urlList.size()+"\"";
+			for(int i=1;i<urlList.size()+1;i++)
+			{
+				temp+=",\"url"+i+"\":"
+						+ "\""+urlList.get(i-1)+"\"";
+			}
+			temp+= ",\"error\":"
+					+"\""+errormsg+"\"}";
+			retJ=jsonParser.parse(temp).getAsJsonObject();
+			out.println(retJ);
 		}
 		else
 		{//如果出错了
-			
+			String temp="{"
+					+ "\"error\":"
+					+"\""+errorReturn+"\""
+					+ "}";
+			retJ=jsonParser.parse(temp).getAsJsonObject();
+			out.println(retJ);
 		}
 	}
 
