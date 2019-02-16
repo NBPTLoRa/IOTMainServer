@@ -83,7 +83,7 @@ public class DeviceRX extends HttpServlet {
 		{//出现异常
 			errorReturn+="e:Error of hasManaSQL "+rets+".";
 		}
-		else if(rets.equals("1"))
+		else if(rets.equals("1")&&inputFormat)
 		{//有权限
 			//把数据请求发送到分服务器
 			//获取分服务器列表
