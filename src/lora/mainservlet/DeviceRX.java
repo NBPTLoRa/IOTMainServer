@@ -49,7 +49,6 @@ public class DeviceRX extends HttpServlet {
 		String devEui=request.getParameter("devEui");		//设备ID
 		String pull_mode=request.getParameter("pull_mode");	//请求模式
 		String t=request.getParameter("t");			//时间
-		String st=request.getParameter("st");		//开始时间
 		String et=request.getParameter("et");		//结束时间
 		
 		JsonObject retJ=new JsonObject();
@@ -104,7 +103,6 @@ public class DeviceRX extends HttpServlet {
 				}else if(pull_mode.equals("2"))
 				{//获取模式2
 					data.put("hwOPT","deviceRX2");
-					data.put("st", st);
 					data.put("et", et);
 				}
 				
