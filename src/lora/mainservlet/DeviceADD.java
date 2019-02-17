@@ -108,6 +108,7 @@ public class DeviceADD extends HttpServlet {
 					data.put("ProfName", ProfName);
 					data.put("descrip", descrip);
 					data.put("devName", devName);
+					data.put("userID", userID);
 					
 					int sucServer=0;//成功的分服务器数量
 					//向所有分服发送指令

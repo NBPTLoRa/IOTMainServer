@@ -108,6 +108,7 @@ public class DeviceDEL extends HttpServlet {
 								Map<String, String> data=new HashMap<String,String>();
 								data.put("doOper", "deviceDEL");
 								data.put("devEui",devEui);
+								data.put("userID", userID);
 								
 								int sucServer=0;//成功的分服务器数量
 								//向所有分服发送指令

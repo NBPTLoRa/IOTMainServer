@@ -104,6 +104,7 @@ public class GatewayADD extends HttpServlet {
 							data.put("gatewayID",gatewayID);
 							data.put("descrip", descrip);
 							data.put("devName", devName);
+							data.put("userID", userID);
 							
 							//向所有分服发送指令
 							for(int i=0;i<ips.length;i++)

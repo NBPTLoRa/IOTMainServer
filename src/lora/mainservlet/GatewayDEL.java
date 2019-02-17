@@ -106,6 +106,7 @@ public class GatewayDEL extends HttpServlet {
 						Map<String, String> data=new HashMap<String,String>();
 						data.put("doOper", "gatewayDEL");
 						data.put("gatewayID",gatewayID);
+						data.put("userID", userID);
 						
 						int sucServer=0;//成功的分服务器数量
 						//向所有分服发送指令
