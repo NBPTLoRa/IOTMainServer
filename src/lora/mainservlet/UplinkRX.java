@@ -20,16 +20,16 @@ import web.loginVerify.LoginObj;
 import web.sqloperation.SqlOp;
 
 /**
- * Servlet implementation class DeviceRX
+ * Servlet implementation class UplinkRX
  */
-public class DeviceRX extends HttpServlet {
+public class UplinkRX extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
 	SqlOp sqlOp;
-    public DeviceRX() {
+    public UplinkRX() {
         super();
         // TODO Auto-generated constructor stub
         sqlOp=new SqlOp();
@@ -39,7 +39,6 @@ public class DeviceRX extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		//鉴权
@@ -99,10 +98,10 @@ public class DeviceRX extends HttpServlet {
 				data.put("t", t);
 				if(pull_mode.equals("1"))
 				{//获取模式1
-					data.put("hwOPT","deviceRX1");
+					data.put("hwOPT","uplinkRX1");
 				}else if(pull_mode.equals("2"))
 				{//获取模式2
-					data.put("hwOPT","deviceRX2");
+					data.put("hwOPT","uplinkRX2");
 					data.put("et", et);
 				}
 				

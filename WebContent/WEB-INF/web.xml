@@ -41,7 +41,7 @@
     <servlet-name>GatewayADD</servlet-name>
     <url-pattern>/gatewayADD</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>GatewayDEL</servlet-name>
     <servlet-class>lora.mainservlet.GatewayDEL</servlet-class>
   </servlet>
@@ -49,7 +49,7 @@
     <servlet-name>GatewayDEL</servlet-name>
     <url-pattern>/gatewayDEL</url-pattern>
   </servlet-mapping>
-      <servlet>
+  <servlet>
     <servlet-name>DeviceRX</servlet-name>
     <servlet-class>lora.mainservlet.DeviceRX</servlet-class>
   </servlet>
@@ -57,5 +57,12 @@
     <servlet-name>DeviceRX</servlet-name>
     <url-pattern>/deviceRX</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <servlet-name>UplinkRX</servlet-name>
+    <servlet-class>lora.mainservlet.UplinkRX</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UplinkRX</servlet-name>
+    <url-pattern>/uplinkRX</url-pattern>
+  </servlet-mapping>
 </web-app>
