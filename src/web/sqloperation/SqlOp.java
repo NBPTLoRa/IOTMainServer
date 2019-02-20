@@ -113,7 +113,7 @@ public class SqlOp {
 		 }
 		 
 		 @SuppressWarnings("finally")
-		public String makeWorkForNode(String nodeID,String nodeManage)
+		public String makeWorkForNode(String nodeID,String nodeManage,String nadeName)
 		 {
 			 SqlSession session = sessionFactory.openSession(); 
 		     String start="me.gacl.mapping.userMapper.select_nodeID";	
@@ -134,6 +134,7 @@ public class SqlOp {
 					 SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
 					 inwork.setNodeCreTime(df.format(new Date()));
 					 inwork.setNodeState("1");
+					 inwork.setNodeName(nadeName);
 					 int retResult = session.update(start,inwork);
 				 	 session.commit();
 				 	 if(retResult==1)
@@ -277,7 +278,6 @@ public class SqlOp {
 			 }
 		 }
 		 
-			
 		 public String hasManageGateway(String userID,String gatewayID)	
 		 {
 			 SqlSession session = sessionFactory.openSession(); 	 

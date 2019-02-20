@@ -6,7 +6,15 @@ public class inWorkNodes {
 	private String nodeManage;
 	private String nodeCreTime;
 	private String nodeState;
+	private String nodeName;
 	
+	public String getNodeName() {
+		return nodeName;
+	}
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
+	}
+
 	public String getNodeID() {
 		return nodeID;
 	}
