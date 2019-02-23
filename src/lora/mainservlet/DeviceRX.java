@@ -2,7 +2,9 @@ package lora.mainservlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +109,9 @@ public class DeviceRX extends HttpServlet {
 				}
 				
 				//设定指令部分
+				String sLastTime="0";
+				String sLastServer="0";
+				SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd-HHmmss");
 				for(int i=0;i<ips.length;i++)
 				{
 					try
@@ -119,16 +124,36 @@ public class DeviceRX extends HttpServlet {
 						{
 							distReturn=UrlApi.urltoDist("http://"+ips[i]+":8090/LoRaServletTest/setIns", data);//运行就用这个
 						}
+						
+						String tempS=distReturn.split(";")[0];
+						//获取在该分服务器的数据的时间
+						if(sLastTime.equals("0"))
+						{//如果初始S=0
+							if(!tempS.substring(0,1).equals("e")&&!tempS.equals("0"))
+							{//且获取的时间不是0或报错
+								sLastTime=tempS;
+							}
+						}
+						else
+						{//如果初始sLastTime是时间
+							if((!tempS.substring(0,1).equals("e")&&!tempS.equals("0"))
+									&&simpleDateFormat.parse(tempS).after(simpleDateFormat.parse(sLastTime)))
+							{//且获取的时间不是0或报错&&获取的时间比老时间大
+								sLastTime=tempS;
+								sLastServer=ips[i];
+							}
+						}
+						
 						//设定指令完之后生成指令
 						if(!distReturn.substring(0,1).equals("e"))
 						{
 							if(DeviceADD.devMode)
 							{
-								urlList.add("http://localhost:8080/LoRaServletTest/do?"+distReturn);//调试就用这个
+								urlList.add("http://localhost:8080/LoRaServletTest/do?"+distReturn.split(";")[1]);//调试就用这个
 							}else
 							{
 								//运行就用这个
-								urlList.add("http://"+ips[i]+":8090/LoRaServletTest/do?"+distReturn);
+								urlList.add("http://"+ips[i]+":8090/LoRaServletTest/do?"+distReturn.split(";")[1]);
 							}
 						}else
 						{
