@@ -183,7 +183,7 @@ public class DeviceADD extends HttpServlet {
 		}
 		
 		retJ=jsonParser.parse("{\"success\":\""+retSuccess
-				+"\",\"error\":\""+retError.replace("\"","#")
+				+"\",\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
 				+"\",\"doCount\":\""+retDoCount
 				+"\",\"doFServer\":\""+retDoFServer
 				+"\"}").getAsJsonObject();
