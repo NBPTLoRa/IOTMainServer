@@ -7,7 +7,21 @@ public class inWorkNodes {
 	private String nodeCreTime;
 	private String nodeState;
 	private String nodeName;
+	private String lastServer;
+	private String lastTime;
 	
+	public String getLastServer() {
+		return lastServer;
+	}
+	public void setLastServer(String lastServer) {
+		this.lastServer = lastServer;
+	}
+	public String getLastTime() {
+		return lastTime;
+	}
+	public void setLastTime(String lastTime) {
+		this.lastTime = lastTime;
+	}
 	public String getNodeName() {
 		return nodeName;
 	}
