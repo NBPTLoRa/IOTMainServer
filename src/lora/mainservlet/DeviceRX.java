@@ -166,6 +166,8 @@ public class DeviceRX extends HttpServlet {
 						errorReturn+="DistError"+e.getMessage();
 					}
 				}
+
+				sqlOp.setNodeLastCommu(devEui, sLastTime, sLastServer);
 			}
 		}else if(rets.equals("0"))
 		{//无权限
@@ -187,6 +189,7 @@ public class DeviceRX extends HttpServlet {
 					+"\""+errormsg+"\"}";
 			retJ=jsonParser.parse(temp).getAsJsonObject();
 			out.println(retJ);
+			
 		}
 		else
 		{//如果出错了
