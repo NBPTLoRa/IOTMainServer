@@ -47,5 +47,8 @@
          select * from inWorkGateways where gatewayID=#{gatewayID} and gatewayManage=#{gatewayManage}
     </select>
         
+    <update id="up_lastServer_and_lastTime" parameterType="me.gacl.domain.inWorkNodes">
+        update inWorkNodes set lastServer=#{lastServer},lastTime=#{lastTime} where nodeID=#{nodeID} 
+    </update>
 
 </mapper>
