@@ -81,4 +81,12 @@
     <servlet-name>DeviceQueueDelete</servlet-name>
     <url-pattern>/queueDEL</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>DeviceQueueList</servlet-name>
+    <servlet-class>lora.mainservlet.DeviceQueueList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeviceQueueList</servlet-name>
+    <url-pattern>/queueGET</url-pattern>
+  </servlet-mapping>
 </web-app>
