@@ -29,7 +29,7 @@ import web.sqloperation.SqlOp;
 public class DeviceADD extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//开发模式，如果调试就写true
-    public static Boolean devMode=true;
+    public static Boolean devMode=false;
     /**
      * @see HttpServlet#HttpServlet()
      */
