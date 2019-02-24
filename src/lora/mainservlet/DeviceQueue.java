@@ -73,7 +73,7 @@ public class DeviceQueue extends HttpServlet {
 			if(tempS.equals("1"))
 			{//拥有
 				//获取节点最后一次通讯的分服务器地址
-				String lastServer="";//sqlOp.getServerIPofDevEui(devEui);
+				String lastServer=sqlOp.getServerIPofDevEui(devEui);
 				if(lastServer.equals("0"))
 				{//如果没有发送过数据
 					retSuccess="failed";		//ADD是否完全成功
