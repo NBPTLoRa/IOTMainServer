@@ -310,4 +310,39 @@ public class SqlOp {
 			 }
 		 }
 		 
+			@SuppressWarnings("finally")
+			public String setNodeLastCommu(String nodeID,String lastTime,String lastServer)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.up_lastServer_and_lastTime";	
+			     String ret="";
+			     try {
+					 inWorkNodes inw =new inWorkNodes();
+					 inw.setNodeID(nodeID);
+					 //SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
+					// inw.setLastTime(df.format(new Date()));
+					 inw.setLastTime(lastTime);
+					 inw.setLastServer(lastServer);
+					 int retResult = session.update(start,inw);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret="1";
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+			     }
+				 catch(Exception ex)
+				 {
+					 ret= "e:"+ex.toString();
+					 ex.printStackTrace();
+				 }
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
 }
