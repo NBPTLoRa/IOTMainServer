@@ -20,14 +20,14 @@ import web.sqloperation.SqlOp;
 /**
  * Servlet implementation class DeviceQueue
  */
-public class DeviceQueue extends HttpServlet {
+public class DeviceQueueDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
 	SqlOp sqlOp;
-    public DeviceQueue() {
+    public DeviceQueueDelete() {
         super();
         // TODO Auto-generated constructor stub
         sqlOp=new SqlOp();
@@ -43,7 +43,6 @@ public class DeviceQueue extends HttpServlet {
 		String retSuccess="e:CreateSuccess";
 		String retError="e:CreateError";
 		String devEui=request.getParameter("devEui");
-		String data=request.getParameter("data");
 		String userID=request.getParameter("userID");
 		
 		//¼øÈ¨
@@ -88,9 +87,8 @@ public class DeviceQueue extends HttpServlet {
 						if(lastServer.equals(ips[i]))
 						{
 							Map<String, String> dataP=new HashMap<String,String>();
-							dataP.put("doOper", "queueadd");
+							dataP.put("doOper", "queuedel");
 							dataP.put("devEui", devEui);
-							dataP.put("data", data);
 							String distReturn="e:DistReturnCreate";
 							try {
 							if(DeviceADD.devMode)

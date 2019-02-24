@@ -65,4 +65,20 @@
     <servlet-name>UplinkRX</servlet-name>
     <url-pattern>/uplinkRX</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>DeviceQueue</servlet-name>
+    <servlet-class>lora.mainservlet.DeviceQueue</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeviceQueue</servlet-name>
+    <url-pattern>/queueADD</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeviceQueueDelete</servlet-name>
+    <servlet-class>lora.mainservlet.DeviceQueueDelete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeviceQueueDelete</servlet-name>
+    <url-pattern>/queueDEL</url-pattern>
+  </servlet-mapping>
 </web-app>
