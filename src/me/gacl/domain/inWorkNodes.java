@@ -55,6 +55,13 @@ public class inWorkNodes {
 	}
 	
     public String toString() {
-        return nodeID;
+    	if(nodeID!=null)
+    	{
+    		return nodeID;
+    	}
+    	else
+    	{
+    		return lastServer;
+    	}
     }
 }

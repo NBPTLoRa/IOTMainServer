@@ -319,8 +319,6 @@ public class SqlOp {
 			     try {
 					 inWorkNodes inw =new inWorkNodes();
 					 inw.setNodeID(nodeID);
-					 //SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
-					// inw.setLastTime(df.format(new Date()));
 					 inw.setLastTime(lastTime);
 					 inw.setLastServer(lastServer);
 					 int retResult = session.update(start,inw);
@@ -345,4 +343,34 @@ public class SqlOp {
 					 return ret;
 				 }
 			}
+			
+			public String getServerIPofDevEui(String nodeID)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_lastServer";	
+				 String ret="";
+				 try
+				 {
+					 inWorkNodes inw =session.selectOne(start, nodeID);
+					 if(inw==null)
+					 {
+						 ret="0";
+					 }
+					 else
+					 {
+						 ret=inw.toString();
+					 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
 }
