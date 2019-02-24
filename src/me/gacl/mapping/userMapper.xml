@@ -50,5 +50,9 @@
     <update id="up_lastServer_and_lastTime" parameterType="me.gacl.domain.inWorkNodes">
         update inWorkNodes set lastServer=#{lastServer},lastTime=#{lastTime} where nodeID=#{nodeID} 
     </update>
+    
+    <select id="select_lastServer" parameterType="String" resultType="me.gacl.domain.inWorkNodes">
+         select lastServer from inWorkNodes where nodeID=#{nodeID} 
+    </select>
 
 </mapper>
