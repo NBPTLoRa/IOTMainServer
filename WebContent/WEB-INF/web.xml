@@ -81,7 +81,7 @@
     <servlet-name>DeviceQueueDelete</servlet-name>
     <url-pattern>/queueDEL</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>DeviceQueueList</servlet-name>
     <servlet-class>lora.mainservlet.DeviceQueueList</servlet-class>
   </servlet>
@@ -89,4 +89,21 @@
     <servlet-name>DeviceQueueList</servlet-name>
     <url-pattern>/queueGET</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>GetAccToken</servlet-name>
+    <servlet-class>web.auth.GetAccToken</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAccToken</servlet-name>
+    <url-pattern>/auth/getAccessToken</url-pattern>
+  </servlet-mapping>
+      <servlet>
+    <servlet-name>RefreshToken</servlet-name>
+    <servlet-class>web.auth.RefreshToken</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RefreshToken</servlet-name>
+    <url-pattern>/auth/refreshToken</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
