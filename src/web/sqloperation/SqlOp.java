@@ -3,11 +3,14 @@ package web.sqloperation;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import me.gacl.domain.User;
+import me.gacl.domain.authToken;
 import me.gacl.domain.inWorkGateways;
 import me.gacl.domain.inWorkNodes;
 import me.gacl.domain.profComparison;
@@ -398,6 +401,61 @@ public class SqlOp {
 					 ret="e:"+ex.toString();
 					 ex.printStackTrace();
 				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String hasClient_id(String client_ID,String APIKey)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_accCreTime_and_effectiveTime";	
+			     String ret="";
+			     try {
+			    	 authToken aut =new authToken();
+			    	 aut.setClient_ID(client_ID);
+			    	 aut.setAPIKey(APIKey);
+			    	 List<authToken> shu= session.selectList(start,aut);
+					 session.commit();
+					 if(shu.toString()!=null)
+					 {
+					 String []shuzhu=(shu.toString().substring(1,shu.toString().length()-1)).split(",");
+					 
+				        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
+				        // 将字符串的日期转为Date类型，ParsePosition(0)表示从第一个字符开始解析
+				        Date date = sdf.parse(shuzhu[0], new ParsePosition(0));
+				        Calendar calendar = Calendar.getInstance();
+				        calendar.setTime(date);
+				        // add方法中的第二个参数n中，正数表示该日期后n天，负数表示该日期的前n天
+				        calendar.add(Calendar.HOUR_OF_DAY, Integer.parseInt(shuzhu[1]));
+						String dateStr=sdf.format(calendar.getTimeInMillis());
+						String newtime=sdf.format(new Date());
+						ret=dateStr+"  "+newtime;
+			            Date dt1 = sdf.parse(dateStr);
+			            Date dt2 = sdf.parse(newtime);
+			            if (dt1.getTime() > dt2.getTime())
+			            {
+			            	ret="1";
+			            }
+			            else
+			            {
+			            	ret="0";
+			            }
+					 }
+					 else
+					 {
+						 ret="2";
+					 }
+						
+			     }
+				 catch(Exception ex)
+				 {
+					 ret= "e:"+ex.toString();
+					 ex.printStackTrace();
+				 }
 				 finally
 				 {
 					 session.close();
