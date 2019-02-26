@@ -55,4 +55,8 @@
          select lastServer from inWorkNodes where nodeID=#{nodeID} 
     </select>
 
+    <select id="select_userAPIKey_and_tokenCreTime" parameterType="String" resultType="me.gacl.domain.User">
+         select userAPIKey,tokenCreTime from userinf where userID=#{userID} 
+    </select>
+
 </mapper>
