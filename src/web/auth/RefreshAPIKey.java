@@ -38,7 +38,7 @@ public class RefreshAPIKey extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		String userID=request.getParameter("userID");
-		String pwd=request.getParameter("userID");//
+		String pwd=request.getParameter("userID");
 		
 		
 		String retSuccess="failed";
