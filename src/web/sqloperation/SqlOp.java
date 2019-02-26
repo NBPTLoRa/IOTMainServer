@@ -344,6 +344,7 @@ public class SqlOp {
 				 }
 			}
 			
+			@SuppressWarnings("finally")
 			public String getServerIPofDevEui(String nodeID)
 			{
 				 SqlSession session = sessionFactory.openSession(); 	 
@@ -373,4 +374,34 @@ public class SqlOp {
 				 }
 			}
 			
+			
+			@SuppressWarnings("finally")
+			public String getAPI(String userID)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_userAPIKey_and_tokenCreTime";	
+				 String ret="";
+				 try
+				 {
+					 User user = session.selectOne(start, userID);
+					 if(user!=null)
+					 {
+						 ret=user.toString();
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
 }
