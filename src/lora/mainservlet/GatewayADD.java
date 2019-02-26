@@ -50,7 +50,7 @@ public class GatewayADD extends HttpServlet {
 				response.setContentType("application/json;charset=UTF-8");
 				PrintWriter out=response.getWriter();
 
-				LoginObj loginObj=Auth.auth(request);
+				LoginObj loginObj=Auth.tokenLogin(request);
 
 				String userID=request.getParameter("userID");			//ÓÃ»§ID
 				String gatewayID=request.getParameter("gatewayID");		//Íø¹ØID

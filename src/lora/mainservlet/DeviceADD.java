@@ -50,7 +50,7 @@ public class DeviceADD extends HttpServlet {
 		PrintWriter out=response.getWriter();
 
 		//鉴权
-		LoginObj loginObj=Auth.auth(request);
+		LoginObj loginObj=Auth.tokenLogin(request);
 
 		String userID=request.getParameter("userID");		//用户ID
 		String devEui=request.getParameter("devEui");		//设备ID

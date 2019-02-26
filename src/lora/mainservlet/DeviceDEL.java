@@ -48,7 +48,7 @@ public class DeviceDEL extends HttpServlet {
 				response.setContentType("application/json;charset=UTF-8");
 				PrintWriter out=response.getWriter();
 
-				LoginObj loginObj=Auth.auth(request);
+				LoginObj loginObj=Auth.tokenLogin(request);
 
 				String userID=request.getParameter("userID");//用户ID
 				String devEui=request.getParameter("devEui");//设备ID

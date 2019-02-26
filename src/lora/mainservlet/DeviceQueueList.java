@@ -52,7 +52,7 @@ public class DeviceQueueList extends HttpServlet {
 		String userID=request.getParameter("userID");
 		
 		//¼øÈ¨
-		LoginObj loginObj=Auth.auth(request);
+		LoginObj loginObj=Auth.tokenLogin(request);
 		
 		//·µ»ØµÄjson
 		JsonObject retJ=new JsonObject();

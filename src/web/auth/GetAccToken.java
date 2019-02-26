@@ -69,7 +69,7 @@ public class GetAccToken extends HttpServlet {
 			if(retS.split(":")[1].equals(ApiKey))
 			{//API符合
 				//查看clien_id是否重复
-				String tempS="";//sqlOp.hasClient_id(Client_ID,ApiKey);
+				String tempS=sqlOp.hasClient_id(Client_ID,ApiKey);
 				if(tempS.equals("1"))
 				{//有正在使用的client_ID
 
@@ -88,9 +88,9 @@ public class GetAccToken extends HttpServlet {
 					//在authToken库创建一条APIkey
 					String accessToken=randomHexString(64);
 					String r="e:CreateR";
-					//r=sqlOp.createTempAuth(ApiKey,Client_ID,accessToken,6);
+					//r=sqlOp.createTempAuth(ApiKey,Client_ID,accessToken,1);
 					
-					if(r.equals("1"))
+					if(r.substring(0,1).equals("1"))
 					{//设置正常
 						retToken=accessToken;
 						retTime="0";

@@ -103,7 +103,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>RefreshToken</servlet-name>
-    <url-pattern>/auth/refreshToken</url-pattern>
+    <url-pattern>/auth/refreshAPIKey</url-pattern>
   </servlet-mapping>
   
 </web-app>
