@@ -2,6 +2,10 @@ package web.auth;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import javax.servlet.ServletException;
@@ -88,12 +92,12 @@ public class GetAccToken extends HttpServlet {
 					//在authToken库创建一条APIkey
 					String accessToken=randomHexString(64);
 					String r="e:CreateR";
-					//r=sqlOp.createTempAuth(ApiKey,Client_ID,accessToken,1);
+					r=sqlOp.createTempAuth(ApiKey,userID,Client_ID,accessToken,1+"");
 					
-					if(r.substring(0,1).equals("1"))
+					if(!r.substring(0,1).equals("e"))
 					{//设置正常
 						retToken=accessToken;
-						retTime="0";
+						retTime=r;
 						retError+="";
 					}
 					else
@@ -144,4 +148,5 @@ public class GetAccToken extends HttpServlet {
 		}
 		return null;
 	}
+
 }

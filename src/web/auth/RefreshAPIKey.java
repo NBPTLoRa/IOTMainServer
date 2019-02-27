@@ -25,9 +25,11 @@ public class RefreshAPIKey extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	SqlOp sqlOp;
     public RefreshAPIKey() {
         super();
         // TODO Auto-generated constructor stub
+        sqlOp=new SqlOp();
     }
 
 	/**
@@ -60,7 +62,7 @@ public class RefreshAPIKey extends HttpServlet {
 		else
 		{//µÇÂ½³É¹¦
 			String newKey=GetAccToken.randomHexString(32);
-			String retS="";//SqlOp.refreshAPIKEy(userID,newKey);
+			String retS="";//sqlOp.refreshAPIKey(userID,newKey);
 			if(retS.substring(0, 1).equals("e"))
 			{
 				retSuccess="failed";
