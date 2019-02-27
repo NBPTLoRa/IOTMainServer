@@ -408,6 +408,19 @@ public class SqlOp {
 				 }
 			}
 			
+			public String newdate(String time,String t)
+			{
+		        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
+		        // 将字符串的日期转为Date类型，ParsePosition(0)表示从第一个字符开始解析
+		        Date date = sdf.parse(time, new ParsePosition(0));
+		        Calendar calendar = Calendar.getInstance();
+		        calendar.setTime(date);
+		        // add方法中的第二个参数n中，正数表示该日期后n天，负数表示该日期的前n天
+		        calendar.add(Calendar.HOUR_OF_DAY, Integer.parseInt(t));
+				String dateStr=sdf.format(calendar.getTimeInMillis());
+				return dateStr;
+			}
+			
 			@SuppressWarnings("finally")
 			public String hasClient_id(String client_ID,String APIKey)
 			{
@@ -423,17 +436,9 @@ public class SqlOp {
 					 if(shu.toString()!=null)
 					 {
 					 String []shuzhu=(shu.toString().substring(1,shu.toString().length()-1)).split(",");
-					 
 				        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
-				        // 将字符串的日期转为Date类型，ParsePosition(0)表示从第一个字符开始解析
-				        Date date = sdf.parse(shuzhu[0], new ParsePosition(0));
-				        Calendar calendar = Calendar.getInstance();
-				        calendar.setTime(date);
-				        // add方法中的第二个参数n中，正数表示该日期后n天，负数表示该日期的前n天
-				        calendar.add(Calendar.HOUR_OF_DAY, Integer.parseInt(shuzhu[1]));
-						String dateStr=sdf.format(calendar.getTimeInMillis());
+						String dateStr=newdate(shuzhu[0],shuzhu[1]);
 						String newtime=sdf.format(new Date());
-						ret=dateStr+"  "+newtime;
 			            Date dt1 = sdf.parse(dateStr);
 			            Date dt2 = sdf.parse(newtime);
 			            if (dt1.getTime() > dt2.getTime())
@@ -448,6 +453,93 @@ public class SqlOp {
 					 else
 					 {
 						 ret="2";
+					 }
+						
+			     }
+				 catch(Exception ex)
+				 {
+					 ret= "e:"+ex.toString();
+					 ex.printStackTrace();
+				 }
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String createTempAuth(String APIKey,String userID,String client_ID,String accessToken,String effectiveTime)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.add_authToken";	
+			     String ret="";
+			     try {
+			    	 authToken aut =new authToken();
+			    	 aut.setAPIKey(APIKey);
+			    	 aut.setClient_ID(client_ID);
+			    	 aut.setUserID(userID);
+			    	 aut.setEffectiveTime(effectiveTime);
+			    	 aut.setAccessToken(accessToken);
+			    	 aut.setTokenState("0");
+				     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
+				     aut.setAccCreTime(sdf.format(new Date()));   
+					 int retResult = session.update(start,aut);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret=newdate(sdf.format(new Date()),effectiveTime);
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+			     }
+				 catch(Exception ex)
+				 {
+					 ret= "e:"+ex.toString();
+					 ex.printStackTrace();
+				 }
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String hasTempToken(String accessToken,String userID,String client_ID)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_accCreTime_and_effectiveTime_1";	
+			     String ret="";
+			     try {
+			    	 authToken aut =new authToken();
+			    	 aut.setClient_ID(client_ID);
+			    	 aut.setAccessToken(accessToken);
+			    	 aut.setUserID(userID);
+			    	 List<authToken> shu= session.selectList(start,aut);
+					 session.commit();
+					 if(shu.toString()!=null)
+					 {
+					    String []shuzhu=(shu.toString().substring(1,shu.toString().length()-1)).split(",");
+				        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
+						String dateStr=newdate(shuzhu[0],shuzhu[1]);
+						String newtime=sdf.format(new Date());
+			            Date dt1 = sdf.parse(dateStr);
+			            Date dt2 = sdf.parse(newtime);
+			            if (dt1.getTime() > dt2.getTime())
+			            {
+			            	ret="1";
+			            }
+			            else
+			            {
+			            	ret="e:This AccessToken has expired!";
+			            }
+					 }
+					 else
+					 {
+			            	ret="e:This AccessToken has expired!";
 					 }
 						
 			     }
