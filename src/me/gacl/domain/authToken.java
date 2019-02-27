@@ -7,8 +7,15 @@ public class authToken {
 	private String tokenState;
 	private String accCreTime;
 	private String effectiveTime;
+	private String userID;
 	
 	
+	public String getUserID() {
+		return userID;
+	}
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 	public String getAPIKey() {
 		return APIKey;
 	}

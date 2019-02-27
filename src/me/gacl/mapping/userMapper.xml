@@ -62,5 +62,13 @@
     <select id="select_accCreTime_and_effectiveTime" resultType="me.gacl.domain.authToken">
          select accCreTime,effectiveTime from authToken where client_ID=#{client_ID} and APIKey=#{APIKey}
     </select>
+    
+         <insert id="add_authToken" parameterType="me.gacl.domain.authToken">
+        insert into authToken(userID,APIKey,client_ID,accessToken,tokenState,accCreTime,effectiveTime) values(#{userID},#{APIKey},#{client_ID},#{accessToken},#{tokenState},#{accCreTime},#{effectiveTime})
+    </insert> 
+    
+        <select id="select_accCreTime_and_effectiveTime_1" resultType="me.gacl.domain.authToken">
+         select accCreTime,effectiveTime from authToken where client_ID=#{client_ID} and userID=#{userID} and accessToken=#{accessToken}
+    </select>
 
 </mapper>
