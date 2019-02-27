@@ -14,7 +14,7 @@ public class Auth {
 		String pwd=request.getParameter("pwd");
 		LoginObj loginObj=loginVerfication.veriLogin(userID,pwd);
 		return loginObj;
-	}
+	}//
 	
 	
 	public static LoginObj tokenLogin(HttpServletRequest request)
