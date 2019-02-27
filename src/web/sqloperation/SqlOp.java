@@ -554,4 +554,39 @@ public class SqlOp {
 					 return ret;
 				 }
 			}
+			
+			@SuppressWarnings("finally")
+			public String refreshAPIKey(String userID,String newKey)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.up_userAPIKey_and_tokenCreTime";	
+			     String ret="";
+			     try {
+			    	 User use=new User();
+			    	 use.setUserID(userID);
+			    	 use.setUserAPIKey(newKey);
+			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
+			    	 use.setTokenCreTime(sdf.format(new Date()));
+					 int retResult = session.update(start,use);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret="1";
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+			     }
+				 catch(Exception ex)
+				 {
+					 ret= "e:"+ex.toString();
+					 ex.printStackTrace();
+				 }
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
 }
