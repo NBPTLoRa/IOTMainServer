@@ -62,7 +62,7 @@ public class RefreshAPIKey extends HttpServlet {
 		else
 		{//µÇÂ½³É¹¦
 			String newKey=GetAccToken.randomHexString(32);
-			String retS="";//sqlOp.refreshAPIKey(userID,newKey);
+			String retS=sqlOp.refreshAPIKey(userID,newKey);
 			if(retS.substring(0, 1).equals("e"))
 			{
 				retSuccess="failed";
