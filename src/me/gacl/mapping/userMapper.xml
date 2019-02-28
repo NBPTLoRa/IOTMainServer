@@ -70,5 +70,9 @@
         <select id="select_accCreTime_and_effectiveTime_1" resultType="me.gacl.domain.authToken">
          select accCreTime,effectiveTime from authToken where client_ID=#{client_ID} and userID=#{userID} and accessToken=#{accessToken}
     </select>
+    
+      <update id="up_userAPIKey_and_tokenCreTime" parameterType="me.gacl.domain.User">
+        update userinf set userAPIKey=#{userAPIKey} , tokenCreTime=#{tokenCreTime} where userID=#{userID} 
+    </update>
 
 </mapper>
