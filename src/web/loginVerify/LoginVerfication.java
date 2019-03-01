@@ -1,6 +1,7 @@
 package web.loginVerify;
 
 
+import lora.mainservlet.DeviceADD;
 import web.sqloperation.SqlOp;
 
 public class LoginVerfication {
@@ -45,7 +46,10 @@ public class LoginVerfication {
 				//校对失败并且SQL内部异常
 				loginObj.setException(loginFlag);
 			}
-			
+			if(DeviceADD.devMode)
+			{
+				loginObj.setLoginSta(true);
+			}
 			return loginObj;
 	}
 }

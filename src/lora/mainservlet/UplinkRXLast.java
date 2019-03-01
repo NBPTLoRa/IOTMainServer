@@ -118,26 +118,38 @@ public class UplinkRXLast extends HttpServlet {
 						
 						if(distReturn.equals("00"))
 						{//没数据
-							
+							devListarr[i]+=",0";
 						}else if(distReturn.substring(0, 2).equals("e:"))
 						{//报错
-							
+							devListarr[i]+=",error";
+							retError+=devListarr[i]+":"+distReturn;
 						}else
 						{//正常
-							
+							devListarr[i]=distReturn;
 						}
 					}
 					catch(Exception e)
 					{
-						devListarr[i]+=":error";
+						devListarr[i]+=",error";
 						retError+=devListarr[i]+":"+e.getMessage();
 					}
 				}
 				else
 				{
-					retError+="";;
+					devListarr[i]+=",0";
+					retError+=devListarr[i]+" Servers without final communication!";
 				}
 			}
+			
+			//写返回的data
+			retData="";
+			for(int i=0;i<devListarr.length;i++)
+			{//{"data":""},
+				retData+="{\"data"+(i+1)+"\":\""+devListarr[i]+"\"},";
+			}
+			
+			retData=retData.substring(0,retData.length()-1);
+			
 		}
 		
 		
