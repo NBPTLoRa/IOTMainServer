@@ -110,10 +110,10 @@ public class UplinkRXLast extends HttpServlet {
 					{
 						if(DeviceADD.devMode)
 						{
-							distReturn=UrlApi.urltoDist("http://localhost:8080/LoRaServletTest/setIns", data);//调试就用这个
+							distReturn=UrlApi.urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
 						}else
 						{
-							distReturn=UrlApi.urltoDist("http://"+lastServer+":8090/LoRaServletTest/setIns", data);//运行就用这个
+							distReturn=UrlApi.urltoDist("http://"+lastServer+":8090/LoRaServletTest/do", data);//运行就用这个
 						}
 						
 						if(distReturn.equals("00"))
@@ -152,10 +152,10 @@ public class UplinkRXLast extends HttpServlet {
 			
 		}
 		
-		
-		retJ=jsonParser.parse("{\"data\":["+retData
+		String retJsonS="{\"data\":["+retData
 				+"],\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")//
-				+"\"}").getAsJsonObject();
+				+"\"}";
+		retJ=jsonParser.parse(retJsonS).getAsJsonObject();
 		out.println(retJ);
 	}
 
