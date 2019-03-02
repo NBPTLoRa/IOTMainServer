@@ -153,7 +153,7 @@ public class UplinkRXLast extends HttpServlet {
 		}
 		
 		String retJsonS="{\"data\":["+retData
-				+"],\"error\":\""+retError.replace("\"","#").replace("CreateNull", "").replace(":","----")//
+				+"],\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
 				+"\"}";
 		retJ=jsonParser.parse(retJsonS).getAsJsonObject();
 		out.println(retJ);
