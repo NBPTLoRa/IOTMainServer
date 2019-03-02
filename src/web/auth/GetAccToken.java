@@ -85,7 +85,7 @@ public class GetAccToken extends HttpServlet {
 				{//出错
 					retToken="0";
 					retTime="0";
-					retError+="Sql Get errors-"+retS;
+					retError+="Sql Get hasClient_id errors-"+tempS;
 				}
 				else
 				{//没有重复且在使用的client_ID
