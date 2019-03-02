@@ -520,7 +520,7 @@ public class SqlOp {
 			    	 aut.setUserID(userID);
 			    	 List<authToken> shu= session.selectList(start,aut);
 					 session.commit();
-					 if(shu.toString()!=null)
+					 if(shu.toString()!="[]")
 					 {
 					    String []shuzhu=(shu.toString().substring(1,shu.toString().length()-1)).split(",");
 				        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");

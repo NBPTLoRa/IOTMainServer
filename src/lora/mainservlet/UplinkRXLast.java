@@ -47,7 +47,7 @@ public class UplinkRXLast extends HttpServlet {
 		String userID=request.getParameter("userID");//用户ID
 		String devList=request.getParameter("devList");//设备ID列表
 		
-		String retData="{0}";
+		String retData="";
 		String retError="CreateNull";
 		
 		JsonObject retJ=new JsonObject();
@@ -122,7 +122,7 @@ public class UplinkRXLast extends HttpServlet {
 						}else if(distReturn.substring(0, 2).equals("e:"))
 						{//报错
 							devListarr[i]+=",error";
-							retError+=devListarr[i]+":"+distReturn;
+							retError+=devListarr[i]+":"+distReturn.replace("e:", "")+"  ";
 						}else
 						{//正常
 							devListarr[i]=distReturn;
@@ -153,7 +153,7 @@ public class UplinkRXLast extends HttpServlet {
 		}
 		
 		String retJsonS="{\"data\":["+retData
-				+"],\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")//
+				+"],\"error\":\""+retError.replace("\"","#").replace("CreateNull", "").replace(":","----")//
 				+"\"}";
 		retJ=jsonParser.parse(retJsonS).getAsJsonObject();
 		out.println(retJ);

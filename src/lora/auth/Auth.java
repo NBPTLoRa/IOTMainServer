@@ -21,8 +21,20 @@ public class Auth {
 	{
 		LoginVerfication loginVerfication=new LoginVerfication();
 		String userID=request.getParameter("userID");
+		if(userID==null)
+		{
+			userID="";
+		}
 		String accessToken=request.getParameter("accessToken");
-		String client_ID=request.getParameter("client_ID");
+		if(accessToken==null)
+		{
+			accessToken="";
+		}
+		String client_ID=request.getParameter("client_id");
+		if(client_ID==null)
+		{
+			client_ID="";
+		}
 		LoginObj loginObj=loginVerfication.veriAuth(accessToken, userID, client_ID);
 		return loginObj;
 	}
