@@ -435,26 +435,26 @@ public class SqlOp {
 					 session.commit();
 					 if(!shu.toString().equals("[]"))
 					 {
-					 String []shuzhu=(shu.toString().substring(1,shu.toString().length()-1)).split(",");
+					    String []shuzhu=(shu.toString().substring(1,shu.toString().length()-1)).split(",");
 				        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
 						String dateStr=newdate(shuzhu[0],shuzhu[1]);
 						String newtime=sdf.format(new Date());
+						ret=dateStr;
 			            Date dt1 = sdf.parse(dateStr);
 			            Date dt2 = sdf.parse(newtime);
-			            if (dt1.getTime() < dt2.getTime())
+			            if(dt2.after(dt1))
 			            {
-			            	ret="1";
+			            	ret="0";
 			            }
 			            else
 			            {
-			            	ret="0";
+			            	ret="1";
 			            }
 					 }
 					 else
 					 {
 						 ret="2";
 					 }
-						
 			     }
 				 catch(Exception ex)
 				 {
