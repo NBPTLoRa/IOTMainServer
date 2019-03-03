@@ -441,7 +441,7 @@ public class SqlOp {
 						String newtime=sdf.format(new Date());
 			            Date dt1 = sdf.parse(dateStr);
 			            Date dt2 = sdf.parse(newtime);
-			            if (dt1.getTime() > dt2.getTime())
+			            if (dt1.getTime() < dt2.getTime())
 			            {
 			            	ret="1";
 			            }

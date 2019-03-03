@@ -44,8 +44,9 @@ public class UplinkRXLast extends HttpServlet {
 
 		LoginObj loginObj=Auth.tokenLogin(request);
 
-		String userID=request.getParameter("userID");//用户ID
-		String devList=request.getParameter("devList");//设备ID列表
+		String userID=request.getParameter("userID");	//用户ID
+		String devList=request.getParameter("devList");	//设备ID列表
+		String count=request.getParameter("count");		//包数量
 		
 		String retData="";
 		String retError="CreateNull";
