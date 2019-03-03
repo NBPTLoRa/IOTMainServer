@@ -105,7 +105,15 @@ public class UplinkRXLast extends HttpServlet {
 				{//取IP不报错且不空
 					Map<String, String> data=new HashMap<String,String>();
 					data.put("devEui",devListarr[i]);
-					data.put("doOper", "getUplinkLastPackage");
+					if(count==null)
+					{
+						data.put("doOper", "getUplinkLastPackage");
+					}
+					else
+					{
+						data.put("doOper", "getUplinkLastPackage2");
+						data.put("count", count);
+					}
 					String distReturn="e:deisReturnCreateNone";
 					try
 					{
@@ -115,17 +123,33 @@ public class UplinkRXLast extends HttpServlet {
 						}else{
 							distReturn=UrlApi.urltoDist("http://"+lastServer+":8090/LoRaServletTest/do", data);//运行就用这个
 						}
-						
-						if(distReturn.equals("00"))
-						{//没数据
-							devListarr[i]+=",0";
-						}else if(distReturn.substring(0, 2).equals("e:"))
-						{//报错
-							devListarr[i]+=",error";
-							retError+=devListarr[i]+":"+distReturn.replace("e:", "")+"  ";
-						}else
-						{//正常
-							devListarr[i]=distReturn;
+						if(count==null)
+						{//单个包
+							if(distReturn.equals("00"))
+							{//没数据
+								devListarr[i]+=",0";
+							}else if(distReturn.substring(0, 2).equals("e:"))
+							{//报错
+								devListarr[i]+=",error";
+								retError+=devListarr[i]+":"+distReturn.replace("e:", "")+"  ";
+							}else
+							{//正常
+								devListarr[i]=distReturn;
+							}	
+						}
+						else 
+						{//多个包
+							if(distReturn.equals("00"))
+							{//没数据
+								devListarr[i]+=",0";
+							}else if(distReturn.substring(0, 2).equals("e:"))
+							{//报错
+								devListarr[i]+=",error";
+								retError+=devListarr[i]+":"+distReturn.replace("e:", "")+"  ";
+							}else
+							{//正常
+								devListarr[i]=distReturn;
+							}	
 						}
 					}
 					catch(Exception e)
@@ -142,13 +166,32 @@ public class UplinkRXLast extends HttpServlet {
 			}
 			
 			//写返回的data
-			retData="";
-			for(int i=0;i<devListarr.length;i++)
-			{//{"data":""},
-				retData+="{\"data"+(i+1)+"\":\""+devListarr[i]+"\"},";
-			}
+			if(count==null)
+			{
+				retData="";
+				for(int i=0;i<devListarr.length;i++)
+				{//{"data":""},
+					retData+="{\"data"+(i+1)+"\":\""+devListarr[i]+"\"},";
+				}
 			
-			retData=retData.substring(0,retData.length()-1);
+				retData=retData.substring(0,retData.length()-1);
+			}else
+			{//多个包
+				retData="";
+				for(int i=0;i<devListarr.length;i++)
+				{
+					retData+="{\""+devListarr[i].split(",")[0]+"\":[";
+					String temp=devListarr[i];
+					for(int j=0;j<temp.split("&").length;j++)
+					{
+						retData+="\""+temp.split("&")[j]+"\",";
+					}
+					retData=retData.substring(0,retData.length()-1);
+					retData+="]},";
+				}
+				
+				retData=retData.substring(0,retData.length()-1);
+			}
 			
 		}
 		
