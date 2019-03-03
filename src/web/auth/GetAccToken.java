@@ -87,7 +87,7 @@ public class GetAccToken extends HttpServlet {
 					retTime="0";
 					retError+="Sql Get hasClient_id errors-"+tempS;
 				}
-				else
+				else if(tempS.equals("0")||tempS.equals("2"))
 				{//没有重复且在使用的client_ID
 					//在authToken库创建一条APIkey
 					String accessToken=randomHexString(64);
@@ -107,6 +107,10 @@ public class GetAccToken extends HttpServlet {
 						retTime="0";
 						retError+="Sql Get errors-"+retS;
 					}
+				}else {
+					retToken="0";
+					retTime="0";
+					retError+="null";
 				}
 				
 			}else
