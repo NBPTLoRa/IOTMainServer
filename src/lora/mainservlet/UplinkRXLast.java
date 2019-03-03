@@ -112,8 +112,7 @@ public class UplinkRXLast extends HttpServlet {
 						if(DeviceADD.devMode)
 						{
 							distReturn=UrlApi.urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
-						}else
-						{
+						}else{
 							distReturn=UrlApi.urltoDist("http://"+lastServer+":8090/LoRaServletTest/do", data);//运行就用这个
 						}
 						
