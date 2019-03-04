@@ -182,9 +182,9 @@ public class UplinkRXLast extends HttpServlet {
 				{
 					retData+="{\""+devListarr[i].split(",")[0]+"\":[";
 					String temp=devListarr[i];
-					for(int j=0;j<temp.split("&").length;j++)
+					for(int j=0;j<temp.split("&&").length;j++)
 					{
-						retData+="\""+temp.split("&")[j]+"\",";
+						retData+="\""+temp.split("&&")[j].replaceAll("\"", "")+"\",";
 					}
 					retData=retData.substring(0,retData.length()-1);
 					retData+="]},";
