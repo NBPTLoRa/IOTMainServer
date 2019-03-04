@@ -441,13 +441,8 @@ public class SqlOp {
 						String newtime=sdf.format(new Date());
 						ret=dateStr;
 			            Date dt1 = sdf.parse(dateStr);
-<<<<<<< HEAD
 			            Date dt2 = sdf.parse(newtime);
 			            if(dt2.after(dt1))
-=======
-			            Date dt2 = sdf.parse(newtime);
-			            if(dt2.after(dt1))
->>>>>>> branch 'master' of https://github.com/NBPTLoRa/IOTMainServer.git
 			            {
 			            	ret="0";
 			            }
