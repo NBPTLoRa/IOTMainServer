@@ -12,6 +12,7 @@ public class Auth {
 		LoginVerfication loginVerfication=new LoginVerfication();
 		String userID=request.getParameter("userID");
 		String pwd=request.getParameter("pwd");
+		System.out.println("authLogin:"+"userID="+userID+" pwd="+pwd);
 		LoginObj loginObj=loginVerfication.veriLogin(userID,pwd);
 		return loginObj;
 	}//
@@ -35,6 +36,7 @@ public class Auth {
 		{
 			client_ID="";
 		}
+		System.out.println("userID="+userID+" client_id"+client_ID+" accessToken"+accessToken);
 		LoginObj loginObj=loginVerfication.veriAuth(accessToken, userID, client_ID);
 		return loginObj;
 	}

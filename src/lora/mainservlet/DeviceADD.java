@@ -197,7 +197,7 @@ public class DeviceADD extends HttpServlet {
 			for(Entry<String, String> vo : data.entrySet()){
 			  	url1+=vo.getKey()+"="+vo.getValue()+"&";
 			}
-			  
+		System.out.println("DeviceADDFullUrl:"+url1);
 		
 		//创建URL对象
 		URL url = new URL(url1);

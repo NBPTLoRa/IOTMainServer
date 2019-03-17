@@ -98,11 +98,11 @@
     <url-pattern>/auth/getAccessToken</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>RefreshToken</servlet-name>
-    <servlet-class>web.auth.RefreshToken</servlet-class>
+    <servlet-name>RefreshAPIKey</servlet-name>
+    <servlet-class>web.auth.RefreshAPIKey</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>RefreshToken</servlet-name>
+    <servlet-name>RefreshAPIKey</servlet-name>
     <url-pattern>/auth/refreshAPIKey</url-pattern>
   </servlet-mapping>
     <servlet>
