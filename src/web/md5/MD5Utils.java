@@ -113,8 +113,12 @@ public class MD5Utils {
 		for(int i=1;i<20;i++)
 		{
 			String aString="00000000000000"+nf.format(i);
-			System.out.println(aString+" "+getSaltMD5ofDevice(aString));
-			System.out.println(aString+" "+getSaltMD5ofGate(aString));
+			System.out.println("DeviceID:"+aString+" "+getSaltMD5ofDevice(aString));
+		}
+		for(int i=1;i<20;i++)
+		{
+			String aString="00000000000000"+nf.format(i);
+			System.out.println("GateWayID:"+aString+" "+getSaltMD5ofGate(aString));
 		}
 	}
 }
