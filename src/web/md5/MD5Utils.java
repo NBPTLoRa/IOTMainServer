@@ -3,7 +3,8 @@ package web.md5;
 import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
- 
+import java.text.DecimalFormat;
+
 import org.apache.commons.codec.binary.Hex;
  
 public class MD5Utils {
@@ -108,9 +109,10 @@ public class MD5Utils {
 	}
 	public static void main(String[] args)
 	{
-		for(int i=1;i<10;i++)
+		DecimalFormat nf = new DecimalFormat("00");
+		for(int i=1;i<20;i++)
 		{
-			String aString="000000000000000"+i;
+			String aString="00000000000000"+nf.format(i);
 			System.out.println(aString+" "+getSaltMD5ofDevice(aString));
 			System.out.println(aString+" "+getSaltMD5ofGate(aString));
 		}
