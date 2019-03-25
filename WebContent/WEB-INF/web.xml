@@ -105,7 +105,7 @@
     <servlet-name>RefreshAPIKey</servlet-name>
     <url-pattern>/auth/refreshAPIKey</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>UplinkRXLast</servlet-name>
     <servlet-class>lora.mainservlet.UplinkRXLast</servlet-class>
   </servlet>
