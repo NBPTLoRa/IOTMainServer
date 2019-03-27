@@ -127,7 +127,7 @@ public class DeviceQueueList extends HttpServlet {
 			}else if(tempS.equals("0"))
 			{
 				retSuccess="failed";		//ADD是否完全成功
-				retError+="You do not own the gateway!";	//返回的错误信息
+				retError+="You do not own the node!";	//返回的错误信息
 			}else {
 				retSuccess="failed";		//ADD是否完全成功
 				retError+=tempS;	//返回的错误信息
