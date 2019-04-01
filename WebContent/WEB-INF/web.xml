@@ -113,4 +113,13 @@
     <servlet-name>UplinkRXLast</servlet-name>
     <url-pattern>/uplinkRXLast</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>TotalCount</servlet-name>
+    <servlet-class>lora.mainservlet.datashow.TotalCount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TotalCount</servlet-name>
+    <url-pattern>/totalCount</url-pattern>
+  </servlet-mapping>
 </web-app>

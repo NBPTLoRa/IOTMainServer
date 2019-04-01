@@ -47,10 +47,10 @@ public class TotalCount extends HttpServlet {
 
 		LoginObj loginObj=Auth.tokenLogin(request);
 		
-		String TotalDevice="";
-		String NetWorkedDevice="";
-		String TotalData="";
-		String DayData="";
+		String TotalDevice="236";
+		String NetWorkedDevice="208";
+		String TotalData="30Íò";
+		String DayData="7754";
 		String retError="CreateNull";
 		
 		
