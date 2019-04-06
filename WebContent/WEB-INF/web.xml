@@ -122,4 +122,12 @@
     <servlet-name>TotalCount</servlet-name>
     <url-pattern>/totalCount</url-pattern>
   </servlet-mapping>
+      <servlet>
+    <servlet-name>DevicePercent</servlet-name>
+    <servlet-class>lora.mainservlet.datashow.DevicePercent</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DevicePercent</servlet-name>
+    <url-pattern>/devicePercent</url-pattern>
+  </servlet-mapping>
 </web-app>
