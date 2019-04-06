@@ -14,8 +14,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lora.auth.Auth;
-import lora.mainservlet.DeviceADD;
-import lora.mainservlet.UrlApi;
 import web.loginVerify.LoginObj;
 import web.sqloperation.SqlOp;
 
@@ -43,16 +41,16 @@ public class TotalCount extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stubresponse.setContentType("application/json;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-
+		
 		LoginObj loginObj=Auth.tokenLogin(request);
 		
-		String TotalDevice="236";
-		String NetWorkedDevice="208";
-		String TotalData="30Íò";
-		String DayData="7754";
+		String TotalDevice="";
+		String NetWorkedDevice="";
+		String TotalData="";
+		String DayData="";
 		String retError="CreateNull";
-		
 		
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
@@ -67,13 +65,20 @@ public class TotalCount extends HttpServlet {
 			retError+="Your account does not have permission!"+loginObj.getException();
 		}
 		
+		if(authFlag)
+		{
+			TotalDevice="236";
+			NetWorkedDevice="208";
+			TotalData="300000";
+			DayData="7754";
+		}
 		
 		String retJsonS="{"
 				+"\"TotalDevice\":\""+TotalDevice+"\","
 				+"\"NetWorkedDevice\":\""+NetWorkedDevice+"\","
 				+"\"TotalData\":\""+TotalData+"\","
 				+"\"DayData\":\""+DayData+"\","
-				+"\",\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
+				+"\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
 				+"\"}";
 		retJ=jsonParser.parse(retJsonS).getAsJsonObject();
 		out.println(retJ);
