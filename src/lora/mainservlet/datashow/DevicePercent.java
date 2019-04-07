@@ -63,11 +63,11 @@ public class DevicePercent extends HttpServlet {
 		
 		if(authFlag)
 		{		
-			Smoke="30.3";
-			Temperature="20";
-			Humidity="10.3";
-			Parklot="30";
-			Safety="9.4";
+			Smoke="30.30";
+			Temperature="20.00";
+			Humidity="10.30";
+			Parklot="30.00";
+			Safety="9.40";
 		}
 		
 		String retJsonS="{"

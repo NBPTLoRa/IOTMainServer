@@ -130,4 +130,13 @@
     <servlet-name>DevicePercent</servlet-name>
     <url-pattern>/devicePercent</url-pattern>
   </servlet-mapping>
+  
+	<servlet>
+    <servlet-name>StatusPercent</servlet-name>
+    <servlet-class>lora.mainservlet.datashow.StatusPercent</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StatusPercent</servlet-name>
+    <url-pattern>/statusPercent</url-pattern>
+  </servlet-mapping>
 </web-app>

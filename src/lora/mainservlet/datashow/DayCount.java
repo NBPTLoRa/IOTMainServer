@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import web.sqloperation.SqlOp;
+
 /**
  * Servlet implementation class DayCount
  */
@@ -16,9 +18,11 @@ public class DayCount extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	SqlOp sqlOp;
     public DayCount() {
         super();
         // TODO Auto-generated constructor stub
+        sqlOp=new SqlOp();
     }
 
 	/**
