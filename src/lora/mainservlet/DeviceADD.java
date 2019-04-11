@@ -149,6 +149,8 @@ public class DeviceADD extends HttpServlet {
 							retDoFServer+=","+ips[i];
 						}
 					}
+					//删除数据库内的记录--
+					sqlOp.deleteNode(devEui);
 					//在向所有分服务器发送完之后在总服务器的inWorkNodes加数据
 					String RetS="makeWorkForNode CreateError";
 					if(retDoCount!=-1)
