@@ -117,11 +117,17 @@ public class DeviceADD extends HttpServlet {
 						
 						try {
 							String distReturn="e:deisReturnCreateNone";
-							if(DeviceADD.devMode)
+							Map<String, String> dataDel=new HashMap<String,String>();
+							data.put("doOper", "deviceDEL");
+							data.put("devEui",devEui);
+							data.put("userID", "Admin");
+							if(DeviceADD.devMode)//先删除再添加
 							{
+								urltoDist("http://localhost:8080/LoRaServletTest/do", dataDel);
 								distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
 							}else
 							{
+								urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", dataDel);
 								distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
 							}
 							if(distReturn.substring(0, 1).equals("e"))
