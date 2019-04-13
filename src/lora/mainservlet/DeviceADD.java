@@ -118,9 +118,9 @@ public class DeviceADD extends HttpServlet {
 						try {
 							String distReturn="e:deisReturnCreateNone";
 							Map<String, String> dataDel=new HashMap<String,String>();
-							data.put("doOper", "deviceDEL");
-							data.put("devEui",devEui);
-							data.put("userID", "Admin");
+							dataDel.put("doOper", "deviceDEL");
+							dataDel.put("devEui",devEui);
+							dataDel.put("userID", "Admin");
 							if(DeviceADD.devMode)//œ»…æ≥˝‘ŸÃÌº”
 							{
 								urltoDist("http://localhost:8080/LoRaServletTest/do", dataDel);
