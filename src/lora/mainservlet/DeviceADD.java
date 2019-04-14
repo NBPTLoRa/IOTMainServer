@@ -58,7 +58,9 @@ public class DeviceADD extends HttpServlet {
 		String app=request.getParameter("app");				//设备类型
 		String descrip=request.getParameter("descrip");		//设备备注
 		String devName=request.getParameter("devName");		//设备名称
-		
+		String appKey=request.getParameter("appKey");		//三元组秘钥1
+		String nwkKey=request.getParameter("nwkKey");		//三元组秘钥3
+
 		//返回的json
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
@@ -67,6 +69,11 @@ public class DeviceADD extends HttpServlet {
 		String retError="CreateNull";	//返回的错误信息
 		int retDoCount=-1;			//作用成功的服务器数量
 		String retDoFServer="-1";		//作用失败的服务器IP
+		
+		if(userID==null||devEui==null||snCode==null||app==null||descrip==null||devName==null||appKey==null||nwkKey==null)
+		{
+			retError+="e:Incomplete field entry!!!!";
+		}
 		
 		Boolean inputFormat=false;
 		//判断ID是不是16位的hex码
@@ -109,6 +116,8 @@ public class DeviceADD extends HttpServlet {
 					data.put("descrip", descrip);
 					data.put("devName", devName);
 					data.put("userID", userID);
+					data.put("appKey", appKey);
+					data.put("nwkKey", nwkKey);
 					
 					int sucServer=0;//成功的分服务器数量
 					//向所有分服发送指令
