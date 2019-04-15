@@ -656,6 +656,7 @@ public class SqlOp {
 			     String start="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
 			     String start_1="me.gacl.mapping.userMapper.up_DayDataCount";	
 			     String start_2="me.gacl.mapping.userMapper.up_DayCount";	
+			     String start_3="me.gacl.mapping.userMapper.select_ALL_TotalCount";	
 				 String ret="";
 				 try
 				 {
@@ -666,7 +667,9 @@ public class SqlOp {
 					 {
 						 sum+=Integer.parseInt(i);
 					 }
-					 
+					 List<TotalCount> lstUsers_1 = session.selectList(start_3); 
+					 String[] shu=lstUsers_1.toString().substring(1,lstUsers_1.toString().length()-1).split(",");
+					 sum+=Integer.parseInt(shu[2]);
 					 session.update(start_1,sum);
 					 session.commit();
 					 
