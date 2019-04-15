@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.org.apache.xml.internal.serializer.ToSAXHandler;
 
 import lora.auth.Auth;
 import web.loginVerify.LoginObj;
@@ -116,8 +117,15 @@ public class DeviceQueueList extends HttpServlet {
 							}else
 							{//如果不报错
 								retSuccess="success";
-								retV=distReturn;
-								retError="0";
+								distReturn=toStringHex(distReturn);
+								retV=distReturn.split("\\[")[1].split("\\]")[0];
+								if(retV.equals(""))
+								{
+									retV="0";
+								}else
+								{
+									retV=strTo16(retV);
+								}
 							}
 							break;
 						}
@@ -153,5 +161,33 @@ public class DeviceQueueList extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	public static String toStringHex(String s) {
+		byte[] baKeyword = new byte[s.length() / 2];
+		for (int i = 0; i < baKeyword.length; i++) {
+			try {
+				baKeyword[i] = (byte) (0xff & Integer.parseInt(
+						s.substring(i * 2, i * 2 + 2), 16));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
+		try {
+			s = new String(baKeyword, "utf-8");// UTF-16le:Not
+		} catch (Exception e1) {
+			s="e:"+e1.toString();
+		}
+		return s;
+	}
+
+    public static String strTo16(String s) {
+        String str = "";
+        for (int i = 0; i < s.length(); i++) {
+            int ch = (int) s.charAt(i);
+            String s4 = Integer.toHexString(ch);
+            str = str + s4;
+        }
+        return str;
+    }
 }
