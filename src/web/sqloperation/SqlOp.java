@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import me.gacl.domain.DayCount;
+import me.gacl.domain.TotalCount;
 import me.gacl.domain.User;
 import me.gacl.domain.authToken;
 import me.gacl.domain.inWorkGateways;
@@ -21,6 +23,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 
 public class SqlOp {
 	SqlSessionFactory sessionFactory;
@@ -589,4 +592,61 @@ public class SqlOp {
 					 return ret;
 				 }
 			}
+
+			@SuppressWarnings("finally")
+			public String getTotalCount()
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_ALL_TotalCount";	
+			     String ret="";
+			     try {
+					 List<TotalCount> lstUsers = session.selectList(start); 
+					 ret="1:"+lstUsers.toString().substring(1,lstUsers.toString().length()-1);
+			     }
+				 catch(Exception ex)
+				 {
+					 ret= "e:"+ex.toString();
+					 ex.printStackTrace();
+				 }
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String ifNewDate()
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_Time_for_DayCount";	
+				 String ret="";
+				 try
+				 {
+					 DayCount day =session.selectOne(start);
+					 String time=day.toString();
+			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			    	 String newtime=sdf.format(new Date());
+			    	 if(time.equals(newtime))
+			    	 {
+			    		 ret="0";
+			    	 }
+			    	 else
+			    	 {
+			    		 ret="1";
+			    	 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			
 }

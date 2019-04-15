@@ -74,5 +74,12 @@
       <update id="up_userAPIKey_and_tokenCreTime" parameterType="me.gacl.domain.User">
         update userinf set userAPIKey=#{userAPIKey} , tokenCreTime=#{tokenCreTime} where userID=#{userID} 
     </update>
-
+            
+    <select id="select_ALL_TotalCount" resultType="me.gacl.domain.TotalCount">
+         select * from TotalCount
+    </select>
+        
+    <select id="select_Time_for_DayCount" resultType="me.gacl.domain.DayCount">
+         select Time from DayCount
+    </select>
 </mapper>
