@@ -66,7 +66,7 @@ public class DayCount extends HttpServlet {
 		{
 			//先判断是否是新的一天
 			String retNew=sqlOp.ifNewDate();
-			/*
+			
 			if(retNew.equals("1"))
 			{//新的一天
 				//把数据加到totalCount里的TotalDataCount后清空
@@ -91,7 +91,7 @@ public class DayCount extends HttpServlet {
 				Parklot=	dayCount.split(",")[3];
 				Safety=		dayCount.split(",")[4];
 			}
-			*/
+			
 		}
 		
 		String retJsonS="{"
