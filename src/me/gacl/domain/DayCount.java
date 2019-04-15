@@ -46,6 +46,11 @@ public class DayCount {
 	
 	public String toString()
 	{
+		if(Time!=null) {
 		return Time;
+		}
+		else {
+		return Smoke+","+Temperature+","+Humidity+","+Parklot+","+Safety;
+		}
 	}
 }

@@ -648,5 +648,36 @@ public class SqlOp {
 				 }
 			}
 			
-			
+			@SuppressWarnings("finally")
+			public String insertToTotalData()
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
+				 String ret="";
+				 try
+				 {
+					 DayCount day =session.selectOne(start);
+					 String time=day.toString();
+			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			    	 String newtime=sdf.format(new Date());
+			    	 if(time.equals(newtime))
+			    	 {
+			    		 ret="0";
+			    	 }
+			    	 else
+			    	 {
+			    		 ret="1";
+			    	 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
 }

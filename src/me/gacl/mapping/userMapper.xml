@@ -82,4 +82,17 @@
     <select id="select_Time_for_DayCount" resultType="me.gacl.domain.DayCount">
          select Time from DayCount
     </select>
+    
+    <select id="select_Smoke_Temperature_Humidity_Parklot_Safety" resultType="me.gacl.domain.DayCount">
+         select Smoke,Temperature,Humidity,Parklot,Safety from DayCount
+    </select>
+    
+    <update id="up_DayDataCount" parameterType="me.gacl.domain.TotalCount">
+        update TotalCount set DayDataCount=#{DayDataCount} 
+    </update>
+    
+    <update id="up_Time" parameterType="me.gacl.domain.DayCount">
+        update Time set Time=#{Time} 
+    </update>
+    
 </mapper>
