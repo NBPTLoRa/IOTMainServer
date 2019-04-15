@@ -65,12 +65,16 @@ public class DayCount extends HttpServlet {
 		if(authFlag)
 		{
 			//先判断是否是新的一天
+			String retNew=sqlOp.ifNewDate();
 			/*
-			//String retNew=sqlOp.ifNewDate();
 			if(retNew.equals("1"))
 			{//新的一天
 				//把数据加到totalCount里的TotalDataCount后清空
 				sqlOp.insertToTotalData();
+			}
+			else
+			{
+				retError+="NewDate Get Error!"+retNew;
 			}
 			//获取每日数据
 			String dayCount=sqlOp.getDayCount();
