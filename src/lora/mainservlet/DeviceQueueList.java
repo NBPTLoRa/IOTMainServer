@@ -81,14 +81,12 @@ public class DeviceQueueList extends HttpServlet {
 				//获取节点最后一次通讯的分服务器地址
 				String lastServer=sqlOp.getServerIPofDevEui(devEui);
 				if(lastServer.equals("0"))
-				{//如果没有发送过数据
+				{//如果没有最后通讯的服务器
 					retSuccess="failed";		//ADD是否完全成功
 					retError+="There is no data under this node. Use Method:DeviceRX first~";	//返回的错误信息
 				}else
-				{
+				{//如果有
 					String[] ips=sqlOp.getDisServIP();
-					retSuccess="failed";		//ADD是否完全成功
-					retError="No communicating server was found   ";	//返回的错误信息
 					for(int i=0;i<ips.length;i++)
 					{//在分服务器列表中查找
 						if(lastServer.equals(ips[i]))
@@ -149,7 +147,7 @@ public class DeviceQueueList extends HttpServlet {
 		}
 		retJ=jsonParser.parse("{\"success\":\""+retSuccess
 				+"\",\"value\":\""+retV
-				+"\",\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")//
+				+"\",\"error\":\""+retError.replace("\"","#").replace("e:CreateError", "")//
 				+"\"}").getAsJsonObject();
 		out.println(retJ);
 	}
