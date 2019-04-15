@@ -65,16 +65,24 @@ public class DayCount extends HttpServlet {
 		if(authFlag)
 		{
 			//先判断是否是新的一天
+			/*
 			//String retNew=sqlOp.ifNewDate();
+			if(retNew.equals("1"))
+			{//新的一天
+				//把数据写到totalCount里后清空
+			}
+			
+			//返回数据加上随机值再写进去
+			String day
+			 
+			*/
 			
 			
-			
-			
-			Smoke="30.30";
-			Temperature="20.00";
-			Humidity="10.30";
-			Parklot="30.00";
-			Safety="9.40";
+			Smoke="30";
+			Temperature="20";
+			Humidity="10";
+			Parklot="30";
+			Safety="9";
 		}
 		
 		String retJsonS="{"

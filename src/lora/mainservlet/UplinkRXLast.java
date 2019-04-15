@@ -97,7 +97,7 @@ public class UplinkRXLast extends HttpServlet {
 		}
 		
 		//¶ÁÊý¾Ý
-		if(manegeFlag)
+		if(manegeFlag&&inputFormat)
 		{
 			for(int i=0;i<devListarr.length;i++)
 			{
