@@ -109,8 +109,8 @@ public class DeviceRX extends HttpServlet {
 				}
 				
 				//设定指令部分
-				String sLastTime="0";
-				String sLastServer="0";
+				String sLastTime="0";//最后通讯的时间
+				String sLastServer="0";//最后通讯的服务器
 				SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd-HHmmss");
 				for(int i=0;i<ips.length;i++)
 				{
@@ -124,7 +124,7 @@ public class DeviceRX extends HttpServlet {
 						{
 							distReturn=UrlApi.urltoDist("http://"+ips[i]+":8090/LoRaServletTest/setIns", data);//运行就用这个
 						}
-						
+						//来自当前这个分服务器的
 						String tempS=distReturn.split(";")[0];
 						//获取在该分服务器的数据的时间
 						if(sLastTime.equals("0"))
@@ -132,6 +132,7 @@ public class DeviceRX extends HttpServlet {
 							if(!tempS.substring(0,1).equals("e")&&!tempS.equals("0"))
 							{//且获取的时间不是0或报错
 								sLastTime=tempS;
+								sLastServer=ips[i];
 							}
 						}
 						else

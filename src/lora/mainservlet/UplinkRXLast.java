@@ -2,6 +2,7 @@ package lora.mainservlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,6 +124,8 @@ public class UplinkRXLast extends HttpServlet {
 						}else{
 							distReturn=UrlApi.urltoDist("http://"+lastServer+":8090/LoRaServletTest/do", data);//运行就用这个
 						}
+						
+						
 						if(count==null)
 						{//单个包
 							if(distReturn.equals("00"))
@@ -181,7 +184,7 @@ public class UplinkRXLast extends HttpServlet {
 				for(int i=0;i<devListarr.length;i++)
 				{
 					retData+="{\""+devListarr[i].split(",")[0]+"\":[";
-					String temp=devListarr[i];
+					String temp=devListarr[i].substring(17);
 					for(int j=0;j<temp.split("&&").length;j++)
 					{
 						retData+="\""+temp.split("&&")[j].replaceAll("\"", "")+"\",";

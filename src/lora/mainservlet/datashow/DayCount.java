@@ -63,7 +63,13 @@ public class DayCount extends HttpServlet {
 		}
 		
 		if(authFlag)
-		{		
+		{
+			//先判断是否是新的一天
+			//String retNew=sqlOp.ifNewDate();
+			
+			
+			
+			
 			Smoke="30.30";
 			Temperature="20.00";
 			Humidity="10.30";

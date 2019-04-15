@@ -69,10 +69,13 @@ public class DeviceADD extends HttpServlet {
 		String retError="CreateNull";	//返回的错误信息
 		int retDoCount=-1;			//作用成功的服务器数量
 		String retDoFServer="-1";		//作用失败的服务器IP
-		
+		 boolean inputF=false;
 		if(userID==null||devEui==null||snCode==null||app==null||descrip==null||devName==null||appKey==null||nwkKey==null)
 		{
 			retError+="e:Incomplete field entry!!!!";
+		}else
+		{
+			inputF=true;
 		}
 		
 		Boolean inputFormat=false;
@@ -89,7 +92,7 @@ public class DeviceADD extends HttpServlet {
 			retDoFServer="0";		//作用失败的服务器IP
 		}
 		//判断用户信息
-		if(loginObj.getLoginSta()&&inputFormat)
+		if(loginObj.getLoginSta()&&inputFormat&&inputF)
 		{
 			//通过后调用所有的分服务器的添加url
 			String[] ips =sqlOp.getDisServIP();

@@ -42,9 +42,11 @@ public class DeviceQueue extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		String retSuccess="e:CreateSuccess";
 		String retError="e:CreateError";
+		
 		String devEui=request.getParameter("devEui");
 		String data=request.getParameter("data");
 		String userID=request.getParameter("userID");
+		String confirmed=request.getParameter("confirmed");
 		
 		//¼øÈ¨
 		LoginObj loginObj=Auth.tokenLogin(request);
@@ -91,6 +93,8 @@ public class DeviceQueue extends HttpServlet {
 							dataP.put("doOper", "queueadd");
 							dataP.put("devEui", devEui);
 							dataP.put("data", data);
+							dataP.put("confirmed", confirmed);
+							
 							String distReturn="e:DistReturnCreate";
 							try {
 							if(DeviceADD.devMode)
