@@ -67,18 +67,18 @@ public class TotalCount extends HttpServlet {
 		
 		if(authFlag)
 		{
-			//String total=sqlOp.getTotalCount();
-			if(true)//total.split(":")[0].equals("1"))
+			String total=sqlOp.getTotalCount();
+			if(total.split(":")[0].equals("1"))
 			{
-				//String s=total.substring(2);
-				TotalDevice="";		//s.split(",")[0];
-				NetWorkedDevice="208";
-				TotalData="300000";
-				DayData="7754";
+				String s=total.substring(2);
+				TotalDevice=	s.split(",")[0];
+				NetWorkedDevice=s.split(",")[1];
+				TotalData=		s.split(",")[2];
+				DayData=		s.split(",")[3];
 			}
 			else
 			{
-				//retError=total.split(":")[1];
+				retError=total.split(":")[1];
 			}
 		}
 		
