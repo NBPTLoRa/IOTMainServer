@@ -87,12 +87,17 @@
          select Smoke,Temperature,Humidity,Parklot,Safety from DayCount
     </select>
     
-    <update id="up_DayDataCount" parameterType="me.gacl.domain.TotalCount">
-        update TotalCount set DayDataCount=#{DayDataCount} 
+    <update id="up_DayDataCount" parameterType="String">
+        update TotalCount set TotalDataCount= #{TotalDataCount} ,DayDataCount='0'
     </update>
     
-    <update id="up_Time" parameterType="me.gacl.domain.DayCount">
-        update Time set Time=#{Time} 
+    <update id="up_DayCount" parameterType="me.gacl.domain.DayCount"> 
+        update DayCount set Smoke=#{Smoke} , Temperature=#{Temperature} , Humidity=#{Humidity} , Parklot=#{Parklot} , 
+        Safety =#{Safety} , Time=#{Time}
     </update>
-    
+
+    <update id="up_DayCount_2" parameterType="me.gacl.domain.DayCount"> 
+        update DayCount set Smoke=#{Smoke} , Temperature=#{Temperature} , Humidity=#{Humidity} , Parklot=#{Parklot} , 
+        Safety =#{Safety}
+    </update>    
 </mapper>

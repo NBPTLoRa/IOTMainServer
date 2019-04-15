@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import java.util.Random;
 import me.gacl.domain.DayCount;
 import me.gacl.domain.TotalCount;
 import me.gacl.domain.User;
@@ -653,21 +654,73 @@ public class SqlOp {
 			{
 				 SqlSession session = sessionFactory.openSession(); 	 
 			     String start="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
+			     String start_1="me.gacl.mapping.userMapper.up_DayDataCount";	
+			     String start_2="me.gacl.mapping.userMapper.up_DayCount";	
 				 String ret="";
 				 try
 				 {
-					 DayCount day =session.selectOne(start);
-					 String time=day.toString();
+					 List<DayCount> lstUsers = session.selectList(start); 
+					 String[] shuju=lstUsers.toString().substring(1,lstUsers.toString().length()-1).split(",");
+					 int sum=0;
+					 for(String i:shuju)
+					 {
+						 sum+=Integer.parseInt(i);
+					 }
+					 
+					 session.update(start_1,sum);
+					 session.commit();
+					 
+					 DayCount day=new DayCount();
+					 day.setHumidity("0");
+					 day.setParklot("0");
+					 day.setSafety("0");
+					 day.setSmoke("0");
+					 day.setTemperature("0");
 			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			    	 String newtime=sdf.format(new Date());
-			    	 if(time.equals(newtime))
-			    	 {
-			    		 ret="0";
-			    	 }
-			    	 else
-			    	 {
-			    		 ret="1";
-			    	 }
+					 day.setTime(sdf.format(new Date()));
+					 session.update(start_2,day);
+					 session.commit();
+					 ret="1";
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String getDayCount()
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
+			     String start_1="me.gacl.mapping.userMapper.up_DayCount_2";	
+				 String ret="";
+				 try
+				 {
+					 Random r=new Random();
+					 List<DayCount> lstUsers = session.selectList(start); 
+					 String[] data=lstUsers.toString().substring(1,lstUsers.toString().length()-1).split(",");
+					 String da="";
+					 for(int i=0;i<5;i++)
+					 {
+						 data[i]=""+(Integer.parseInt(data[i])+r.nextInt(3));
+					 }
+					 ret="1:"+data[0]+","+data[1]+","+data[2]+","+data[3]+","+data[4];
+					 DayCount day=new DayCount();
+					 
+					 day.setHumidity(data[2]);
+					 day.setParklot(data[3]);
+					 day.setSafety(data[4]);
+					 day.setSmoke(data[0]);
+					 day.setTemperature(data[1]);
+					 session.update(start_1,day);
+					 session.commit();
 				 }
 				 catch(Exception ex)
 				 {
