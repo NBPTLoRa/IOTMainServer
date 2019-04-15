@@ -69,20 +69,25 @@ public class DayCount extends HttpServlet {
 			//String retNew=sqlOp.ifNewDate();
 			if(retNew.equals("1"))
 			{//新的一天
-				//把数据写到totalCount里后清空
+				//把数据加到totalCount里的TotalDataCount后清空
+				sqlOp.insertToTotalData();
 			}
-			
-			//返回数据加上随机值再写进去
-			String day
-			 
+			//获取每日数据
+			String dayCount=sqlOp.getDayCount();
+			if(dayCount.split(":")[0].equals("e"))
+			{//返回数据加上随机值再写进去
+				retError+="DayCount Get Error!"+dayCount;
+			}
+			else
+			{
+				dayCount=	dayCount.split(":")[1];
+				Smoke=		dayCount.split(",")[0];
+				Temperature=dayCount.split(",")[1];
+				Humidity=	dayCount.split(",")[2];
+				Parklot=	dayCount.split(",")[3];
+				Safety=		dayCount.split(",")[4];
+			}
 			*/
-			
-			
-			Smoke="30";
-			Temperature="20";
-			Humidity="10";
-			Parklot="30";
-			Safety="9";
 		}
 		
 		String retJsonS="{"
