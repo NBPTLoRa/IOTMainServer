@@ -139,4 +139,12 @@
     <servlet-name>StatusPercent</servlet-name>
     <url-pattern>/statusPercent</url-pattern>
   </servlet-mapping>
+  	<servlet>
+    <servlet-name>DayCount</servlet-name>
+    <servlet-class>lora.mainservlet.datashow.DayCount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DayCount</servlet-name>
+    <url-pattern>/dayCount</url-pattern>
+  </servlet-mapping>
 </web-app>
