@@ -91,7 +91,7 @@ public class EventPush extends HttpServlet {
 					else
 						warn="±¨¾¯";
 				retEvents+="\"Event"+(i+1)+"\":\""
-				+"Î»ÖÃ,"
+				+(r.nextInt(20)+1)+"ºÅÂ¥,"
 				+n+(r.nextInt(3000)+1000)+","
 				+warn+","
 				+sdf.format(new Date())+"-"+df.format(r.nextInt(hour))+":"+df.format(r.nextInt(minute))+":"+df.format(r.nextInt(second))+"\",";
