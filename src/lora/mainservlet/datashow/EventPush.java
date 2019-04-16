@@ -2,7 +2,13 @@ package lora.mainservlet.datashow;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,19 +23,20 @@ import web.loginVerify.LoginObj;
 import web.sqloperation.SqlOp;
 
 /**
- * Servlet implementation class DayCount
+ * Servlet implementation class EventPush
  */
-public class DayCount extends HttpServlet {
+
+public class EventPush extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
 	SqlOp sqlOp;
-    public DayCount() {
+    public EventPush() {
         super();
-        // TODO Auto-generated constructor stub
         sqlOp=new SqlOp();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -37,16 +44,13 @@ public class DayCount extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("application/json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
 		
 		LoginObj loginObj=Auth.tokenLogin(request);
 		
-		String Smoke="";
-		String Temperature="";
-		String Humidity="";
-		String Parklot="";
-		String Safety="";
+		String retEvents="";
 		String retError="CreateNull";
 		
 		JsonObject retJ=new JsonObject();
@@ -61,45 +65,44 @@ public class DayCount extends HttpServlet {
 		{
 			retError+="Your account does not have permission!"+loginObj.getException();
 		}
-		
+		try {
 		if(authFlag)
 		{
-			//先判断是否是新的一天
-			String retNew=sqlOp.ifNewDate();
+			Random r=new Random();
+			//烟雾、地磁、安防
+			String[] name=new String[] {"烟雾","地磁","安防"};
+			//ID 1000-4000
+			//报警1 正常9
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+			Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+
+			int hour = c.get(Calendar.HOUR_OF_DAY); 
+			int minute = c.get(Calendar.MINUTE); 
+			int second = c.get(Calendar.SECOND);
 			
-			if(retNew.equals("1"))
-			{//新的一天
-				//把数据加到totalCount里的TotalDataCount后清空
-				sqlOp.insertToTotalData();
-			}
-			else if(retNew.substring(0,1).equals("e"))
+			DecimalFormat df=new DecimalFormat("00");
+			for(int i=0;i<5;i++)
 			{
-				retError+="NewDate Get Error!"+retNew;
+				String warn="正常";
+				String n=name[r.nextInt(3)];
+				if(r.nextInt(10)==1)
+					if(n.equals("地磁"))
+						warn="占用";
+					else
+						warn="报警";
+				retEvents+="\"Event"+(i+1)+"\":\""
+				+"位置,"
+				+n+(r.nextInt(3000)+1000)+","
+				+warn+","
+				+sdf.format(new Date())+"-"+df.format(r.nextInt(hour))+":"+df.format(r.nextInt(minute))+":"+df.format(r.nextInt(second))+"\",";
 			}
-			//获取每日数据
-			String dayCount=sqlOp.getDayCount();
-			if(dayCount.split(":")[0].equals("e"))
-			{//返回数据加上随机值再写进去
-				retError+="DayCount Get Error!"+dayCount;
-			}
-			else
-			{
-				dayCount=	dayCount.split(":")[1];
-				Smoke=		dayCount.split(",")[0];
-				Temperature=dayCount.split(",")[1];
-				Humidity=	dayCount.split(",")[2];
-				Parklot=	dayCount.split(",")[3];
-				Safety=		dayCount.split(",")[4];
-			}
-			
 		}
-		
+		}catch(Exception e)
+		{
+			retError+=e.toString();
+		}
 		String retJsonS="{"
-				+"\"Smoke\":\""+Smoke+"\","
-				+"\"Temperature\":\""+Temperature+"\","
-				+"\"Humidity\":\""+Humidity+"\","
-				+"\"Parklot\":\""+Parklot+"\","
-				+"\"Safety\":\""+Safety+"\","
+				+retEvents
 				+"\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
 				+"\"}";
 		retJ=jsonParser.parse(retJsonS).getAsJsonObject();
