@@ -2,7 +2,13 @@ package lora.mainservlet.datashow;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,15 +44,13 @@ public class EventPush extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("application/json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
 		
 		LoginObj loginObj=Auth.tokenLogin(request);
 		
-		String TotalDevice="";
-		String NetWorkedDevice="";
-		String TotalData="";
-		String DayData="";
+		String retEvents="";
 		String retError="CreateNull";
 		
 		JsonObject retJ=new JsonObject();
@@ -61,29 +65,44 @@ public class EventPush extends HttpServlet {
 		{
 			retError+="Your account does not have permission!"+loginObj.getException();
 		}
-		
+		try {
 		if(authFlag)
 		{
-			String total=sqlOp.getTotalCount();
-			if(total.split(":")[0].equals("1"))
+			Random r=new Random();
+			//烟雾、地磁、安防
+			String[] name=new String[] {"烟雾","地磁","安防"};
+			//ID 1000-4000
+			//报警1 正常9
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+			Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+
+			int hour = c.get(Calendar.HOUR_OF_DAY); 
+			int minute = c.get(Calendar.MINUTE); 
+			int second = c.get(Calendar.SECOND);
+			
+			DecimalFormat df=new DecimalFormat("00");
+			for(int i=0;i<5;i++)
 			{
-				String s=total.substring(2);
-				TotalDevice=	s.split(",")[0];
-				NetWorkedDevice=s.split(",")[1];
-				TotalData=		s.split(",")[2];
-				DayData=		s.split(",")[3];
-			}
-			else
-			{
-				retError=total.split(":")[1];
+				String warn="正常";
+				String n=name[r.nextInt(3)];
+				if(r.nextInt(10)==1)
+					if(n.equals("地磁"))
+						warn="占用";
+					else
+						warn="报警";
+				retEvents+="\"Event"+(i+1)+"\":\""
+				+"位置,"
+				+n+(r.nextInt(3000)+1000)+","
+				+warn+","
+				+sdf.format(new Date())+"-"+df.format(r.nextInt(hour))+":"+df.format(r.nextInt(minute))+":"+df.format(r.nextInt(second))+"\",";
 			}
 		}
-		
+		}catch(Exception e)
+		{
+			retError+=e.toString();
+		}
 		String retJsonS="{"
-				+"\"TotalDevice\":\""+TotalDevice+"\","
-				+"\"NetWorkedDevice\":\""+NetWorkedDevice+"\","
-				+"\"TotalData\":\""+TotalData+"\","
-				+"\"DayData\":\""+DayData+"\","
+				+retEvents
 				+"\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
 				+"\"}";
 		retJ=jsonParser.parse(retJsonS).getAsJsonObject();

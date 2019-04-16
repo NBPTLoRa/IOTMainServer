@@ -72,7 +72,7 @@ public class DayCount extends HttpServlet {
 				//把数据加到totalCount里的TotalDataCount后清空
 				sqlOp.insertToTotalData();
 			}
-			else
+			else if(retNew.substring(0,1).equals("e"))
 			{
 				retError+="NewDate Get Error!"+retNew;
 			}
