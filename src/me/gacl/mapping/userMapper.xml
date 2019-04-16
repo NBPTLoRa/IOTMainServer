@@ -100,4 +100,8 @@
         update DayCount set Smoke=#{Smoke} , Temperature=#{Temperature} , Humidity=#{Humidity} , Parklot=#{Parklot} , 
         Safety =#{Safety}
     </update>    
+       
+    <update id="up_DayDataCount_for_DayDataCount" parameterType="String">
+        update TotalCount set DayDataCount=#{DayDataCount}
+    </update>
 </mapper>

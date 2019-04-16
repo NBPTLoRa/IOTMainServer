@@ -600,6 +600,7 @@ public class SqlOp {
 				 SqlSession session = sessionFactory.openSession(); 	 
 			     String start="me.gacl.mapping.userMapper.select_ALL_TotalCount";	
 			     String start_1="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
+			     String start_2="me.gacl.mapping.userMapper.up_DayDataCount_for_DayDataCount";	
 			     String ret="";
 			     try {
 					 List<TotalCount> lstUsers = session.selectList(start); 
@@ -613,6 +614,10 @@ public class SqlOp {
 					 }
 					 data[3]=""+sum;
 					 data[2]=""+(Integer.parseInt(data[2])+sum);
+					 
+					 session.update(start_2,data[3]);
+					 session.commit();
+					 
 					 ret="1:"+data[0]+","+data[1]+","+data[2]+","+data[3];
 			     }
 				 catch(Exception ex)
