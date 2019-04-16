@@ -113,8 +113,7 @@
     <servlet-name>UplinkRXLast</servlet-name>
     <url-pattern>/uplinkRXLast</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>TotalCount</servlet-name>
     <servlet-class>lora.mainservlet.datashow.TotalCount</servlet-class>
   </servlet>
@@ -122,7 +121,7 @@
     <servlet-name>TotalCount</servlet-name>
     <url-pattern>/totalCount</url-pattern>
   </servlet-mapping>
-      <servlet>
+  <servlet>
     <servlet-name>DevicePercent</servlet-name>
     <servlet-class>lora.mainservlet.datashow.DevicePercent</servlet-class>
   </servlet>
@@ -130,8 +129,7 @@
     <servlet-name>DevicePercent</servlet-name>
     <url-pattern>/devicePercent</url-pattern>
   </servlet-mapping>
-  
-	<servlet>
+  <servlet>
     <servlet-name>StatusPercent</servlet-name>
     <servlet-class>lora.mainservlet.datashow.StatusPercent</servlet-class>
   </servlet>
@@ -139,12 +137,20 @@
     <servlet-name>StatusPercent</servlet-name>
     <url-pattern>/statusPercent</url-pattern>
   </servlet-mapping>
-  	<servlet>
+  <servlet>
     <servlet-name>DayCount</servlet-name>
     <servlet-class>lora.mainservlet.datashow.DayCount</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>DayCount</servlet-name>
     <url-pattern>/dayCount</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>EventPush</servlet-name>
+    <servlet-class>lora.mainservlet.datashow.EventPush</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPush</servlet-name>
+    <url-pattern>/event</url-pattern>
   </servlet-mapping>
 </web-app>
