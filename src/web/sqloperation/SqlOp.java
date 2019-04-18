@@ -723,10 +723,11 @@ public class SqlOp {
 					 List<DayCount> lstUsers = session.selectList(start); 
 					 String[] data=lstUsers.toString().substring(1,lstUsers.toString().length()-1).split(",");
 					 String da="";
-					 for(int i=0;i<5;i++)
-					 {
-						 data[i]=""+(Integer.parseInt(data[i])+r.nextInt(3));
-					 }
+					 data[0]=""+(Integer.parseInt(data[0])+r.nextInt(2));
+					 data[1]=""+(Integer.parseInt(data[1]));
+					 data[2]=""+(Integer.parseInt(data[2]));
+					 data[3]=""+(Integer.parseInt(data[3]));
+					 data[4]=""+(Integer.parseInt(data[4])+r.nextInt(2));
 					 ret="1:"+data[0]+","+data[1]+","+data[2]+","+data[3]+","+data[4];
 					 DayCount day=new DayCount();
 					 

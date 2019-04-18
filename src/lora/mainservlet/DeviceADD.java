@@ -69,7 +69,10 @@ public class DeviceADD extends HttpServlet {
 		String retError="CreateNull";	//返回的错误信息
 		int retDoCount=-1;			//作用成功的服务器数量
 		String retDoFServer="-1";		//作用失败的服务器IP
-		 boolean inputF=false;
+
+		//判断字段输入是否完整
+		boolean inputF=true;
+		 /*
 		if(userID==null||devEui==null||snCode==null||app==null||descrip==null||devName==null||appKey==null||nwkKey==null)
 		{
 			retError+="e:Incomplete field entry!!!!";
@@ -77,7 +80,7 @@ public class DeviceADD extends HttpServlet {
 		{
 			inputF=true;
 		}
-		
+		*/
 		Boolean inputFormat=false;
 		//判断ID是不是16位的hex码
 		if(devEui.matches("^[a-f0-9]{16}"))
@@ -119,8 +122,8 @@ public class DeviceADD extends HttpServlet {
 					data.put("descrip", descrip);
 					data.put("devName", devName);
 					data.put("userID", userID);
-					data.put("appKey", appKey);
-					data.put("nwkKey", nwkKey);
+					data.put("appKey","077ee45c6e4564d96d76ae55afd3aa89");
+					data.put("nwkKey","077ee45c6e4564d96d76ae55afd3aa89");
 					
 					int sucServer=0;//成功的分服务器数量
 					//向所有分服发送指令

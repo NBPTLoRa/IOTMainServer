@@ -69,32 +69,23 @@ public class EventPush extends HttpServlet {
 		if(authFlag)
 		{
 			Random r=new Random();
-			//烟雾、地磁、安防
-			String[] name=new String[] {"烟雾","地磁","安防"};
+			//烟雾、安防
+			String[] name=new String[] {"烟雾","安防"};
 			//ID 1000-4000
 			//报警1 正常9
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");//设置日期格式
-			Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");//设置日期格式
 
-			int hour = c.get(Calendar.HOUR_OF_DAY); 
-			int minute = c.get(Calendar.MINUTE); 
-			int second = c.get(Calendar.SECOND);
-			
-			DecimalFormat df=new DecimalFormat("00");
 			for(int i=0;i<5;i++)
 			{
 				String warn="正常";
-				String n=name[r.nextInt(3)];
-				if(r.nextInt(10)==1)
-					if(n.equals("地磁"))
-						warn="占用";
-					else
-						warn="报警";
+				String n=name[r.nextInt(2)];
+				//if(r.nextInt(10)==1)
+					//warn="报警";
 				retEvents+="\"Event"+(i+1)+"\":\""
 				+(r.nextInt(20)+1)+"号楼,"
 				+n+(r.nextInt(3000)+1000)+","
 				+warn+","
-				+sdf.format(new Date())+"-"+df.format(r.nextInt(hour))+":"+df.format(r.nextInt(minute))+":"+df.format(r.nextInt(second))+"\",";
+				+sdf.format(new Date())+"\",";
 			}
 		}
 		}catch(Exception e)
