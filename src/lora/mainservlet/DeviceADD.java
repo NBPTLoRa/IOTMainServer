@@ -1,14 +1,9 @@
 package lora.mainservlet;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +44,18 @@ public class DeviceADD extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 
+		//判断字段输入是否完整
+		boolean inputF=true;
+		 /*
+		if(userID==null||devEui==null||snCode==null||app==null||descrip==null||devName==null||appKey==null||nwkKey==null)
+		{
+			retError+="e:Incomplete field entry!!!!";
+		}else
+		{
+			inputF=true;
+		}
+		*/
+		
 		//鉴权
 		LoginObj loginObj=Auth.tokenLogin(request);
 
@@ -70,17 +77,6 @@ public class DeviceADD extends HttpServlet {
 		int retDoCount=-1;			//作用成功的服务器数量
 		String retDoFServer="-1";		//作用失败的服务器IP
 
-		//判断字段输入是否完整
-		boolean inputF=true;
-		 /*
-		if(userID==null||devEui==null||snCode==null||app==null||descrip==null||devName==null||appKey==null||nwkKey==null)
-		{
-			retError+="e:Incomplete field entry!!!!";
-		}else
-		{
-			inputF=true;
-		}
-		*/
 		Boolean inputFormat=false;
 		//判断ID是不是16位的hex码
 		if(devEui.matches("^[a-f0-9]{16}"))
@@ -138,12 +134,12 @@ public class DeviceADD extends HttpServlet {
 							dataDel.put("userID", "Admin");
 							if(DeviceADD.devMode)//先删除再添加
 							{
-								urltoDist("http://localhost:8080/LoRaServletTest/do", dataDel);
-								distReturn=urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
+								UrlApi.urltoDist("http://localhost:8080/LoRaServletTest/do", dataDel);
+								distReturn=UrlApi.urltoDist("http://localhost:8080/LoRaServletTest/do", data);//调试就用这个
 							}else
 							{
-								urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", dataDel);
-								distReturn=urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
+								UrlApi.urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", dataDel);
+								distReturn=UrlApi.urltoDist("http://"+ips[i]+":8090/LoRaServletTest/do", data);//运行就用这个
 							}
 							if(distReturn.substring(0, 1).equals("e"))
 							{//如果分服务器报错 
@@ -212,45 +208,6 @@ public class DeviceADD extends HttpServlet {
 				+"\"}").getAsJsonObject();
 		out.println(retJ);
 	}
-
-	public String urltoDist(String url1, Map<String,String> data)throws Exception 
-	{
-		//把参数拼接到URL后面
-		url1+="?";
-			for(Entry<String, String> vo : data.entrySet()){
-			  	url1+=vo.getKey()+"="+vo.getValue()+"&";
-			}
-		System.out.println("DeviceADDFullUrl:"+url1);
-		
-		//创建URL对象
-		URL url = new URL(url1);
-		
-		URLConnection connection=url.openConnection();
-		
-		InputStream in = connection.getInputStream();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-		//接收返回响应信息
-		String response = new String();
-		try {
-            byte buf[] = new byte[1024];
-            int read = 0;
-            while ((read = in.read(buf)) > 0) {
-                out.write(buf, 0, read);
-            }
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-        }
-        byte b[] = out.toByteArray();
-        response=new String(b,"utf-8");
-
-		return response.toString();
-
-	}
-
-	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
