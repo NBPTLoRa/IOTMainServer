@@ -145,7 +145,7 @@
     <servlet-name>DayCount</servlet-name>
     <url-pattern>/dayCount</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>EventPush</servlet-name>
     <servlet-class>lora.mainservlet.datashow.EventPush</servlet-class>
   </servlet>
