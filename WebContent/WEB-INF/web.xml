@@ -153,4 +153,12 @@
     <servlet-name>EventPush</servlet-name>
     <url-pattern>/event</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>DayHistory</servlet-name>
+    <servlet-class>lora.mainservlet.datashow.DayHistory</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DayHistory</servlet-name>
+    <url-pattern>/dayHistory</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -65,7 +65,7 @@ public class DayHistory extends HttpServlet {
 				if(authFlag)
 				{
 					//获取数据
-					String retSql="";//
+					String retSql=sqlOp.getDayHistory();
 					if(retSql.substring(0,1).equals("1"))
 					{//通过
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-");
