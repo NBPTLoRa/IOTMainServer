@@ -69,7 +69,7 @@ public class EventPush extends HttpServlet {
 		if(authFlag)
 		{
 			Random r=new Random();
-			//烟雾、安防
+			//烟雾、安防//
 			String[] name=new String[] {"烟雾","安防"};
 			//ID 1000-4000
 			//报警1 正常9
