@@ -2,10 +2,6 @@ package lora.mainservlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,26 +40,29 @@ public class DeviceList extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 
+		String userID=request.getParameter("userID");		//用户ID
+		
+		if(userID==null)
+		{
+			
+		}
+		
 		//鉴权
 		LoginObj loginObj=Auth.tokenLogin(request);
 
-		String userID=request.getParameter("userID");		//用户ID
-		String devEui=request.getParameter("devEui");		//设备ID
-		String snCode=request.getParameter("snCode").toLowerCase();	//设备sn码
-		String app=request.getParameter("app");				//设备类型
-		String descrip=request.getParameter("descrip");		//设备备注
-		String devName=request.getParameter("devName");		//设备名称
-		
 		//返回的json
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
 		
-		String retSuccess="failed";		//ADD是否完全成功
+		String retDevCount="0";
+		String retDevList="";
 		String retError="CreateNull";	//返回的错误信息
-		int retDoCount=-1;			//作用成功的服务器数量
-		String retDoFServer="-1";		//作用失败的服务器IP
 		
-		
+		retJ=jsonParser.parse("{\"DevCount\":\""+retDevCount
+				+retDevList
+				+"\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")//
+				+"\"}").getAsJsonObject();
+		out.println(retJ);
 	}
 
 	/**
