@@ -104,4 +104,9 @@
     <update id="up_DayDataCount_for_DayDataCount" parameterType="String">
         update TotalCount set DayDataCount=#{DayDataCount}
     </update>
+    
+    <select id="select_all_for_DayHistory" parameterType="String" resultType="me.gacl.domain.DayHistory">
+         select * from DayHistory where time like #{time}
+    </select>
+    
 </mapper>

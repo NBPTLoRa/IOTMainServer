@@ -6,6 +6,6 @@ public class test {
 
     public static void main(String[] args){
     	SqlOp sql=new SqlOp();
-    	System.out.println(sql.getTotalCount());
+    	System.out.println(sql.getDayHistory());
     }
 }

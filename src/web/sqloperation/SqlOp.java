@@ -11,6 +11,7 @@ import java.util.List;
 
 import java.util.Random;
 import me.gacl.domain.DayCount;
+import me.gacl.domain.DayHistory;
 import me.gacl.domain.TotalCount;
 import me.gacl.domain.User;
 import me.gacl.domain.authToken;
@@ -737,6 +738,41 @@ public class SqlOp {
 					 day.setTemperature(data[1]);
 					 session.update(start_1,day);
 					 session.commit();
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String getDayHistory()
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_all_for_DayHistory";	
+			     String []date=new String[]{"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
+				 String ret="";
+				 try
+				 {
+			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+					 List<DayHistory> shuzhu=session.selectList(start,sdf.format(new Date())+"%");
+					 for(DayHistory i:shuzhu)
+					 {
+						 String []t=i.toString().split(",");
+						 int da=Integer.parseInt(t[0].substring(t[0].length()-2, t[0].length()));
+						 date[da]=""+da+":"+t[1];
+					 }
+					 for(String i:date)
+					 {
+						 ret+=i+",";
+					 }
+					 ret=ret.substring(0,ret.length()-1);
 				 }
 				 catch(Exception ex)
 				 {
