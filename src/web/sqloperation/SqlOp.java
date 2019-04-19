@@ -755,7 +755,7 @@ public class SqlOp {
 			@SuppressWarnings("finally")
 			public String getDayHistory()
 			{
-				 SqlSession session = sessionFactory.openSession(); 	 
+				 SqlSession session = sessionFactory.openSession(); 	 //454
 			     String start="me.gacl.mapping.userMapper.select_all_for_DayHistory";	
 			     String []date=new String[]{"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
 				 String ret="";
