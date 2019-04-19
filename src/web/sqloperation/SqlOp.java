@@ -758,7 +758,7 @@ public class SqlOp {
 				 SqlSession session = sessionFactory.openSession(); 	 //454
 			     String start="me.gacl.mapping.userMapper.select_all_for_DayHistory";	
 			     String []date=new String[]{"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
-				 String ret="";
+				 String ret="1:";
 				 try
 				 {
 			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -767,7 +767,7 @@ public class SqlOp {
 					 {
 						 String []t=i.toString().split(",");
 						 int da=Integer.parseInt(t[0].substring(t[0].length()-2, t[0].length()));
-						 date[da]=""+da+":"+t[1];
+						 date[da]=t[1];
 					 }
 					 for(String i:date)
 					 {
