@@ -12,8 +12,8 @@ public class Auth {
 		LoginVerfication loginVerfication=new LoginVerfication();
 		String userID=request.getParameter("userID");
 		String pwd=request.getParameter("pwd");
-		System.out.println("authLogin:"+"userID="+userID+" pwd="+pwd);
 		LoginObj loginObj=loginVerfication.veriLogin(userID,pwd);
+		System.out.println("authLogin:"+"userID="+userID+" pwd="+pwd+" result="+loginObj.getLoginSta());
 		return loginObj;
 	}//
 	
@@ -36,8 +36,8 @@ public class Auth {
 		{
 			client_ID="";
 		}
-		System.out.println("userID="+userID+" client_id"+client_ID+" accessToken"+accessToken);
 		LoginObj loginObj=loginVerfication.veriAuth(accessToken, userID, client_ID);
+		System.out.println("tokenLogin:userID="+userID+" client_id="+client_ID+" accessToken="+accessToken+" result="+loginObj.getLoginSta());
 		return loginObj;
 	}
 }

@@ -1,8 +1,6 @@
 package web.md5;
  
-import java.io.FileNotFoundException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 
 import org.apache.commons.codec.binary.Hex;
