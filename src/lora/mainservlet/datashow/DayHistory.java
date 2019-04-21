@@ -77,6 +77,7 @@ public class DayHistory extends HttpServlet {
 						{
 							retHistorys+="\""+d+String.format("%02d", i)+","+hiStrings[i]+"\",";
 						}
+						retHistorys=retHistorys.substring(0,retHistorys.length()-1);
 					}
 					else 
 					{
@@ -84,7 +85,7 @@ public class DayHistory extends HttpServlet {
 					}
 				}
 				String retJsonS="{"
-						+"\"History\":["+retHistorys.substring(0,retHistorys.length()-1)+"],"
+						+"\"History\":["+retHistorys+"],"
 						+"\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")
 						+"\"}";
 				retJ=jsonParser.parse(retJsonS).getAsJsonObject();
