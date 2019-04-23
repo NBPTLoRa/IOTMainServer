@@ -769,9 +769,11 @@ public class SqlOp {
 						 int da=Integer.parseInt(t[0].substring(t[0].length()-2, t[0].length()));
 						 date[da]=t[1];
 					 }
-					 for(String i:date)
+		    	     SimpleDateFormat sdf_1 = new SimpleDateFormat("HH");
+					 int da=Integer.parseInt(sdf_1.format(new Date()));
+					 for(int i=0;i<=da;i++)
 					 {
-						 ret+=i+",";
+						 ret+=date[i]+",";
 					 }
 					 ret=ret.substring(0,ret.length()-1);
 				 }
