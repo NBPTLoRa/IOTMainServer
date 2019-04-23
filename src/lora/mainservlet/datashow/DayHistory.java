@@ -71,9 +71,8 @@ public class DayHistory extends HttpServlet {
 						String d=sdf.format(new Date());
 						
 						//·ÖÎöÊı¾İ
-						String[] hiStrings=new String[24];
-						hiStrings=retSql.split(":")[1].split(",");
-						for(int i=0;i<24;i++)
+						String[] hiStrings=retSql.split(":")[1].split(",");
+						for(int i=0;i<hiStrings.length;i++)
 						{
 							retHistorys+="\""+d+String.format("%02d", i)+","+hiStrings[i]+"\",";
 						}
