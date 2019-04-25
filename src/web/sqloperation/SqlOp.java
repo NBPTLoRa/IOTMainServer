@@ -717,18 +717,22 @@ public class SqlOp {
 				 SqlSession session = sessionFactory.openSession(); 	 
 			     String start="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
 			     String start_1="me.gacl.mapping.userMapper.up_DayCount_2";	
-				 String ret="";
+			     String start_2="me.gacl.mapping.userMapper.select_all_for_DayHistory";	
+			     String start_3="me.gacl.mapping.userMapper.up_TimeCount_for_DayHistory";	
+			     String start_4="me.gacl.mapping.userMapper.add_DayHistory";	
+				 String ret="1";
 				 try
 				 {
 					 Random r=new Random();
 					 List<DayCount> lstUsers = session.selectList(start); 
 					 String[] data=lstUsers.toString().substring(1,lstUsers.toString().length()-1).split(",");
 					 String da="";
-					 data[0]=""+(Integer.parseInt(data[0])+r.nextInt(2));
+					 int ran=r.nextInt(2);
+					 data[0]=""+(Integer.parseInt(data[0])+ran);
 					 data[1]=""+(Integer.parseInt(data[1]));
 					 data[2]=""+(Integer.parseInt(data[2]));
 					 data[3]=""+(Integer.parseInt(data[3]));
-					 data[4]=""+(Integer.parseInt(data[4])+r.nextInt(2));
+					 data[4]=""+(Integer.parseInt(data[4])+ran);
 					 ret="1:"+data[0]+","+data[1]+","+data[2]+","+data[3]+","+data[4];
 					 DayCount day=new DayCount();
 					 
@@ -739,6 +743,26 @@ public class SqlOp {
 					 day.setTemperature(data[1]);
 					 session.update(start_1,day);
 					 session.commit();
+					 
+			    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HH");
+					 List<DayHistory> shu=session.selectList(start_2,sdf.format(new Date()));
+					 if(shu.toString().equals("[]"))
+					 {
+						 DayHistory dh=new DayHistory();
+						 dh.setTime(sdf.format(new Date()));
+						 dh.setTimeCount(""+ran);
+						 session.update(start_4,dh);
+						 session.commit();
+					 }
+					 else
+					 {
+						 String[] data_1=shu.toString().substring(1,shu.toString().length()-1).split(",");
+						 DayHistory dh=new DayHistory();
+						 dh.setTime(sdf.format(new Date()));
+						 dh.setTimeCount(""+(Integer.parseInt(data_1[1])+ran));
+						 session.update(start_3,dh);
+						 session.commit();
+					 }
 				 }
 				 catch(Exception ex)
 				 {

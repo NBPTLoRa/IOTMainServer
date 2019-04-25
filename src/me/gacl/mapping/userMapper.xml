@@ -63,7 +63,7 @@
          select accCreTime,effectiveTime from authToken where client_ID=#{client_ID} and APIKey=#{APIKey} order by accCreTime desc limit 1
     </select>
     
-         <insert id="add_authToken" parameterType="me.gacl.domain.authToken">
+    <insert id="add_authToken" parameterType="me.gacl.domain.authToken">
         insert into authToken(userID,APIKey,client_ID,accessToken,tokenState,accCreTime,effectiveTime) values(#{userID},#{APIKey},#{client_ID},#{accessToken},#{tokenState},#{accCreTime},#{effectiveTime})
     </insert> 
     
@@ -108,5 +108,13 @@
     <select id="select_all_for_DayHistory" parameterType="String" resultType="me.gacl.domain.DayHistory">
          select * from DayHistory where time like #{time}
     </select>
+    
+    <update id="up_TimeCount_for_DayHistory" parameterType="me.gacl.domain.DayHistory">
+        update DayHistory set TimeCount= #{TimeCount} where Time=#{Time}
+    </update>
+    
+    <insert id="add_DayHistory" parameterType="me.gacl.domain.DayHistory">
+        insert into DayHistory(Time,TimeCount) values(#{Time},#{TimeCount})
+    </insert> 
     
 </mapper>
