@@ -714,7 +714,7 @@ public class SqlOp {
 			@SuppressWarnings("finally")
 			public String getDayCount()
 			{
-				 SqlSession session = sessionFactory.openSession(); 	 
+				 SqlSession session = sessionFactory.openSession(); 	 //88
 			     String start="me.gacl.mapping.userMapper.select_Smoke_Temperature_Humidity_Parklot_Safety";	
 			     String start_1="me.gacl.mapping.userMapper.up_DayCount_2";	
 			     String start_2="me.gacl.mapping.userMapper.select_all_for_DayHistory";	
