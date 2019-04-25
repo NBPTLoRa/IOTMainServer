@@ -77,9 +77,15 @@ public class EventPush extends HttpServlet {
 				String n=name[r.nextInt(2)];
 				//if(r.nextInt(10)==1)
 					//warn="报警";
-				retEvents+="\"Event"+(i+1)+"\":\""
-				+(r.nextInt(20)+1)+"号楼,"
-				+n+(r.nextInt(3000)+1000)+","
+				retEvents+="\"Event"+(i+1)+"\":\"";
+				if(n.equals("安防"))
+				{
+					retEvents+="公共,";
+				}else 
+				{
+					retEvents+=(r.nextInt(20)+1)+"号楼,";
+				}
+				retEvents+=n+(r.nextInt(3000)+1000)+","
 				+warn+","
 				+sdf.format(new Date())+"\",";
 			}
