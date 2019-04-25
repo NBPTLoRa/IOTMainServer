@@ -2,6 +2,8 @@ package lora.mainservlet.datashow;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -61,11 +63,20 @@ public class StatusPercent extends HttpServlet {
 		}
 		
 		if(authFlag)
-		{		
-			Normal="80.33";
-			Warning="19.67";
-			Alarm="0";
-			LowPower="0";
+		{
+			try
+			{
+				DecimalFormat df=new DecimalFormat("#.00");
+				Normal=df.format(60.00+new Random().nextDouble()*10);
+				Warning=df.format(87-Double.valueOf(Normal));
+				Alarm="00";
+				LowPower="13.00";
+			}
+			catch (Exception e) {
+				// TODO: handle exceptio
+				e.printStackTrace();
+				retError+=e.getMessage();
+			}
 		}
 		
 		String retJsonS="{"
