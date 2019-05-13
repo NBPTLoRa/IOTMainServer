@@ -161,7 +161,7 @@
     <servlet-name>DayHistory</servlet-name>
     <url-pattern>/dayHistory</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>MulticastQueuePOST</servlet-name>
     <servlet-class>lora.mainservlet.MulticastQueuePOST</servlet-class>
   </servlet>
