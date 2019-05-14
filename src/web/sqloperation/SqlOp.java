@@ -836,4 +836,97 @@ public class SqlOp {
 					 return ret;
 				 }
 			}
+			
+			@SuppressWarnings("finally")
+			public String setLight(String s)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.up_light_for_Switch";	
+				 String ret="";
+				 try
+				 {
+					 int retResult = session.update(start,s);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret="1";
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String setWar(String s)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.up_war_for_Switch";	
+				 String ret="";
+				 try
+				 {
+					 int retResult = session.update(start,s);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret="1";
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String setLinkWar(String s)
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.up_link_war_for_Switch";	
+				 String ret="";
+				 try
+				 {
+					 int retResult = session.update(start,s);
+					 session.commit();
+					 if(retResult==1)
+					 {
+						 ret="1";
+					 }
+					 else
+					 {
+						 ret="0";
+					 }
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
 }

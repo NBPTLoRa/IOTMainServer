@@ -120,5 +120,16 @@
     <select id="select_all_for_Switch"  resultType="me.gacl.domain.Switch">
          select light, war, link_war from Switch 
     </select>
+           
+    <update id="up_light_for_Switch" parameterType="String">
+        update Switch set light=#{light}
+    </update>
     
+   <update id="up_war_for_Switch" parameterType="String">
+        update Switch set war=#{war}
+    </update>
+    
+        <update id="up_link_war_for_Switch" parameterType="String">
+        update Switch set link_war=#{link_war}
+    </update>
 </mapper>
