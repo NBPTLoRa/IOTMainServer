@@ -117,4 +117,8 @@
         insert into DayHistory(Time,TimeCount) values(#{Time},#{TimeCount})
     </insert> 
     
+    <select id="select_all_for_Switch"  resultType="me.gacl.domain.Switch">
+         select light, war, link_war from Switch 
+    </select>
+    
 </mapper>

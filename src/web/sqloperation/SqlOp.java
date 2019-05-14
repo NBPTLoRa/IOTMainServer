@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import me.gacl.domain.DayCount;
 import me.gacl.domain.DayHistory;
+import me.gacl.domain.Switch;
 import me.gacl.domain.TotalCount;
 import me.gacl.domain.User;
 import me.gacl.domain.authToken;
@@ -800,6 +801,29 @@ public class SqlOp {
 						 ret+=date[i]+",";
 					 }
 					 ret=ret.substring(0,ret.length()-1);
+				 }
+				 catch(Exception ex)
+				 {
+					 ret="e:"+ex.toString();
+					 ex.printStackTrace();
+				 } 
+				 finally
+				 {
+					 session.close();
+					 return ret;
+				 }
+			}
+			
+			@SuppressWarnings("finally")
+			public String getSwitches()
+			{
+				 SqlSession session = sessionFactory.openSession(); 	 
+			     String start="me.gacl.mapping.userMapper.select_all_for_Switch";	
+				 String ret="";
+				 try
+				 {
+					 List<Switch> lstUsers = session.selectList(start);
+					 ret="1:"+lstUsers.toString().substring(1,lstUsers.toString().length()-1);
 				 }
 				 catch(Exception ex)
 				 {
