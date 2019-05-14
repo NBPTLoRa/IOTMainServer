@@ -11,7 +11,7 @@ public class Switch {
 	public void setLight(String light) {
 		this.light = light;
 	}
-	public String getWar() {
+	public String getWar() {//
 		return war;
 	}
 	public void setWar(String war) {
