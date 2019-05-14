@@ -169,4 +169,12 @@
     <servlet-name>MulticastQueuePOST</servlet-name>
     <url-pattern>/multicastQueuePOST</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>getSwitches</servlet-name>
+    <servlet-class>lora.switches.getSwitches</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getSwitches</servlet-name>
+    <url-pattern>/getSwitches</url-pattern>
+  </servlet-mapping>
 </web-app>

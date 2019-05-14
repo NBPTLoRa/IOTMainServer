@@ -47,14 +47,32 @@ public class getSwitches extends HttpServlet {
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
 		
-		String retDevCount="0";
-		String retDevList="";
+		String retLight="0";
+		String retWar="0";
+		String retLinkWar="0";
 		String retError="CreateNull";	//返回的错误信息
 		
+		if(loginObj.getLoginSta())
+		{
+			String retSql=sqlOp.getSwitches();
+			if(retSql.substring(0, 1).equals("e"))
+			{//报错
+				retError+=retSql;
+			}else
+			{
+				retLight=retSql.split(":")[1].split(",")[0];
+				retWar=retSql.split(":")[1].split(",")[1];
+				retLinkWar=retSql.split(":")[1].split(",")[2];
+			}
+		}else
+		{
+			retError+=loginObj.getException();
+		}
 		
-		
-		retJ=jsonParser.parse("{\"DevCount\":\""+retDevCount
-				+retDevList
+		retJ=jsonParser.parse("{"
+				+ "\"Light\":\""+retLight+"\","
+				+ "\"War\":\""+retWar+"\","
+				+ "\"LinkWar\":\""+retLinkWar+"\","
 				+"\"error\":\""+retError.replace("\"","#").replace("CreateNull", "")//
 				+"\"}").getAsJsonObject();
 		out.println(retJ);
