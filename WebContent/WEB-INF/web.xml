@@ -177,4 +177,29 @@
     <servlet-name>getSwitches</servlet-name>
     <url-pattern>/getSwitches</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>setLight</servlet-name>
+    <servlet-class>lora.switches.setLight</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>setLight</servlet-name>
+    <url-pattern>/setLight</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>setWar</servlet-name>
+    <servlet-class>lora.switches.setWar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>setWar</servlet-name>
+    <url-pattern>/setWar</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>setLinkWar</servlet-name>
+    <servlet-class>lora.switches.setLinkWar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>setLinkWar</servlet-name>
+    <url-pattern>/setLinkWar</url-pattern>
+  </servlet-mapping>
 </web-app>

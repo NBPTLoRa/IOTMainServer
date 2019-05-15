@@ -19,7 +19,6 @@ import web.sqloperation.SqlOp;
 /**
  * Servlet implementation class setLight
  */
-@WebServlet("/setLight")
 public class setLight extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,7 +44,10 @@ public class setLight extends HttpServlet {
 		LoginObj loginObj=Auth.tokenLogin(request);
 
 		String s=request.getParameter("s"); //开关值
-		
+		if(s==null)
+		{
+			s="";
+		}
 		//返回的json
 		JsonObject retJ=new JsonObject();
 		JsonParser jsonParser=new JsonParser();
