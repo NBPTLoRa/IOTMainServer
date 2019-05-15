@@ -17,17 +17,17 @@ import web.loginVerify.LoginObj;
 import web.sqloperation.SqlOp;
 
 /**
- * Servlet implementation class setLight
+ * Servlet implementation class setLinkWar
  */
-@WebServlet("/setLight")
-public class setLight extends HttpServlet {
+@WebServlet("/setLinkWar")
+public class setLinkWar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
 	SqlOp sqlOp;
-    public setLight() {
+    public setLinkWar() {
         super();
         sqlOp=new SqlOp();
         // TODO Auto-generated constructor stub
@@ -37,7 +37,7 @@ public class setLight extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub// TODO Auto-generated method stub
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out=response.getWriter();
 
@@ -58,10 +58,10 @@ public class setLight extends HttpServlet {
 			String retSql="e:create";
 			if(s.equals("1"))
 			{
-				retSql=sqlOp.setLight("1");
+				retSql=sqlOp.setLinkWar("1");
 			}else if(s.equals("0"))
 			{
-				retSql=sqlOp.setLight("0");
+				retSql=sqlOp.setLinkWar("0");
 			}else
 			{
 				retSql="e:S:INPUT ERROR";
