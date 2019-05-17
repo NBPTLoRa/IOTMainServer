@@ -12,7 +12,7 @@
                 <property name="username" value="${name}" />
                 <property name="password" value="${password}" />                                            
                 <property name="poolPingEnabled" value="true"/>
-                <property name="poolPingQuery" value="select now() from LoRaINFDB.lastupdatedlog limit 1"/>
+                <property name="poolPingQuery" value="select now() from LoRaINFDB.userinf limit 1"/>
                 <property name="poolPingConnectionsNotUsedFor" value="3600000"/>
             </dataSource>
         </environment>
