@@ -108,15 +108,17 @@ public class MD5Utils {
 	public static void main(String[] args)
 	{
 		DecimalFormat nf = new DecimalFormat("00");
-		for(int i=1;i<20;i++)
+    	//System.out.println(getSaltMD5ofDevice(""));
+		
+		for(int i=1;i<6;i++)
 		{
 			String aString="00000000000000"+nf.format(i);
-			System.out.println("DeviceID:"+aString+" "+getSaltMD5ofDevice(aString));
+			System.out.println("DeviceID:"+aString+" "+getSaltMD5ofDevice("d896e0ff00000240"));
 		}
-		for(int i=1;i<20;i++)
-		{
-			String aString="00000000000000"+nf.format(i);
-			System.out.println("GateWayID:"+aString+" "+getSaltMD5ofGate(aString));
-		}
+//		for(int i=1;i<20;i++)
+//		{
+//			String aString="00000000000000"+nf.format(i);
+//			System.out.println("GateWayID:"+aString+" "+getSaltMD5ofGate(aString));
+//		}
 	}
 }
