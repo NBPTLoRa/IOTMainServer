@@ -79,7 +79,7 @@ public class DeviceADD extends HttpServlet {
 
 		Boolean inputFormat=false;
 		//判断ID是不是16位的hex码
-		if(devEui.matches("^[a-f0-9]{16}"))
+		if(devEui.matches("^[a-fA-F0-9]{16}"))
 		{//如果是
 			inputFormat=true;
 		}
